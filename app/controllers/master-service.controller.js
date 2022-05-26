@@ -109,3 +109,15 @@ exports.getServiceRate = (req, res) => {
       res.status(error.response.status).json(error.response.data)
     });
 };
+exports.editRateService = (req, res) => {
+  let service_code = req.query.service_code || ""
+  axios
+    .patch(process.env.MW_URL + "/v2/rate-service/" + service_code,req.body)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};

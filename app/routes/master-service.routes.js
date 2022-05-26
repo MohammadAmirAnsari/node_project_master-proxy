@@ -55,4 +55,9 @@ module.exports = function (app) {
     [authJwt.verifyToken],
     controller.getServiceRate
   );
+  app.patch(
+    "/api/rate-service",
+    [authJwt.verifyToken],
+    controller.editRateService
+  );
 };
