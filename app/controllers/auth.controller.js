@@ -12,20 +12,6 @@ exports.signup = async (req, res) => {
 
   try {
     const schema = Joi.object({
-      // merchant_code: Joi.string()
-      //   .pattern(new RegExp(pattern))
-      //   .min(3)
-      //   .max(32)
-      //   .required(),
-      // tracking_prefix: Joi.string()
-      //   .pattern(new RegExp(pattern))
-      //   .min(3)
-      //   .max(32),
-      // use_order_ref: Joi.boolean().falsy('N'),
-      // username: Joi.string()
-      //   .min(3)
-      //   .max(32)
-      //   .required(),
       email: Joi.string()
         .min(3)
         .max(32)

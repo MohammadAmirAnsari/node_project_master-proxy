@@ -1,21 +1,22 @@
 const db = require("../models");
 const ROLES = db.ROLES;
+const RolesDb = db.role;
 const User = db.user;
 
 checkDuplicateUsernameOrEmail = (req, res, next) => {
-      User.findOne({
-      where: {
-        email: req.body.email
-      }
-    }).then(user => {
-      if (user) {
-        res.status(400).send({
-          message: "Failed! Email is already in use!"
-        });
-        return;
-      }
-      next();
-    });
+  User.findOne({
+    where: {
+      email: req.body.email
+    }
+  }).then(user => {
+    if (user) {
+      res.status(400).send({
+        message: "Failed! Email is already in use!"
+      });
+      return;
+    }
+    next();
+  });
   // Username
   // User.findOne({
   //   where: {
@@ -52,7 +53,7 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
   //         });
   //         return;
   //       }
-  
+
   //       next();
   //     });
   //   });
@@ -61,17 +62,28 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
 
 checkRolesExisted = (req, res, next) => {
   if (req.body.roles) {
-    for (let i = 0; i < req.body.roles.length; i++) {
-      if (!ROLES.includes(req.body.roles[i])) {
-        res.status(400).send({
-          message: "Failed! Role does not exist = " + req.body.roles[i]
-        });
-        return;
-      }
-    }
+    RolesDb.findAll({
+      attributes: ['name'],
+
+    })
+      .then((roles) => {
+        let roles_list = [];
+        for (const i in roles) {
+          roles_list.push(roles[i].name);
+        }
+        for (let i = 0; i < req.body.roles.length; i++) {
+          if (!roles_list.includes(req.body.roles[i])) {
+            res.status(400).send({
+              message: "Failed! Role does not exist = " + req.body.roles[i]
+            });
+            return;
+          }
+
+        }
+        next();
+      });
+
   }
-  
-  next();
 };
 
 const verifySignUp = {
