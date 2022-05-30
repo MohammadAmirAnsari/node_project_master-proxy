@@ -105,5 +105,10 @@ module.exports = function (app) {
     "/api/master-user",
     [authJwt.verifyToken],
     controller.createClientMaster
+ );
+  app.patch(
+    "/api/rate-service",
+    [authJwt.verifyToken],
+    controller.editRateService
   );
 };
