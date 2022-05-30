@@ -109,3 +109,130 @@ exports.getServiceRate = (req, res) => {
       res.status(error.response.status).json(error.response.data)
     });
 };
+exports.getCountries = (req, res) => {
+  axios
+    .get(process.env.MW_URL + "/v2/countries")
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log(error)
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getGovernorates = (req, res) => {
+  axios
+    .get(process.env.MW_URL + "/v2/oman-governorates/governorates")
+    .then(mwRes => {
+      
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log(error)
+      console.log(error.response)
+      res.status(error.response.status).json(error.response.data)
+    });
+  };
+exports.getRate_service = (req, res) => {
+  axios
+    .get(process.env.MW_URL + "/v2/internal-rate-service")
+    .then(mwRes => {
+      
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log(error.response)
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getCities = (req, res) => {
+  let country = req.query.country || ""
+  axios
+    .get(process.env.MW_URL + "/v2/countries/"+country+"/cities")
+    .then(mwRes => {
+      
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log(error.response)
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getOmanWilayat = (req, res) => {
+  let governorate = req.query.governorate || ""
+  axios
+    .get(process.env.MW_URL + "/v2/oman-governorates/wilayat/"+governorate)
+    .then(mwRes => {
+      
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log(error.response)
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getOmanCity = (req, res) => {
+  let wilaya = req.query.wilaya || ""
+  axios
+    .get(process.env.MW_URL + "/v2/oman-governorates/cities/"+wilaya)
+    .then(mwRes => {
+      
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log(error.response)
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getOmanArea = (req, res) => {
+  let omanCity = req.query.omanCity || ""
+  axios
+    .get(process.env.MW_URL + "/v2/oman-governorates/area/"+omanCity)
+    .then(mwRes => {
+      
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log(error.response)
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getZipCode = (req, res) => {
+  let omanArea = req.query.omanArea || ""
+  axios
+    .get(process.env.MW_URL + "/v2/oman-governorates/zip-code/"+omanArea)
+    .then(mwRes => {
+      
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log(error.response)
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getBillingCycle = (req, res) => {
+  axios
+    .get(process.env.MW_URL + "/v2/billing-cycle")
+    .then(mwRes => {
+      
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log(error.response)
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+
+exports.createClientMaster = (req, res) => {
+  axios
+    .post(process.env.MW_URL + "/internal/user/master-user", req.body)
+    .then(mwRes => {
+      
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log(error.response)
+      res.status(error.response.status).json(error.response.data)
+    });
+};

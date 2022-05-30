@@ -55,4 +55,55 @@ module.exports = function (app) {
     [authJwt.verifyToken],
     controller.getServiceRate
   );
+  app.get(
+    "/api/countries",
+    [authJwt.verifyToken],
+    controller.getCountries
+  );
+  app.get(
+    "/api/governorates",
+    [authJwt.verifyToken],
+    controller.getGovernorates
+  );
+  app.get(
+    "/api/internal-rate-service",
+    [authJwt.verifyToken],
+    controller.getRate_service
+  );
+  
+  app.get(
+    "/api/cities",
+    [authJwt.verifyToken],
+    controller.getCities
+  );
+  app.get(
+    "/api/wilayat",
+    [authJwt.verifyToken],
+    controller.getOmanWilayat
+  );
+  app.get(
+    "/api/oman-governorates/cities",
+    [authJwt.verifyToken],
+    controller.getOmanCity
+  );
+  app.get(
+    "/api/oman-governorates/area",
+    [authJwt.verifyToken],
+    controller.getOmanArea
+  );
+  app.get(
+    "/api/oman-governorates/zip-code",
+    [authJwt.verifyToken],
+    controller.getZipCode
+  );
+  app.get(
+    "/api/billing-cycle",
+    [authJwt.verifyToken],
+    controller.getBillingCycle
+  );
+  app.post(
+    "/api/master-user",
+    [authJwt.verifyToken],
+    controller.createClientMaster
+  );
 };
