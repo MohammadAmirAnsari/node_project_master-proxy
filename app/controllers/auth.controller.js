@@ -45,7 +45,8 @@ exports.signup = async (req, res) => {
             }
           }).then(roles => {
             user.setRoles(roles).then(() => {
-              res.send({ message: "User registered successfully!" });
+              res.status(200).json({status:true, message: "User registered successfully!" })
+              
             });
           });
         } else {
@@ -56,7 +57,7 @@ exports.signup = async (req, res) => {
         }
       })
       .catch(err => {
-        res.status(500).send({ message: err.message });
+        res.status(500).json({status:false, message: err.message })
       });
   } catch (e) {
     console.log("e : ", e);
@@ -123,7 +124,7 @@ exports.signin = (req, res) => {
       });
     })
     .catch(err => {
-      res.status(500).send({ message: err.message });
+      res.status(500).json({status:false, message: err.message })
     });
 };
 

@@ -3,6 +3,7 @@ const config = require("../config/auth.config.js");
 const db = require("../models");
 const User = db.user;
 
+
 const { TokenExpiredError } = jwt;
 
 const catchError = (err, res) => {
@@ -25,8 +26,25 @@ const verifyToken = (req, res, next) => {
     if (err) {
       return catchError(err, res);
     }
+    console.log("req.originalUrl : ", req.originalUrl);
     req.userId = decoded.id;
-    next();
+    if (req.originalUrl.includes("/api/permissions")) {
+      User.findOne({
+        where: {
+          id: req.userId
+        }
+      })
+        .then(async (user) => {
+          user.getRoles().then(roles => {
+            req.roleId = roles[0].id;
+            next();
+          });
+        });
+    } else {
+      next();
+    }
+
+
   });
 };
 

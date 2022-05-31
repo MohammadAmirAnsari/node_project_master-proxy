@@ -71,7 +71,7 @@ exports.addRole = async (req, res) => {
 exports.getPermissions = (req, res) => {
     PermissionRole.findAll({
         where: {
-            role_id: 3
+            role_id: req.roleId
         }
     }).then(per_roles => {
         let permissionsIds = [];
