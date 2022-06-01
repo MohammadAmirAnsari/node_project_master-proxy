@@ -227,7 +227,7 @@ exports.getZipCode = (req, res) => {
 };
 exports.getBillingCycle = (req, res) => {
   axios
-    .get(process.env.MW_URL + "/v2/billing-cycle")
+    .get(process.env.MW_URL + "/v2/billing-cycle/billing-cycle")
     .then(mwRes => {
       
       res.status(mwRes.status).json(mwRes.data)
