@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
-
+var fileupload = require("express-fileupload");
 const corsOptions = {
   origin: "http://localhost:8081"
 };
@@ -13,6 +13,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
+app.use(fileupload());
 app.use(express.urlencoded({ extended: true }));
 
 // database
