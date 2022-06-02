@@ -244,7 +244,7 @@ exports.createClientMaster = (req, res) => {
   const form = new FormData();
   for (let i in req.files) {
     console.log("i : ", i);
-    form.append(i, req.files[i].data.toString(), req.files[i].name)
+    form.append(i, req.files[i].data, req.files[i].name)
   }
   for (const [key, value] of Object.entries(req.body)) {
     form.append(key, value);
