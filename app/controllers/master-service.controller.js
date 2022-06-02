@@ -265,3 +265,16 @@ exports.createClientMaster = (req, res) => {
       res.status(error.response.status).json(error.response.data)
     });
 };
+
+exports.getClientMaster = (req, res) => {
+  let page = req.query.page || 1
+  axios
+    .get(process.env.MW_URL + "/internal/user/client-master?page=" + page)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
