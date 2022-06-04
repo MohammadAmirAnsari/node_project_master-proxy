@@ -116,4 +116,14 @@ module.exports = function (app) {
     [authJwt.verifyToken],
     controller.editRateService
   );
+  app.get(
+    "/api/master-service/pending-count",
+    [authJwt.verifyToken],
+    controller.getMasterServicesPendingCount
+  );
+  app.get(
+    "/api/rate-service/approve",
+    [authJwt.verifyToken],
+    controller.approveServiceMaster
+  );
 };

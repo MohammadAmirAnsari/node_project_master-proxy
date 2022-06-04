@@ -3,14 +3,20 @@ const axios = require('axios');
 const FormData = require('form-data');
 axios.defaults.headers.common['Authorization'] = process.env.MW_AUTH
 exports.getMasterServices = (req, res) => {
-  let page = req.query.page || 1
+  let page = req.query.page || 1;
+  let status = req.query.status || null;
+  let url = process.env.MW_URL + "/v2/rate-service?page=" + page;
+  if (status != null) {
+    url += "&status=" + status
+  }
   axios
-    .get(process.env.MW_URL + "/v2/rate-service?page=" + page)
+    .get(url)
     .then(mwRes => {
 
       res.status(mwRes.status).json(mwRes.data)
     })
     .catch(error => {
+      console.log("error : ", error);
       res.status(error.response.status).json(error.response.data)
     });
 };
@@ -86,7 +92,10 @@ exports.getServiceGroupDropDown = (req, res) => {
     });
 };
 exports.createRateService = (req, res) => {
-
+  req.body.status = false;
+  if (req.roleName == 'finance_admin' || req.roleName == 'super_admin') {
+    req.body.status = true;
+  }
   axios
     .post(process.env.MW_URL + "/v2/rate-service", req.body)
     .then(mwRes => {
@@ -270,6 +279,33 @@ exports.getClientMaster = (req, res) => {
   let page = req.query.page || 1
   axios
     .get(process.env.MW_URL + "/internal/user/client-master?page=" + page)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getMasterServicesPendingCount = (req, res) => {
+
+  let url = process.env.MW_URL + "/v2/rate-service/pending-count";
+
+  axios
+    .get(url)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+
+exports.approveServiceMaster = (req, res) => {
+  let service_code = req.query.service_code || ""
+  axios
+    .get(process.env.MW_URL + "/v2/rate-service/approve/" + service_code)
     .then(mwRes => {
 
       res.status(mwRes.status).json(mwRes.data)
