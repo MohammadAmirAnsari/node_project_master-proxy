@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config.js");
 const db = require("../models");
 const User = db.user;
-
+const axios = require('axios');
 
 const { TokenExpiredError } = jwt;
 
@@ -26,9 +26,11 @@ const verifyToken = (req, res, next) => {
     if (err) {
       return catchError(err, res);
     }
-    console.log("req.originalUrl : ", req.originalUrl);
+    console.log("decoded : ", decoded);
     req.userId = decoded.id;
-    if (req.originalUrl.includes("/api/permissions")) {
+    axios.defaults.headers.common['x-user-name'] = decoded.full_name || "NA";
+    axios.defaults.headers.common['x-user-id'] = decoded.id || "NA";
+    if (req.originalUrl.includes("/api/permissions") || req.originalUrl.includes("/api/rate-service")) {
       User.findOne({
         where: {
           id: req.userId
@@ -37,6 +39,7 @@ const verifyToken = (req, res, next) => {
         .then(async (user) => {
           user.getRoles().then(roles => {
             req.roleId = roles[0].id;
+            req.roleName = roles[0].name;
             next();
           });
         });
