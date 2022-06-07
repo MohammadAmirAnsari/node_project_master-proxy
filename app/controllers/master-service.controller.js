@@ -154,7 +154,6 @@ exports.getGovernorates = (req, res) => {
     })
     .catch(error => {
       console.log(error)
-      console.log(error.response)
       res.status(error.response.status).json(error.response.data)
     });
 };
@@ -166,7 +165,7 @@ exports.getRate_service = (req, res) => {
       res.status(mwRes.status).json(mwRes.data)
     })
     .catch(error => {
-      console.log(error.response)
+      console.log(error)
       res.status(error.response.status).json(error.response.data)
     });
 };
@@ -179,7 +178,7 @@ exports.getCities = (req, res) => {
       res.status(mwRes.status).json(mwRes.data)
     })
     .catch(error => {
-      console.log(error.response)
+      console.log(error)
       res.status(error.response.status).json(error.response.data)
     });
 };
@@ -192,7 +191,7 @@ exports.getOmanWilayat = (req, res) => {
       res.status(mwRes.status).json(mwRes.data)
     })
     .catch(error => {
-      console.log(error.response)
+      console.log(error)
       res.status(error.response.status).json(error.response.data)
     });
 };
@@ -205,7 +204,7 @@ exports.getOmanCity = (req, res) => {
       res.status(mwRes.status).json(mwRes.data)
     })
     .catch(error => {
-      console.log(error.response)
+      console.log(error)
       res.status(error.response.status).json(error.response.data)
     });
 };
@@ -218,7 +217,7 @@ exports.getOmanArea = (req, res) => {
       res.status(mwRes.status).json(mwRes.data)
     })
     .catch(error => {
-      console.log(error.response)
+      console.log(error)
       res.status(error.response.status).json(error.response.data)
     });
 };
@@ -231,7 +230,7 @@ exports.getZipCode = (req, res) => {
       res.status(mwRes.status).json(mwRes.data)
     })
     .catch(error => {
-      console.log(error.response)
+      console.log(error)
       res.status(error.response.status).json(error.response.data)
     });
 };
@@ -243,7 +242,7 @@ exports.getBillingCycle = (req, res) => {
       res.status(mwRes.status).json(mwRes.data)
     })
     .catch(error => {
-      console.log(error.response)
+      console.log(error)
       res.status(error.response.status).json(error.response.data)
     });
 };
@@ -270,7 +269,7 @@ exports.createClientMaster = (req, res) => {
       res.status(mwRes.status).json(mwRes.data)
     })
     .catch(error => {
-      console.log(error.response)
+      console.log(error)
       res.status(error.response.status).json(error.response.data)
     });
 };
