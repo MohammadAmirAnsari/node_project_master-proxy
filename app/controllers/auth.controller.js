@@ -81,6 +81,10 @@ exports.signin = (req, res) => {
         return res.status(404).send({ message: "User Not found." });
       }
 
+      if (user.status == 0) {
+        return res.status(400).send({ message: "User Is Not Active , Please Contact Adminstration." });
+      }
+
       const passwordIsValid = bcrypt.compareSync(
         req.body.password,
         user.password
