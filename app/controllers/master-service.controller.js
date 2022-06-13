@@ -289,7 +289,19 @@ exports.getClientMaster = (req, res) => {
 exports.getClient = (req, res) => {
   let id = req.query.id || 1
   axios
-    .get(process.env.MW_URL + "/internal/user/show-client?id=" + id)
+    .get(process.env.MW_URL + "/internal/user/show-client-master?id=" + id)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.editClientMaster = (req, res) => {
+  let id = req.query.id || 1
+  axios
+    .get(process.env.MW_URL + "/internal/user/edit-client-master?id=" + id, req.body)
     .then(mwRes => {
 
       res.status(mwRes.status).json(mwRes.data)

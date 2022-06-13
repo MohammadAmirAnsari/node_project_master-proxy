@@ -116,6 +116,11 @@ module.exports = function (app) {
   [authJwt.verifyToken],
   controller.getClient
 );
+ app.post(
+  "/api/edit-client",
+  [authJwt.verifyToken],
+  controller.editClientMaster
+);
   app.patch(
     "/api/rate-service",
     [authJwt.verifyToken],
