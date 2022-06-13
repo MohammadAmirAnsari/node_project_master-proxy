@@ -286,6 +286,30 @@ exports.getClientMaster = (req, res) => {
       res.status(error.response.status).json(error.response.data)
     });
 };
+exports.getClient = (req, res) => {
+  let id = req.query.id || 1
+  axios
+    .get(process.env.MW_URL + "/internal/user/show-client-master?id=" + id)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.editClientMaster = (req, res) => {
+  let id = req.query.id || 1
+  axios
+    .get(process.env.MW_URL + "/internal/user/edit-client-master?id=" + id, req.body)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
 exports.getMasterServicesPendingCount = (req, res) => {
 
   let url = process.env.MW_URL + "/v2/rate-service/pending-count";
