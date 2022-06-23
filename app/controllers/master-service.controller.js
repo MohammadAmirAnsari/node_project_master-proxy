@@ -337,3 +337,30 @@ exports.approveServiceMaster = (req, res) => {
       res.status(error.response.status).json(error.response.data)
     });
 };
+
+exports.getServiceRateByType = (req, res) => {
+  let service_type = req.query.service_type || ""
+  axios
+    .get(process.env.MW_URL + "/v2/rate-service/service-by-type/" + service_type)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log(error)
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getServiceRateByGroup = (req, res) => {
+  let service_group = req.query.service_group || ""
+  axios
+    .get(process.env.MW_URL + "/v2/rate-service-list/service-by-group/" + service_group)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log(error)
+      res.status(error.response.status).json(error.response.data)
+    });
+};

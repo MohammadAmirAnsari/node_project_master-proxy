@@ -136,4 +136,14 @@ module.exports = function (app) {
     [authJwt.verifyToken],
     controller.approveServiceMaster
   );
+  app.get(
+    "/api/rate-service-by-type",
+    [authJwt.verifyToken],
+    controller.getServiceRateByType
+  );
+  app.get(
+    "/api/rate-service-by-group",
+    [authJwt.verifyToken],
+    controller.getServiceRateByGroup
+  );
 };
