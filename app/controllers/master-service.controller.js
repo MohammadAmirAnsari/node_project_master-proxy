@@ -341,7 +341,7 @@ exports.approveServiceMaster = (req, res) => {
 exports.getServiceRateByType = (req, res) => {
   let service_type = req.query.service_type || ""
   axios
-    .get(process.env.MW_URL + "/v2/rate-service/service-by-type/" + service_type)
+    .get(process.env.MW_URL + "/v2/rate-service-list/service-by-type/" + service_type)
     .then(mwRes => {
 
       res.status(mwRes.status).json(mwRes.data)
