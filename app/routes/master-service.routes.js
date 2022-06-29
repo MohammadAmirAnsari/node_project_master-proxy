@@ -136,4 +136,9 @@ module.exports = function (app) {
     [authJwt.verifyToken],
     controller.approveServiceMaster
   );
+  app.get(
+    "/api/fulfillment-clients",
+    [authJwt.verifyToken],
+    controller.getFulfillmentClients
+  );
 };

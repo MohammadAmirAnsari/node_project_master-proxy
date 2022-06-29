@@ -1,10 +1,14 @@
 const express = require("express");
 const cors = require("cors");
-
+const http = require('http');
+const dotenv = require('dotenv');
+dotenv.config();
+let masterActiveUsers = {};
 const app = express();
 var fileupload = require("express-fileupload");
+const MASTER_URL = process.env.MASTER_URL
 const corsOptions = {
-  origin: "http://localhost:8081"
+  origin: MASTER_URL
 };
 
 app.use(cors(corsOptions));
@@ -29,7 +33,7 @@ db.sequelize.sync();
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  res.json({ message: "Master Proxy." });
 });
 
 // routes
@@ -37,10 +41,40 @@ require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/master-service.routes')(app);
 require('./app/routes/permissions.routes')(app);
+require('./app/routes/inventory.routes')(app);
+const server = http.createServer(app);
+
+const io = require("socket.io")(server, {
+  cors: {
+    origin: MASTER_URL,
+    methods: ["GET", "POST"]
+  }
+});
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  let user_id = socket.handshake.query.user_id;
+  if (user_id != undefined && user_id != "") {
+    masterActiveUsers[socket.handshake.query.user_id] = socket.id;
+  }
+  console.log("user_id : ", user_id);
+  console.log("masterActiveUsers : ", masterActiveUsers);
+  socket.on('disconnect', () => {
+    if (user_id != undefined && user_id != "") {
+      delete masterActiveUsers[user_id]
+    }
+    console.log('user disconnected');
+    console.log("After Delete masterActiveUsers : ", masterActiveUsers);
+  });
+  socket.on('chat message', (msg) => {
+    console.log("msg : ", msg);
+    io.emit('chatMessage', msg);
+  });
+});
 
 // set port, listen for requests
 const PORT = process.env.PORT || 9090;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
@@ -49,12 +83,12 @@ function initial() {
     id: 1,
     name: "user"
   });
- 
+
   Role.create({
     id: 2,
     name: "moderator"
   });
- 
+
   Role.create({
     id: 3,
     name: "admin"
