@@ -106,10 +106,25 @@ module.exports = function (app) {
     [authJwt.verifyToken],
     controller.createClientMaster
  );
+  app.post(
+    "/api/user-clients/create-user",
+    [authJwt.verifyToken],
+    controller.createUser
+ );
  app.get(
   "/api/client-master",
   [authJwt.verifyToken],
   controller.getClientMaster
+);
+ app.get(
+  "/api/client-users",
+  [authJwt.verifyToken],
+  controller.getClienstUsers
+);
+ app.get(
+  "/api/client-users-by-merchant",
+  [authJwt.verifyToken],
+  controller.getClientUsers
 );
  app.get(
   "/api/show-client",
@@ -120,6 +135,16 @@ module.exports = function (app) {
   "/api/edit-client",
   [authJwt.verifyToken],
   controller.editClientMaster
+);
+ app.get(
+  "/api/client-master/pending-count",
+  [authJwt.verifyToken],
+  controller.getClientPendingCount
+);
+app.get(
+  "/api/client-master/approve",
+  [authJwt.verifyToken],
+  controller.approveClient
 );
   app.patch(
     "/api/rate-service",

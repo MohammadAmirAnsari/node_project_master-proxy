@@ -273,11 +273,57 @@ exports.createClientMaster = (req, res) => {
       res.status(error.response.status).json(error.response.data)
     });
 };
+exports.createUser = (req, res) => {
+  axios
+    .post(process.env.MW_URL + "/internal/user-clients/create-user",  req.body)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log(error)
+      res.status(error.response.status).json(error.response.data)
+    });
+};
 
 exports.getClientMaster = (req, res) => {
-  let page = req.query.page || 1
+  let page = req.query.page || 0
+  let status = req.query.status || null;
+  let url = process.env.MW_URL + "/internal/user/client-master?page=" + page;
+  if (status != null) {
+    url += "&status=" + status
+  }
   axios
-    .get(process.env.MW_URL + "/internal/user/client-master?page=" + page)
+    .get(url)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getClienstUsers = (req, res) => {
+  let page = req.query.page || 0
+  let status = req.query.status || null;
+  let url = process.env.MW_URL + "/internal/user-clients/client-users?page=" + page;
+  if (status != null) {
+    url += "&status=" + status
+  }
+  axios
+    .get(url)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getClientUsers = (req, res) => {
+  let merchant_code = req.query.merchant_code || 0
+  axios
+    .get(process.env.MW_URL + "/internal/user-clients/client-users-by-merchant?merchant_code=" + merchant_code)
     .then(mwRes => {
 
       res.status(mwRes.status).json(mwRes.data)
@@ -287,7 +333,7 @@ exports.getClientMaster = (req, res) => {
     });
 };
 exports.getClient = (req, res) => {
-  let id = req.query.id || 1
+  let id = req.query.id || 0
   axios
     .get(process.env.MW_URL + "/internal/user/show-client-master?id=" + id)
     .then(mwRes => {
@@ -299,9 +345,35 @@ exports.getClient = (req, res) => {
     });
 };
 exports.editClientMaster = (req, res) => {
-  let id = req.query.id || 1
+  let id = req.query.id || 0
   axios
     .get(process.env.MW_URL + "/internal/user/edit-client-master?id=" + id, req.body)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getClientPendingCount = (req, res) => {
+
+  let url = process.env.MW_URL + "/internal/user/pending-count";
+
+  axios
+    .get(url)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.approveClient = (req, res) => {
+  let merchant_code = req.query.merchant_code || 0
+  axios
+    .get(process.env.MW_URL + "/internal/user/approve/" + merchant_code)
     .then(mwRes => {
 
       res.status(mwRes.status).json(mwRes.data)
