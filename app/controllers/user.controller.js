@@ -47,3 +47,6 @@ exports.getAllRoles = (req, res) => {
       });
   })
 };
+exports.userActiveDeactive = (req, res) => {
+  console.log(req.query)
+};

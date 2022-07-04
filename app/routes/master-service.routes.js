@@ -170,5 +170,10 @@ app.get(
     "/api/rate-service-by-group",
     [authJwt.verifyToken],
     controller.getServiceRateByGroup
+    );
+  app.get(
+    "/api/fulfillment-clients",
+    [authJwt.verifyToken],
+    controller.getFulfillmentClients
   );
 };

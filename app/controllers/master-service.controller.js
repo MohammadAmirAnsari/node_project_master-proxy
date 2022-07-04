@@ -432,7 +432,17 @@ exports.getServiceRateByGroup = (req, res) => {
       res.status(mwRes.status).json(mwRes.data)
     })
     .catch(error => {
-      console.log(error)
+      res.status(error.response.status).json(error.response.data)
+    });
+  };
+exports.getFulfillmentClients = (req, res) => {
+  
+  axios
+    .get(process.env.MW_URL + "/v2/fulfillment-clients")
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
       res.status(error.response.status).json(error.response.data)
     });
 };
