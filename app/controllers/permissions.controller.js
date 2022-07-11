@@ -68,6 +68,46 @@ exports.addRole = async (req, res) => {
         });
     }
 }
+exports.getInternalPermissions = async (roleId) => {
+    return new Promise((resolve ,reject)=>{
+        console.log("SHooo el wadee3");
+        PermissionRole.findAll({
+            where: {
+                role_id: roleId
+            }
+        }).then(async (per_roles) => {
+            let permissionsIds = [];
+            for (i in per_roles) {
+                permissionsIds.push(per_roles[i].permission_id);
+                console.log(per_roles[i].permission_id)
+            }
+            Permissions.findAll({
+                where: {
+                    id: { [Op.in]: permissionsIds }
+                }
+            }).then(async (perm) => {
+                let actions = [];
+                for (p in perm) {
+                    actions.push(perm[p].title);
+                }
+                let response = {
+                    "rules": [
+                        {
+                            "action": actions,
+                            "subject": ["all"]
+                        }
+    
+                    ]
+                }
+                resolve(response) ;
+            })
+    
+        })
+       
+    }
+    );
+ 
+}
 exports.getPermissions = (req, res) => {
     PermissionRole.findAll({
         where: {
