@@ -2,6 +2,7 @@ require('dotenv').config()
 const axios = require('axios');
 const FormData = require('form-data');
 axios.defaults.headers.common['Authorization'] = process.env.MW_AUTH
+console.log("process.env.MW_AUTH : ",process.env.MW_AUTH)
 exports.getMasterServices = (req, res) => {
   let page = req.query.page || 1;
   let status = req.query.status || null;
@@ -128,6 +129,7 @@ exports.getCountries = (req, res) => {
       res.status(mwRes.status).json(mwRes.data)
     })
     .catch(error => {
+      console.log(error)
       res.status(error.response.status).json(error.response.data)
     });
 };
