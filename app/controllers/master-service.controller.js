@@ -325,7 +325,7 @@ exports.getClienstUsers = (req, res) => {
 exports.getClientUsers = (req, res) => {
   let merchant_code = req.query.merchant_code || 0
   axios
-    .get(process.env.MW_URL + "/internal/user-clients/client-users-by-merchant?merchant_code=" + merchant_code)
+    .get(process.env.MW_URL + "/internal/user-clients/client-users-by-merchant/" + merchant_code)
     .then(mwRes => {
 
       res.status(mwRes.status).json(mwRes.data)
