@@ -1,7 +1,7 @@
 const db = require("../models");
 const config = require("../config/auth.config");
 const { user: User, role: Role, refreshToken: RefreshToken } = db;
-
+const permissionsController = require("../controllers/permissions.controller");
 const Op = db.Sequelize.Op;
 
 const jwt = require("jsonwebtoken");
@@ -100,20 +100,25 @@ exports.signin = (req, res) => {
       
 
       let refreshToken = await RefreshToken.createToken(user);
-
+      
       let authorities = [];
-      user.getRoles().then(roles => {
+      user.getRoles().then(async (roles) => {
         var all_roles = [];
         for (let i = 0; i < roles.length; i++) {
           authorities.push("ROLE_" + roles[i].name.toUpperCase());
           all_roles.push(roles[i].name.toUpperCase());
         }
+        // permissionsController.getInternalPermissions(roles[0].id).then(perm => {
+        //   console.log("perm : ",perm);
+        // });
+        let permm = await permissionsController.getInternalPermissions(roles[0].id);
+       
         const token = jwt.sign({
           id: user.id, 
           email: user.email,
           status: user.status,
           full_name: user.full_name,
-          roles : all_roles
+          roles : all_roles,
          }, config.secret, {
          expiresIn: config.jwtExpiration
        });
@@ -124,6 +129,7 @@ exports.signin = (req, res) => {
           roles: authorities,
           accessToken: token,
           refreshToken: refreshToken,
+          permissions : permm
         });
       });
     })
