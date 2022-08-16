@@ -349,7 +349,7 @@ exports.getClient = (req, res) => {
 exports.editClientMaster = (req, res) => {
   let id = req.query.id || 0
   axios
-    .get(process.env.MW_URL + "/internal/user/edit-client-master?id=" + id, req.body)
+    .post(process.env.MW_URL + "/internal/user/edit-client-master?id=" + id, req.body)
     .then(mwRes => {
 
       res.status(mwRes.status).json(mwRes.data)
