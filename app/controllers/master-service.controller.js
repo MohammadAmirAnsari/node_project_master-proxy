@@ -448,3 +448,55 @@ exports.getFulfillmentClients = (req, res) => {
       res.status(error.response.status).json(error.response.data)
     });
 };
+exports.getAvailableIntegration = (req, res) => {
+  let page = req.query.page || 1;
+  axios
+    .get(process.env.MW_URL + "/v2/available-integration?page=" + page)
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getClientsIntegrationList = (req, res) => {
+  let page = req.query.page || 1;
+  axios
+    .get(process.env.MW_URL + "/v2/client-integration-list?page=" + page)
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getAllAvailableCodes = (req, res) => {
+  axios
+    .get(process.env.MW_URL + "/v2/all-integration-codes")
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.createClientIntegration = (req, res) => {
+  axios
+    .post(process.env.MW_URL + "/v2/integration-clients", req.body)
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getAllAvailableClients = (req, res) => {
+  axios
+    .get(process.env.MW_URL + "/v2/not-integration-client")
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
