@@ -347,14 +347,27 @@ exports.getClient = (req, res) => {
     });
 };
 exports.editClientMaster = (req, res) => {
-  let id = req.query.id || 0
+  
+  let id = req.query.id || 0;
+  const form = new FormData();
+  for (let i in req.files) {
+    form.append(i, req.files[i].data, req.files[i].name)
+  }
+  for (const [key, value] of Object.entries(req.body)) {
+    form.append(key, value);
+  }
+ 
   axios
-    .post(process.env.MW_URL + "/internal/user/edit-client-master?id=" + id, req.body)
+    .post(process.env.MW_URL + "/internal/user/edit-client-master?id=" + id, form, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
     .then(mwRes => {
-
       res.status(mwRes.status).json(mwRes.data)
     })
     .catch(error => {
+      console.log(error)
       res.status(error.response.status).json(error.response.data)
     });
 };
