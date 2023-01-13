@@ -7,6 +7,7 @@ let masterActiveUsers = {};
 const app = express();
 var fileupload = require("express-fileupload");
 const MASTER_URL = process.env.MASTER_URL
+var connectedClient = {};
 const corsOptions = {
   origin: MASTER_URL
 };
@@ -58,6 +59,9 @@ io.on('connection', (socket) => {
   if (user_id != undefined && user_id != "") {
     masterActiveUsers[socket.handshake.query.user_id] = socket.id;
   }
+
+
+
   console.log("user_id : ", user_id);
   console.log("masterActiveUsers : ", masterActiveUsers);
   socket.on('disconnect', () => {
@@ -67,9 +71,13 @@ io.on('connection', (socket) => {
     console.log('user disconnected');
     console.log("After Delete masterActiveUsers : ", masterActiveUsers);
   });
-  socket.on('chat message', (msg) => {
-    console.log("msg : ", msg);
-    io.emit('chatMessage', msg);
+  socket.on('chat message', (data) => {
+    console.log("msg : ", data);
+    if (data.user_id != undefined && masterActiveUsers[data.user_id] != undefined) {
+      console.log("Push To : ", data.user_id, masterActiveUsers[data.user_id]);
+      io.to(masterActiveUsers[data.user_id]).emit('chatMessage', data.msg);
+    }
+    
   });
 });
 
