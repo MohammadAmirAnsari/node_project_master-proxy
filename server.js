@@ -57,27 +57,37 @@ io.on('connection', (socket) => {
   console.log('a user connected');
   let user_id = socket.handshake.query.user_id;
   if (user_id != undefined && user_id != "") {
-    masterActiveUsers[socket.handshake.query.user_id] = socket.id;
-  }
-
-
-
-  console.log("user_id : ", user_id);
-  console.log("masterActiveUsers : ", masterActiveUsers);
-  socket.on('disconnect', () => {
-    if (user_id != undefined && user_id != "") {
-      delete masterActiveUsers[user_id]
+    if (!masterActiveUsers[user_id]) {
+      masterActiveUsers[user_id] = [];
     }
-    console.log('user disconnected');
-    console.log("After Delete masterActiveUsers : ", masterActiveUsers);
+    masterActiveUsers[user_id].push(socket);
+  }
+  
+  socket.on('disconnect', () => {
+    var connectedTabs = false;
+    if (typeof masterActiveUsers[user_id] != 'undefined') {
+      for (var x = 0; x < masterActiveUsers[user_id].length; x++) {
+        if (masterActiveUsers[user_id][x].connected) {
+          connectedTabs = true;
+        }
+      }
+      if (!connectedTabs) {
+        console.log("DELETED <><><");
+        delete masterActiveUsers[user_id];
+      }
+    }
   });
+  console.log(masterActiveUsers);
   socket.on('chat message', (data) => {
     console.log("msg : ", data);
     if (data.user_id != undefined && masterActiveUsers[data.user_id] != undefined) {
-      console.log("Push To : ", data.user_id, masterActiveUsers[data.user_id]);
-      io.to(masterActiveUsers[data.user_id]).emit('chatMessage', data.msg);
+      for (var x = 0; x < masterActiveUsers[data.user_id].length; x++) {
+        console.log("Push To : ", data.user_id, masterActiveUsers[data.user_id][x].id);
+        io.to(masterActiveUsers[data.user_id][x].id).emit('chatMessage', data.msg);
+       }
+     
     }
-    
+
   });
 });
 
