@@ -11,4 +11,9 @@ module.exports = function (app) {
         [authJwt.verifyToken],
         controller.generateBulkAwb
     );
+    app.post(
+        "/api/print/bulk-awb-excel",
+        [authJwt.verifyToken],
+        controller.generrateCommercialInvoiceExcel
+    );
 }
