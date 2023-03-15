@@ -513,3 +513,13 @@ exports.getAllAvailableClients = (req, res) => {
       res.status(error.response.status).json(error.response.data)
     });
 };
+exports.pushAmazonFakeEvents = (req, res) => {
+  axios
+    .post(process.env.MW_URL + "/internal/amazon/amazon-fake-events-pusher", req.body)
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};

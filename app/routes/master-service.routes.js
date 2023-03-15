@@ -201,4 +201,9 @@ app.get(
     [authJwt.verifyToken],
     controller.getAllAvailableClients
   );
+  app.post(
+    "/api/amazon-fake-events-pusher",
+    [authJwt.verifyToken],
+    controller.pushAmazonFakeEvents
+  );
 };
