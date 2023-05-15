@@ -1,6 +1,7 @@
 require('dotenv').config()
 const axios = require('axios');
 const FormData = require('form-data');
+const fs = require("fs");
 axios.defaults.headers.common['Authorization'] = process.env.MW_AUTH
 console.log("process.env.MW_AUTH : ",process.env.MW_AUTH)
 exports.getMasterServices = (req, res) => {
@@ -454,6 +455,93 @@ exports.getFulfillmentClients = (req, res) => {
   
   axios
     .get(process.env.MW_URL + "/v2/fulfillment-clients")
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getAvailableIntegration = (req, res) => {
+  let page = req.query.page || 1;
+  axios
+    .get(process.env.MW_URL + "/v2/available-integration?page=" + page)
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getClientsIntegrationList = (req, res) => {
+  let page = req.query.page || 1;
+  axios
+    .get(process.env.MW_URL + "/v2/client-integration-list?page=" + page)
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getAllAvailableCodes = (req, res) => {
+  axios
+    .get(process.env.MW_URL + "/v2/all-integration-codes")
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.createClientIntegration = (req, res) => {
+  axios
+    .post(process.env.MW_URL + "/v2/integration-clients", req.body)
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getAllAvailableClients = (req, res) => {
+  axios
+    .get(process.env.MW_URL + "/v2/not-integration-client")
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.pushAmazonFakeEvents = (req, res) => {
+  axios
+    .post(process.env.MW_URL + "/internal/amazon/amazon-fake-events-pusher", req.body)
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.pushAmazonBoeFile = (req, res) => {
+
+  const formData = new FormData();
+  let files = Object.keys(req.files)
+  files.map(function(filekey, key) {
+    let file = req.files[filekey];
+    formData.append('file['+key+']' , file.data, { filename: file.name });
+  });
+
+
+
+  const headers = {
+    'Content-Type': 'multipart/form-data',
+    'Authorization' : 'Bearer 3BDF0A7D-6A16-4817-93D0-3E420EBA27DC'
+  };
+
+  axios
+    .post(process.env.MW_URL + "/internal/amazon/boe-upload", formData , {headers})
     .then(mwRes => {
       res.status(mwRes.status).json(mwRes.data)
     })
