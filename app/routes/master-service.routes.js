@@ -207,8 +207,8 @@ app.get(
     controller.pushAmazonFakeEvents
   );
   app.post(
-    "/api/amazon-boe-file",
-    [authJwt.verifyToken],
-    controller.pushAmazonBoeFile
+      "/api/amazon-boe-file",
+      [authJwt.verifyToken],
+      controller.pushAmazonBoeFile
   );
 };
