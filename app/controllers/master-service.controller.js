@@ -1,6 +1,7 @@
 require('dotenv').config()
 const axios = require('axios');
 const FormData = require('form-data');
+const fs = require("fs");
 axios.defaults.headers.common['Authorization'] = process.env.MW_AUTH
 console.log("process.env.MW_AUTH : ",process.env.MW_AUTH)
 exports.getMasterServices = (req, res) => {
@@ -516,6 +517,31 @@ exports.getAllAvailableClients = (req, res) => {
 exports.pushAmazonFakeEvents = (req, res) => {
   axios
     .post(process.env.MW_URL + "/internal/amazon/amazon-fake-events-pusher", req.body)
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.pushAmazonBoeFile = (req, res) => {
+
+  const formData = new FormData();
+  let files = Object.keys(req.files)
+  files.map(function(filekey, key) {
+    let file = req.files[filekey];
+    formData.append('file['+key+']' , file.data, { filename: file.name });
+  });
+
+
+
+  const headers = {
+    'Content-Type': 'multipart/form-data',
+    'Authorization' : 'Bearer 3BDF0A7D-6A16-4817-93D0-3E420EBA27DC'
+  };
+
+  axios
+    .post(process.env.MW_URL + "/internal/amazon/boe-upload", formData , {headers})
     .then(mwRes => {
       res.status(mwRes.status).json(mwRes.data)
     })
