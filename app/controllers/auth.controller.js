@@ -165,7 +165,11 @@ exports.refreshToken = async (req, res) => {
     }
 
     const user = await refreshToken.getUser();
-    let newAccessToken = jwt.sign({ id: user.id }, config.secret, {
+    let newAccessToken = jwt.sign({
+      id: user.id,
+      email: user.email,
+      status: user.status,
+      full_name: user.full_name }, config.secret, {
       expiresIn: config.jwtExpiration,
     });
 
