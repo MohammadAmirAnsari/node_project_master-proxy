@@ -549,3 +549,51 @@ exports.pushAmazonBoeFile = (req, res) => {
       res.status(error.response.status).json(error.response.data)
     });
 };
+exports.uploadCBM = (req, res) => {
+
+  const form = new FormData();
+  for (let i in req.files) {
+    console.log("i : ", i);
+    form.append(i, req.files[i].data, req.files[i].name)
+  }
+  
+  console.log("req.files ", req.files);
+  axios
+    .post(process.env.MW_URL + "/v2/upload/cbm", form, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log(error)
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.uploadPS = (req, res) => {
+
+  const form = new FormData();
+  for (let i in req.files) {
+    console.log("i : ", i);
+    form.append(i, req.files[i].data, req.files[i].name)
+  }
+
+  console.log("req.files ", req.files);
+  axios
+    .post(process.env.MW_URL + "/v2/upload/ps", form, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log(error)
+      res.status(error.response.status).json(error.response.data)
+    });
+};
