@@ -211,4 +211,14 @@ app.get(
       [authJwt.verifyToken],
       controller.pushAmazonBoeFile
   );
+  app.post(
+    "/api/upload/cbm",
+    [authJwt.verifyToken],
+    controller.uploadCBM
+  );
+  app.post(
+    "/api/upload/ps",
+    [authJwt.verifyToken],
+    controller.uploadPS
+  );
 };
