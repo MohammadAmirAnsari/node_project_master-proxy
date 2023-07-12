@@ -101,6 +101,11 @@ module.exports = function (app) {
     "/api/edit-city",
     [authJwt.verifyToken],
     controller.editCity
+  );  
+  app.post(
+    "/api/activate-city",
+    [authJwt.verifyToken],
+    controller.activateCity
   );
 
   app.get(
@@ -108,6 +113,27 @@ module.exports = function (app) {
     [authJwt.verifyToken],
     controller.getAreaMaster
   );
+  app.post(
+    "/api/create-area",
+    [authJwt.verifyToken],
+    controller.createArea
+ );
+  app.get(
+    "/api/area",
+    [authJwt.verifyToken],
+    controller.getArea
+  );  
+  app.post(
+    "/api/edit-area",
+    [authJwt.verifyToken],
+    controller.editArea
+  );  
+  app.post(
+    "/api/activate-area",
+    [authJwt.verifyToken],
+    controller.activateArea
+  );
+
   app.post(
     "/api/create-eventcode",
     [authJwt.verifyToken],
