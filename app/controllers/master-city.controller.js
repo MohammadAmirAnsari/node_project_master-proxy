@@ -230,6 +230,20 @@ exports.getCity = (req, res) => {
       res.status(error.response.status).json(error.response.data)
     });
 };
+exports.activateCity = (req, res) => {
+  let id = req.query.id || ""
+  axios
+    .post(process.env.MW_URL + "/v2/cities/updateactive/" + id, req.body)
+
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log(error)
+      res.status(error.response.status).json(error.response.data)
+    });
+};
 
 exports.getAreaMaster = (req, res) => {
   let country = req.query.country || ""
@@ -282,7 +296,20 @@ exports.getArea = (req, res) => {
       res.status(error.response.status).json(error.response.data)
     });
 };
+exports.activateArea = (req, res) => {
+  let id = req.query.id || ""
+  axios
+    .post(process.env.MW_URL + "/v2/areas/updateactive/" + id, req.body)
 
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log(error)
+      res.status(error.response.status).json(error.response.data)
+    });
+};
 exports.getEventCodes = (req, res) => {
   axios
     .get(process.env.MW_URL + "/v2/event-code/eventcode")
