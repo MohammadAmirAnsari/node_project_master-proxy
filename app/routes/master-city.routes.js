@@ -97,6 +97,11 @@ module.exports = function (app) {
     [authJwt.verifyToken],
     controller.getCity
   );  
+  app.get(
+    "/api/cities/country",
+    [authJwt.verifyToken],
+    controller.getCitiesByCountry
+  );  
   app.post(
     "/api/edit-city",
     [authJwt.verifyToken],

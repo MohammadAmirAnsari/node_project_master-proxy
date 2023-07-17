@@ -230,6 +230,18 @@ exports.getCity = (req, res) => {
       res.status(error.response.status).json(error.response.data)
     });
 };
+exports.getCitiesByCountry = (req, res) => {
+  let id = req.query.country || 0
+  axios
+    .get(process.env.MW_URL + "/v2/cities/country/" + id)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
 exports.activateCity = (req, res) => {
   let id = req.query.id || ""
   axios
