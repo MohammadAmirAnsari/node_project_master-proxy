@@ -44,8 +44,9 @@ exports.activateCountry = (req, res) => {
     });
 };
 exports.getCountriesMaster = (req, res) => {
+  let page = req.query.page || 0
   axios
-    .get(process.env.MW_URL + "/v2/countries-master/get-countries")
+    .get(process.env.MW_URL + "/v2/countries-master/get-countries?page=" + page)
     .then(mwRes => {
 
       res.status(mwRes.status).json(mwRes.data)
@@ -118,8 +119,9 @@ exports.getGovernorateByCountries = (req, res) => {
     });
 };
 exports.getGovernoratesMaster = (req, res) => {
+  let page = req.query.page || 0
   axios
-    .get(process.env.MW_URL + "/v2/governorates/governorates")
+    .get(process.env.MW_URL + "/v2/governorates/governorates?page=" + page)
     .then(mwRes => {
 
       res.status(mwRes.status).json(mwRes.data)
@@ -168,8 +170,9 @@ exports.getWilayat = (req, res) => {
     });
 };
 exports.getWilayatMaster = (req, res) => {
+  let page = req.query.page || 0
   axios
-    .get(process.env.MW_URL + "/v2/wilayat/wilayat")
+    .get(process.env.MW_URL + "/v2/wilayat/wilayat?page=" + page)
     .then(mwRes => {
 
       res.status(mwRes.status).json(mwRes.data)
@@ -180,9 +183,9 @@ exports.getWilayatMaster = (req, res) => {
     });
 };
 exports.getCitiesMaster = (req, res) => {
-  let country = req.query.country || ""
+  let page = req.query.page || 0
   axios
-    .get(process.env.MW_URL + "/v2/cities/cities")
+    .get(process.env.MW_URL + "/v2/cities/cities?page=" + page)
     .then(mwRes => {
 
       res.status(mwRes.status).json(mwRes.data)
@@ -258,9 +261,9 @@ exports.activateCity = (req, res) => {
 };
 
 exports.getAreaMaster = (req, res) => {
-  let country = req.query.country || ""
+  let page = req.query.page || 0
   axios
-    .get(process.env.MW_URL + "/v2/areas/areas")
+    .get(process.env.MW_URL + "/v2/areas/areas?page=" + page)
     .then(mwRes => {
 
       res.status(mwRes.status).json(mwRes.data)
@@ -323,8 +326,9 @@ exports.activateArea = (req, res) => {
     });
 };
 exports.getEventCodes = (req, res) => {
+  let page = req.query.page || 0
   axios
-    .get(process.env.MW_URL + "/v2/event-code/eventcode")
+    .get(process.env.MW_URL + "/v2/event-code/eventcode?page=" + page)
     .then(mwRes => {
 
       res.status(mwRes.status).json(mwRes.data)
