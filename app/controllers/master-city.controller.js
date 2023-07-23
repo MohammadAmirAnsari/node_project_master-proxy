@@ -56,6 +56,18 @@ exports.getCountriesMaster = (req, res) => {
       res.status(error.response.status).json(error.response.data)
     });
 };
+exports.getCountriesList = (req, res) => {
+  axios
+    .get(process.env.MW_URL + "/v2/countries-master/countries-list")
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log(error)
+      res.status(error.response.status).json(error.response.data)
+    });
+};
 exports.getCountry = (req, res) => {
   let id = req.query.id || 0
   axios

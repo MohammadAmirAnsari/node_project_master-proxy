@@ -19,6 +19,11 @@ module.exports = function (app) {
     "/api/countries-master",
     [authJwt.verifyToken],
     controller.getCountriesMaster
+  );   
+  app.get(
+    "/api/countries-list",
+    [authJwt.verifyToken],
+    controller.getCountriesList
   );  
   app.get(
     "/api/country",
