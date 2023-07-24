@@ -7,6 +7,7 @@ let masterActiveUsers = {};
 const app = express();
 var fileupload = require("express-fileupload");
 const MASTER_URL = process.env.MASTER_URL
+console.log("MASTER_URL :",MASTER_URL)
 const corsOptions = {
   origin: MASTER_URL
 };
@@ -40,6 +41,7 @@ app.get("/", (req, res) => {
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/master-service.routes')(app);
+require('./app/routes/master-city.routes')(app);
 require('./app/routes/permissions.routes')(app);
 require('./app/routes/inventory.routes')(app);
 const server = http.createServer(app);
