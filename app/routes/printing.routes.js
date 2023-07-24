@@ -1,0 +1,24 @@
+const { authJwt } = require("../middleware");
+const controller = require("../controllers/printing.controller");
+module.exports = function (app) {
+    app.post(
+        "/api/print/com-invoice",
+        [authJwt.verifyToken],
+        controller.generrateCommercialInvoice
+    );
+    app.post(
+        "/api/print/bulk-awb",
+        [authJwt.verifyToken],
+        controller.generateBulkAwb
+    );
+    app.post(
+        "/api/print/awb",
+        [authJwt.verifyToken],
+        controller.generateSingleAwb
+    );
+    app.post(
+        "/api/print/bulk-awb-excel",
+        [authJwt.verifyToken],
+        controller.generrateCommercialInvoiceExcel
+    );
+}

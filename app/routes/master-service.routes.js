@@ -176,4 +176,49 @@ app.get(
     [authJwt.verifyToken],
     controller.getFulfillmentClients
   );
+  app.get(
+    "/api/available-integration",
+    [authJwt.verifyToken],
+    controller.getAvailableIntegration
+  );
+  app.get(
+    "/api/client-integration-list",
+    [authJwt.verifyToken],
+    controller.getClientsIntegrationList
+  );
+  app.get(
+    "/api/all-integration-codes",
+    [authJwt.verifyToken],
+    controller.getAllAvailableCodes
+  );
+  app.post(
+    "/api/integration-clients",
+    [authJwt.verifyToken],
+    controller.createClientIntegration
+  );
+  app.get(
+    "/api/not-integration-client",
+    [authJwt.verifyToken],
+    controller.getAllAvailableClients
+  );
+  app.post(
+    "/api/amazon-fake-events-pusher",
+    [authJwt.verifyToken],
+    controller.pushAmazonFakeEvents
+  );
+  app.post(
+      "/api/amazon-boe-file",
+      [authJwt.verifyToken],
+      controller.pushAmazonBoeFile
+  );
+  app.post(
+    "/api/upload/cbm",
+    [authJwt.verifyToken],
+    controller.uploadCBM
+  );
+  app.post(
+    "/api/upload/ps",
+    [authJwt.verifyToken],
+    controller.uploadPS
+  );
 };
