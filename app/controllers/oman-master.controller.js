@@ -14,9 +14,9 @@ exports.createOmanGovernorate = (req, res) => {
     });
 };
 exports.editOmanGovernorate = (req, res) => {
-  let id = req.query.id || "";
+  let governorate_en = req.query.governorate_en || "";
   axios
-    .patch(process.env.MW_URL + "/v2/oman-governorates/edit-governorate/" + id, req.body)
+    .patch(process.env.MW_URL + "/v2/oman-governorates/edit-governorate/" + governorate_en, req.body)
 
     .then((mwRes) => {
       res.status(mwRes.status).json(mwRes.data);
@@ -27,9 +27,9 @@ exports.editOmanGovernorate = (req, res) => {
     });
 };
 exports.getOmanGovernorate = (req, res) => {
-  let id = req.query.id || 0;
+  let governorate_en = req.query.governorate_en || "";
   axios
-    .get(process.env.MW_URL + "/v2/oman-governorates/show-governorate/" + id)
+    .get(process.env.MW_URL + "/v2/oman-governorates/show-governorate/" + governorate_en)
     .then((mwRes) => {
       res.status(mwRes.status).json(mwRes.data);
     })
@@ -87,9 +87,9 @@ exports.createOmanWilayat = (req, res) => {
     });
 };
 exports.editOmanWilayat = (req, res) => {
-  let id = req.query.id || "";
+  let wilayat_en = req.query.wilayat_en || "";
   axios
-    .patch(process.env.MW_URL + "/v2/oman-governorates/edit-wilayat/" + id, req.body)
+    .patch(process.env.MW_URL + "/v2/oman-governorates/edit-wilayat/" + wilayat_en, req.body)
 
     .then((mwRes) => {
       res.status(mwRes.status).json(mwRes.data);
@@ -100,9 +100,9 @@ exports.editOmanWilayat = (req, res) => {
     });
 };
 exports.getOmanWilayat = (req, res) => {
-  let id = req.query.id || 0;
+  let wilayat_en = req.query.wilayat_en || "";
   axios
-    .get(process.env.MW_URL + "/v2/oman-governorates/show-wilayat/" + id)
+    .get(process.env.MW_URL + "/v2/oman-governorates/show-wilayat/" + wilayat_en)
     .then((mwRes) => {
       res.status(mwRes.status).json(mwRes.data);
     })
@@ -135,9 +135,9 @@ exports.createOmanCity = (req, res) => {
     });
 };
 exports.editOmanCity = (req, res) => {
-  let id = req.query.id || "";
+  let city_en = req.query.city_en || "";
   axios
-    .patch(process.env.MW_URL + "/v2/oman-governorates/edit-city/" + id, req.body)
+    .patch(process.env.MW_URL + "/v2/oman-governorates/edit-city/" + city_en, req.body)
 
     .then((mwRes) => {
       res.status(mwRes.status).json(mwRes.data);
@@ -147,9 +147,9 @@ exports.editOmanCity = (req, res) => {
     });
 };
 exports.getOmanCity = (req, res) => {
-  let id = req.query.id || 0;
+  let city_en = req.query.city_en || "";
   axios
-    .get(process.env.MW_URL + "/v2/oman-governorates/show-city/" + id)
+    .get(process.env.MW_URL + "/v2/oman-governorates/show-city/" + city_en)
     .then((mwRes) => {
       res.status(mwRes.status).json(mwRes.data);
     })
@@ -181,9 +181,9 @@ exports.createOmanArea = (req, res) => {
 };
 
 exports.editOmanArea = (req, res) => {
-  let id = req.query.id || "";
+  let area_en = req.query.area_en || "";
   axios
-    .patch(process.env.MW_URL + "/v2/oman-governorates/edit-area/" + id, req.body)
+    .patch(process.env.MW_URL + "/v2/oman-governorates/edit-area/" + area_en, req.body)
 
     .then((mwRes) => {
       res.status(mwRes.status).json(mwRes.data);
@@ -194,9 +194,9 @@ exports.editOmanArea = (req, res) => {
 };
 
 exports.getOmanArea = (req, res) => {
-  let id = req.query.id || 0;
+  let area_en = req.query.area_en || "";
   axios
-    .get(process.env.MW_URL + "/v2/oman-governorates/show-area/" + id)
+    .get(process.env.MW_URL + "/v2/oman-governorates/show-area/" + area_en)
     .then((mwRes) => {
       res.status(mwRes.status).json(mwRes.data);
     })
