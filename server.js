@@ -42,6 +42,7 @@ require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/master-city.routes')(app);
 require('./app/routes/master-service.routes')(app);
+require("./app/routes/master-oman.routes")(app);
 require('./app/routes/permissions.routes')(app);
 require('./app/routes/inventory.routes')(app);
 require('./app/routes/printing.routes')(app);
