@@ -53,8 +53,15 @@ exports.editGovernorate = (req, res) => {
 
 exports.getOmanGovernoratesMaster = (req, res) => {
   let page = req.query.page || 0;
+  let pagination = req.query.pagination || 1;
+  let url = "";
+  if (pagination == 1) {
+    url = "/v2/oman-governorates/governorates?page=" + page;
+  } else if (pagination == 0) {
+    url = "/v2/oman-governorates/governorates?pagination=0";
+  }
   axios
-    .get(process.env.MW_URL + "/v2/oman-governorates/governorates?page=" + page)
+    .get(process.env.MW_URL + url)
     .then((mwRes) => {
       res.status(mwRes.status).json(mwRes.data);
     })
@@ -65,8 +72,15 @@ exports.getOmanGovernoratesMaster = (req, res) => {
 };
 exports.getOmanWilayatsMaster = (req, res) => {
   let page = req.query.page || 0;
+  let pagination = req.query.pagination || 1;
+  let url = "";
+  if (pagination == 1) {
+    url = "/v2/oman-governorates/wilayat?page=" + page;
+  } else if (pagination == 0) {
+    url = "/v2/oman-governorates/wilayat?pagination=0";
+  }
   axios
-    .get(process.env.MW_URL + "/v2/oman-governorates/wilayat?page=" + page)
+    .get(process.env.MW_URL + url)
     .then((mwRes) => {
       res.status(mwRes.status).json(mwRes.data);
     })
@@ -112,8 +126,15 @@ exports.getOmanWilayat = (req, res) => {
 };
 exports.getOmanCitiesMaster = (req, res) => {
   let page = req.query.page || 0;
+  let pagination = req.query.pagination || 1;
+  let url = "";
+  if (pagination == 1) {
+    url = "/v2/oman-governorates/cities?page=" + page;
+  } else if (pagination == 0) {
+    url = "/v2/oman-governorates/cities?pagination=0";
+  }
   axios
-    .get(process.env.MW_URL + "/v2/oman-governorates/cities?page=" + page)
+    .get(process.env.MW_URL + url)
     .then((mwRes) => {
       res.status(mwRes.status).json(mwRes.data);
     })
