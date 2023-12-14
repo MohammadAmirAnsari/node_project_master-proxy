@@ -14,7 +14,7 @@ exports.signup = async (req, res) => {
     const schema = Joi.object({
       email: Joi.string()
         .min(3)
-        .max(32)
+        .max(256)
         .required(),
       password: Joi.string()
         .min(3)
@@ -22,7 +22,7 @@ exports.signup = async (req, res) => {
         .required(),
       full_name: Joi.string()
         .min(3)
-        .max(128)
+        .max(256)
         .required(),
       roles : Joi.array().items(Joi.string())
     });
