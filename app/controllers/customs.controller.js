@@ -2,7 +2,6 @@ require("dotenv").config();
 let axios = require("axios");
 const FormData = require("form-data");
 axios.defaults.headers.common["Authorization"] = process.env.MW_AUTH;
-
 exports.getHouseManifest = (req, res) => {
   page = req.query.page;
   axios
