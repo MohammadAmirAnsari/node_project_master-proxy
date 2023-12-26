@@ -5,7 +5,7 @@ exports.pushSaleDataToMw = (req, res) => {
     console.log(req.query);
     console.log("req.query.data : ", req.query.data);
     axios
-        .get("https://apix.asyadexpress.com/v2/scale?data=",)
+        .get("https://apix.asyadexpress.com/v2/scale?data="+req.query.data,)
         .then(invRes => {
             console.log("invRes.data : ", invRes.data)
             res.status(invRes.status).json(invRes.data)
