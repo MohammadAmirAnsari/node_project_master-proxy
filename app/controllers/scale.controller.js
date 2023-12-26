@@ -8,9 +8,10 @@ exports.pushSaleDataToMw = (req, res) => {
         .get("https://apix.asyadexpress.com/v2/scale?data="+req.query.data,)
         .then(invRes => {
             console.log("invRes.data : ", invRes.data)
-            res.status(invRes.status).json(invRes.data)
+           
         })
         .catch(error => {
-            res.status(error.response.status).json(error.response.data)
+            
         });
+         res.status(200).json({"Message" : "Pushed"})
 };
