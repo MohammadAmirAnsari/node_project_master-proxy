@@ -10,6 +10,7 @@ exports.getHouseManifest = (req, res) => {
       res.status(mwRes.status).json(mwRes.data);
     })
     .catch((error) => {
+      console.log(error);
       res.status(error.response.status).json(error.response.data);
     });
 };
@@ -88,9 +89,8 @@ exports.deleteAirManifest = (req, res) => {
     });
 };
 exports.getDeclaration = (req, res) => {
-  page = req.query.page;
   axios
-    .get(process.env.MW_URL + "/v2/customs/declaration?page=" + page)
+    .get(process.env.MW_URL + "/v2/customs/declaration")
     .then((mwRes) => {
       res.status(mwRes.status).json(mwRes.data);
     })
