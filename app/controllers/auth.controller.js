@@ -33,7 +33,7 @@ exports.signup = async (req, res) => {
         .min(6)
         .max(50).allow(null),
       destinationDepot: Joi.string().optional()
-        .min(6)
+        .min(3)
         .max(150).allow(null),
     });
     const value = await schema.validateAsync(req.body, { abortEarly: false });
