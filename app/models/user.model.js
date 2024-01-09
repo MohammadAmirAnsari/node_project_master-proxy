@@ -9,6 +9,15 @@ module.exports = (sequelize, Sequelize) => {
     password: {
       type: Sequelize.STRING,
     },
+    Salt: {
+      type: Sequelize.STRING
+    },
+    DestinationDepot: {
+      type: Sequelize.STRING
+    },
+    MerchantCode: {
+      type: Sequelize.STRING
+    },
     status: {
       type: Sequelize.BOOLEAN,
       defaultValue: false,

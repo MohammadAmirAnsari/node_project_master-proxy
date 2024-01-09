@@ -48,6 +48,8 @@ require('./app/routes/inventory.routes')(app);
 require('./app/routes/printing.routes')(app);
 require('./app/routes/customs.routes')(app);
 require('./app/routes/scale.routes')(app);
+require('./app/routes/helper.routes')(app);
+
 const server = http.createServer(app);
 
 const io = require("socket.io")(server, {

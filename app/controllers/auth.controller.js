@@ -1,29 +1,55 @@
 const db = require("../models");
 const config = require("../config/auth.config");
+
+const crypto = require('crypto')
+
 const { user: User, role: Role, refreshToken: RefreshToken, passwordsHashs } = db;
+
 const permissionsController = require("../controllers/permissions.controller");
 const Op = db.Sequelize.Op;
-
+var pbkdf2 = require('pbkdf2')
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const Joi = require("joi");
 const pattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/;
 exports.signup = async (req, res) => {
   try {
-    const schema = Joi.object({
-      email: Joi.string().min(3).max(32).required(),
-      password: Joi.string().min(3).max(32).required().pattern(pattern),
-      full_name: Joi.string().min(3).max(128).required(),
+   
+    const schema = Joi.object({ 
+      email: Joi.string()
+        .min(3)
+        .max(256)
+        .required(),
+      password: Joi.string()
+        .min(3)
+        .max(32)
+        .required().pattern(pattern),
+      full_name: Joi.string()
+        .min(3)
+        .max(256)
+        .required(),
       roles: Joi.array().items(Joi.string()),
+      merchantCode: Joi.string().optional()
+        .min(6)
+        .max(50).allow(null),
+      destinationDepot: Joi.string().optional()
+        .min(6)
+        .max(150).allow(null),
     });
     const value = await schema.validateAsync(req.body, { abortEarly: false });
-
+    let salt = crypto.randomBytes(16).toString('base64');
+    let password = crypto.pbkdf2Sync(req.body.password, salt, 10000, (256 / 8), 'sha512').toString('base64');
+    
+    // Save User to Database
     User.create({
       username: req.body.username,
       email: req.body.email,
       full_name: req.body.full_name,
+      MerchantCode: req.body?.merchantCode || null,
+      DestinationDepot: req.body?.destinationDepot || null,
       status: true,
-      password: bcrypt.hashSync(req.body.password, 8),
+      password: password,
+      Salt: salt, 
       password_last_changed: new Date(),
     })
       .then((user) => {
@@ -81,14 +107,13 @@ exports.signin = (req, res) => {
       if (user.status == 0) {
         return res.status(400).send({ message: "User Is Not Active , Please Contact Adminstration." });
       }
+      var derivedKey = pbkdf2.pbkdf2Sync(req.body.password, user.Salt, 10000, (256 / 8), 'sha512')
+      var base64Password = Buffer.from(derivedKey).toString('base64');
 
-      const passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
 
-      if (!passwordIsValid) {
-        // add lock up count
+      if (base64Password != user.password) {
         user.lock_up_count = user.lock_up_count + 1;
         await user.save();
-
         return res.status(401).send({
           accessToken: null,
           message: "Invalid Password!",
@@ -136,6 +161,7 @@ exports.signin = (req, res) => {
         }
       }
 
+
       let refreshToken = await RefreshToken.createToken(user);
 
       let authorities = [];
@@ -150,27 +176,32 @@ exports.signin = (req, res) => {
         // });
         let permm = await permissionsController.getInternalPermissions(roles[0].id);
 
-        const token = jwt.sign(
-          {
-            id: user.id,
-            email: user.email,
-            status: user.status,
-            full_name: user.full_name,
-            roles: all_roles,
-          },
-          config.secret,
-          {
-            expiresIn: config.jwtExpiration,
-          }
-        );
+       
+        const token = jwt.sign({
+          id: user.id, 
+          email: user.email,
+          status: user.status,
+          full_name: user.full_name,
+          roles: all_roles,
+          destinationDepot: user.DestinationDepot,
+          merchantCode: user.MerchantCode,
+         }, config.secret, {
+         expiresIn: config.jwtExpiration
+       });
+
         res.status(200).send({
           id: user.id,
           username: user.username,
+          full_name: user.full_name,
           email: user.email,
           roles: authorities,
           accessToken: token,
           refreshToken: refreshToken,
+          destinationDepot: user.DestinationDepot,
+          merchantCode: user.MerchantCode,
           permissions: permm,
+          expiresIn: config.jwtExpiration
+
         });
       });
     })
