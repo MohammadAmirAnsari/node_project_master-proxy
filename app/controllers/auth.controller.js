@@ -6,6 +6,7 @@ const crypto = require('crypto')
 const { user: User, role: Role, refreshToken: RefreshToken, passwordsHashs } = db;
 
 const permissionsController = require("../controllers/permissions.controller");
+const helperController = require("../controllers/helper.controller");
 const Op = db.Sequelize.Op;
 var pbkdf2 = require('pbkdf2')
 const jwt = require("jsonwebtoken");
@@ -53,6 +54,11 @@ exports.signup = async (req, res) => {
       password_last_changed: new Date(),
     })
       .then((user) => {
+        
+        helperController.createMasterUsersMw({
+          master_id: user.id,
+          NameEn: user.full_name
+        });
         if (req.body.roles) {
           Role.findAll({
             where: {

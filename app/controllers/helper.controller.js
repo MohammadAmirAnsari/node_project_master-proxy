@@ -543,3 +543,17 @@ exports.ImportIntlCustomDuty = (req, res) => {
             res.status(error.response.status).json(error.response.data)
         });
 }
+exports.createMasterUsersMw = (payload) => {
+    let url = process.env.MW_URL + "/api/user/save"
+    console.log("url : ", url)
+    console.log("payload : ", payload)
+    axios
+        .post(url, payload)
+        .then(mwRes => {
+
+           console.log(mwRes)
+        })
+        .catch(error => {
+            console.log(error)
+        });
+ }
