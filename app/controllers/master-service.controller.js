@@ -598,3 +598,13 @@ exports.uploadPS = (req, res) => {
       res.status(error.response.status).json(error.response.data)
     });
 };
+exports.generateHalbanBillingReport = (req, res) => {
+  axios
+    .post(process.env.MW_URL + "/v2/wms-billing-report", req.body)
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};

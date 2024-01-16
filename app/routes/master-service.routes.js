@@ -221,4 +221,9 @@ app.get(
     [authJwt.verifyToken],
     controller.uploadPS
   );
+  app.post(
+    "/api/wms-billing-report",
+    [authJwt.verifyToken],
+    controller.generateHalbanBillingReport
+  );
 };
