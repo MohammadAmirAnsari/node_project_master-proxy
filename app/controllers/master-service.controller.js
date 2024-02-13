@@ -608,3 +608,27 @@ exports.generateHalbanBillingReport = (req, res) => {
       res.status(error.response.status).json(error.response.data)
     });
 };
+exports.manifestChecker = (req, res) => {
+  const form = new FormData();
+  for (let i in req.files) {
+    console.log("i : ", i);
+    form.append(i, req.files[i].data, req.files[i].name)
+  }
+  
+  for (const [key, value] of Object.entries(req.body)) {
+    console.log(key, value)
+    form.append(key, value);
+  }
+  axios
+    .post(process.env.MW_URL + "/v2/manifest-checker", form, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
