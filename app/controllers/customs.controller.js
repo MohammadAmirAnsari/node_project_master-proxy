@@ -101,7 +101,7 @@ exports.getDeclaration = (req, res) => {
 exports.addDeclaration = (req, res) => {
   let data = new FormData();
   data.append("data", JSON.stringify(req.body));
-  data.append("file", req.files["file"].data, req.files["file"].name);
+  data.append("file", req.files["file_data"].data, req.files["file_data"].name);
   axios
     .post(process.env.MW_URL + "/v2/orders/declaration", data, {
       headers: { "Content-Type": "multipart/form-data", Authorization: process.env.MW_AUTH },
