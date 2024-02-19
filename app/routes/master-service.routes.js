@@ -226,4 +226,9 @@ app.get(
     [authJwt.verifyToken],
     controller.generateHalbanBillingReport
   );
+  app.post(
+    "/api/manifest-checker",
+    [authJwt.verifyToken],
+    controller.manifestChecker
+  );
 };
