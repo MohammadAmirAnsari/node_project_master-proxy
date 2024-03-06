@@ -231,4 +231,39 @@ app.get(
     [authJwt.verifyToken],
     controller.manifestChecker
   );
+  app.post(
+    "/api/mw-users",
+    [authJwt.verifyToken],
+    controller.getMWusers
+  );
+  app.post(
+    "/api/create-mw-users",
+    [authJwt.verifyToken],
+    controller.createMWusers
+  );
+  app.post(
+    "/api/client-change-status",
+    [authJwt.verifyToken],
+    controller.changeClientStatus
+  );
+  app.post(
+    "/api/client-by-id",
+    [authJwt.verifyToken],
+    controller.getClientDetails
+  );
+  app.post(
+    "/api/edit-client/:id",
+    [authJwt.verifyToken],
+    controller.editClient
+  );
+  app.get(
+    "/api/d-key/:id",
+    [authJwt.verifyToken],
+    controller.getDKey
+  );
+  app.post(
+    "/api/client-change-password",
+    [authJwt.verifyToken],
+    controller.changeClientPassword
+  );
 };
