@@ -31,6 +31,7 @@ db.permission_role = require("./permission_role.model.js")(sequelize, Sequelize)
 db.refreshToken = require("../models/refreshToken.model.js")(sequelize, Sequelize);
 db.passwordsHashs = require("../models/passwordsHashs.model.js")(sequelize, Sequelize);
 db.forbiddenWords = require("../models/forbiddenWords.model.js")(sequelize, Sequelize);
+db.resetPassword = require("../models/resetPassword.model.js")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",

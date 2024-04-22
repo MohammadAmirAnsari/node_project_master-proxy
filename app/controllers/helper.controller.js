@@ -79,6 +79,20 @@ exports.GetAllOPSPagingFilter = (req, res) => {
         });
 
 }
+exports.sendResetPasswordLinkMw = (req, res) => {
+    let url = process.env.MW_URL + "api/master_user/reset-password";
+    return new Promise((resolve, reject) => {
+        axios
+            .post(url, req.body)
+            .then(mwRes => {
+                resolve(mwRes.data)
+            })
+            .catch(error => {
+                reject(error.response.data)
+            });
+    }
+    )
+}
 exports.FilterReportStatusUpdated = (req, res) => {
     let url = process.env.MW_URL + "/api/View_COD_Report/FilterReportStatusUpdated"
     console.log("url : ", url)
