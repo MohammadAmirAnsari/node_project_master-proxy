@@ -1,9 +1,10 @@
+require("dotenv").config();
 const db = require("../models");
 const config = require("../config/auth.config");
 
 const crypto = require('crypto')
 
-const { user: User, role: Role, refreshToken: RefreshToken, passwordsHashs } = db;
+const { user: User, role: Role, refreshToken: RefreshToken, passwordsHashs, resetPassword: ResetPassword } = db;
 
 const permissionsController = require("../controllers/permissions.controller");
 const helperController = require("../controllers/helper.controller");
@@ -135,7 +136,7 @@ exports.signin = (req, res) => {
         if (diffDays > 45) {
           return res.status(401).send({
             accessToken: null,
-            message: "Your Password Is Expired , Please Contact Adminstration.",
+            message: "Your Password Is Expired , You will be redirected to reset it.",
           });
         }
       }
@@ -262,5 +263,68 @@ exports.refreshToken = async (req, res) => {
     });
   } catch (err) {
     return res.status(500).send({ message: err });
+  }
+};
+exports.resetPassword = async (req, res) => {
+  try {
+    const MW_AUTH = process.env.MW_AUTH;
+    if (!MW_AUTH) {
+      throw new Error("MW_AUTH environment variable is not set.");
+    }
+    const encrypted = crypto.randomBytes(24).toString("hex");
+    // delete reset password exists for this email if it's expired or used
+    await ResetPassword.destroy({
+      where: {
+        email: req.body.email,
+        [Op.or]: [
+          {
+            expire: {
+              [Op.lt]: new Date(),
+            },
+          },
+          {
+            used: true,
+          },
+        ],
+      },
+    });
+    isExist = await ResetPassword.findOne({
+      where: {
+        email: req.body.email,
+        used: false,
+        expire: {
+          [Op.gt]: new Date(),
+        },
+      },
+    });
+    console.log("isExist", isExist);
+
+    if (isExist) {
+      return res.status(400).send({ message: "Reset Password Already Exists" });
+    }
+
+    await ResetPassword.create({
+      email: req.body.email,
+      token: encrypted,
+      expire: new Date(new Date().getTime() + 30 * 60000),
+      used: false,
+    });
+    const resetPasswordLink = `${process.env.MASTER_URL}/reset-password-form/?token=${encrypted}`;
+    helperController.sendResetPasswordLinkMw({
+      body: {
+        email: req.body.email,
+        resetPasswordLink,
+      },
+    }).then((response) => {
+      console.log("response", response);
+      if (response.status !== 200) {
+        return res.status(500).send({ message: "Internal server error" });
+      }
+      return res.status(200).send({ message: "Reset Password" });
+    });
+  
+  } catch (error) {
+    console.error("Error occurred:", error.message);
+    return res.status(500).send({ error: "Internal server error" });
   }
 };
