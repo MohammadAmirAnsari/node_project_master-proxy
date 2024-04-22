@@ -147,7 +147,7 @@ exports.signin = (req, res) => {
           await user.save();
           return res.status(401).send({
             accessToken: null,
-            message: "Your Account Is Locked Up , Please Contact Adminstration.",
+            message: "Your Password Is Expired , You will be redirected to reset it.",
           });
         } else {
           // check if the last lock up date is 30 min ago
@@ -158,11 +158,13 @@ exports.signin = (req, res) => {
           if (diffMin > 30) {
             // reset lock up count
             user.lock_up_count = 0;
+            // reset last lock up date
+            user.last_lock_up_date = null;
             await user.save();
           } else {
             return res.status(401).send({
               accessToken: null,
-              message: "Your Account Is Locked Up , Please Contact Adminstration.",
+              message: "Your Password Is Expired , You will be redirected to reset it.",
             });
           }
         }
