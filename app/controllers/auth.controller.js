@@ -147,7 +147,7 @@ exports.signin = (req, res) => {
           await user.save();
           return res.status(401).send({
             accessToken: null,
-            message: "Your Password Is Expired , You will be redirected to reset it.",
+            message: "Your Account Is Locked , You will be redirected to reset it.",
           });
         } else {
           // check if the last lock up date is 30 min ago
@@ -164,7 +164,7 @@ exports.signin = (req, res) => {
           } else {
             return res.status(401).send({
               accessToken: null,
-              message: "Your Password Is Expired , You will be redirected to reset it.",
+              message: "Your Account Is Locked , You will be redirected to reset it.",
             });
           }
         }

@@ -87,10 +87,6 @@ exports.sendResetPasswordLinkMw = (req, res) => {
             .then(mwRes => {
                 resolve(mwRes.data)
             })
-            .catch(error => {
-              console.log("error : ", error);
-                reject(error.response.data)
-            });
     }
     )
 }
