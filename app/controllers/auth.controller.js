@@ -330,3 +330,50 @@ exports.resetPassword = async (req, res) => {
     return res.status(500).send({ error: "Internal server error" });
   }
 };
+exports.applyResetPassword = async (req, res) => {
+  console.log("req.body", req.body);
+  try {
+    const schema = Joi.object({
+      token: Joi.string().required(),
+      password: Joi.string().min(3).max(32).required().pattern(pattern),
+    });
+    const value = await schema.validateAsync(req.body, { abortEarly: false });
+    const resetPassword = await ResetPassword.findOne({
+      where: {
+        token: req.body.token,
+        used: false,
+        expire: {
+          [Op.gt]: new Date(),
+        },
+      },
+    });
+    if (!resetPassword) {
+      return res.status(400).send({ message: "Invalid Token" });
+    }
+    const user = await User.findOne({
+      where: {
+        email: resetPassword.email,
+      },
+    });
+    if (!user) {
+      return res.status(400).send({ message: "User Not Found" });
+    }
+    let salt = crypto.randomBytes(16).toString("base64");
+    let password = crypto.pbkdf2Sync(req.body.password, salt, 10000, 256 / 8, "sha512").toString("base64");
+    user.password = password;
+    user.lock_up_count = 0;
+    user.Salt = salt;
+    user.password_last_changed = new Date();
+    try {
+      await user.save();
+    } catch (error) {
+      return res.status(400).send({ message: "Error occurred while updating password , please make sure that the password is applied to policy" });
+    }
+    resetPassword.used = true;
+    await resetPassword.save();
+    return res.status(200).send({ message: "Password Reset Successfully" });
+  } catch (error) {
+    console.error("Error occurred:", error.message);
+    return res.status(500).send({ error: "Internal server error" });
+  }
+};
