@@ -80,7 +80,7 @@ exports.GetAllOPSPagingFilter = (req, res) => {
 
 }
 exports.sendResetPasswordLinkMw = (req, res) => {
-    let url = process.env.MW_URL + "api/master_user/reset-password";
+    let url = process.env.MW_URL + "/api/master_user/reset-password";
     return new Promise((resolve, reject) => {
         axios
             .post(url, req.body)
