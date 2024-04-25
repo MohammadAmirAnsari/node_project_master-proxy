@@ -331,7 +331,6 @@ exports.resetPassword = async (req, res) => {
   }
 };
 exports.applyResetPassword = async (req, res) => {
-  console.log("req.body", req.body);
   try {
     const schema = Joi.object({
       token: Joi.string().required(),
@@ -350,6 +349,8 @@ exports.applyResetPassword = async (req, res) => {
     if (!resetPassword) {
       return res.status(400).send({ message: "Invalid Token" });
     }
+    // if that password exists in passwordsHashs table last 5 passwords sorted by created_at desc , then return error
+    
     const user = await User.findOne({
       where: {
         email: resetPassword.email,
@@ -393,7 +394,10 @@ exports.applyResetPassword = async (req, res) => {
     await resetPassword.save();
     return res.status(200).send({ message: "Password Reset Successfully" });
   } catch (error) {
-    console.error("Error occurred:", error.message);
-    return res.status(500).send({ error: "Internal server error" });
+    if (error.details) {
+      if (error.details[0].message.includes("pattern")) {
+        return res.status(400).send({ message: "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character" });
+      }
+    }
   }
 };
