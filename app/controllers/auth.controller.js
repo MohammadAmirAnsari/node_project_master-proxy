@@ -300,6 +300,18 @@ exports.resetPassword = async (req, res) => {
       },
     });
     console.log("isExist", isExist);
+    // not before 24 hours reset password even if it's used
+    isNotBefore24Hours = await ResetPassword.findOne({
+      where: {
+        email: req.body.email,
+        expire: {
+          [Op.gt]: new Date(),
+        },
+      },
+    });
+    if (isNotBefore24Hours) {
+      return res.status(400).send({ message: "Reset Password is not allowed before 24 hours" });
+    }
 
     if (isExist) {
       return res.status(400).send({ message: "Reset Password Already Exists" });
@@ -318,7 +330,6 @@ exports.resetPassword = async (req, res) => {
         resetPasswordLink,
       },
     }).then((response) => {
-      console.log("response", response);
       if (response.status !== 200) {
         return res.status(500).send({ message: "Internal server error" });
       }
