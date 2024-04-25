@@ -308,7 +308,7 @@ exports.resetPassword = async (req, res) => {
     await ResetPassword.create({
       email: req.body.email,
       token: encrypted,
-      expire: new Date(new Date().getTime() + 30 * 60000),
+      expire: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
       used: false,
     });
     const resetPasswordLink = `${process.env.MASTER_URL}/reset-password-form/?token=${encrypted}`;
@@ -326,7 +326,6 @@ exports.resetPassword = async (req, res) => {
     });
   
   } catch (error) {
-    console.error("Error occurred:", error.message);
     return res.status(500).send({ error: "Internal server error" });
   }
 };
