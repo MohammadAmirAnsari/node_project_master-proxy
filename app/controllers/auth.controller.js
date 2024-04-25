@@ -275,6 +275,18 @@ exports.resetPassword = async (req, res) => {
     }
     const encrypted = crypto.randomBytes(24).toString("hex");
     // delete reset password exists for this email if it's expired or used
+    isNotBefore24Hours = await ResetPassword.findOne({
+      where: {
+        email: req.body.email,
+        used: true,
+        expire: {
+          [Op.gt]: new Date(),
+        },
+      },
+    });
+    if (isNotBefore24Hours) {
+      return res.status(400).send({ message: "Reset Password is not allowed before 24 hours" });
+    }
     await ResetPassword.destroy({
       where: {
         email: req.body.email,
