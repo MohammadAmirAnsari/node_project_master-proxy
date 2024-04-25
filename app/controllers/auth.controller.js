@@ -4,7 +4,7 @@ const config = require("../config/auth.config");
 
 const crypto = require('crypto')
 
-const { user: User, role: Role, refreshToken: RefreshToken, passwordsHashs, resetPassword: ResetPassword } = db;
+const { user: User, role: Role, refreshToken: RefreshToken, passwordsHashs, resetPassword: ResetPassword , forbiddenWords: ForbiddenWords } = db;
 
 const permissionsController = require("../controllers/permissions.controller");
 const helperController = require("../controllers/helper.controller");
@@ -372,6 +372,13 @@ exports.applyResetPassword = async (req, res) => {
       if (bcrypt.compareSync(req.body.password, passwords[i].password)) {
         console.log("I am here");
         return res.status(400).send({ message: "Password must be different from last 5 passwords" });
+      }
+    }
+    // check if the password in forbidden words
+    const forbiddenWords = await ForbiddenWords.findAll();
+    for (let i = 0; i < forbiddenWords.length; i++) {
+      if (req.body.password.includes(forbiddenWords[i].word)) {
+        return res.status(400).send({ message: "Password contains forbidden word" });
       }
     }
     let salt = crypto.randomBytes(16).toString("base64");
