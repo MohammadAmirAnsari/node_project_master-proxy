@@ -304,6 +304,7 @@ exports.resetPassword = async (req, res) => {
     isNotBefore24Hours = await ResetPassword.findOne({
       where: {
         email: req.body.email,
+        used: true,
         expire: {
           [Op.gt]: new Date(),
         },
