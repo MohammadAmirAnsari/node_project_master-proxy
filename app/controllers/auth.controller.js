@@ -82,7 +82,7 @@ exports.signup = async (req, res) => {
         // add password to passwordsHashs
         passwordsHashs.create({
           user_id: user.id,
-          password: req.body.password,
+          password: bcrypt.hash(req.body.password, 8)
         });
       })
       .catch((err) => {
@@ -358,12 +358,32 @@ exports.applyResetPassword = async (req, res) => {
     if (!user) {
       return res.status(400).send({ message: "User Not Found" });
     }
+    const passwords = await passwordsHashs.findAll({
+      where: {
+        user_id: user.id,
+      },
+      order: [["createdAt", "DESC"]],
+      limit: 5,
+    });
+    console.log("req.body.password", req.body.password);
+    for (let i = 0; i < passwords.length; i++) {
+      console.log(passwords[i].password);
+      if (bcrypt.compareSync(req.body.password, passwords[i].password)) {
+        console.log("I am here");
+        return res.status(400).send({ message: "Password must be different from last 5 passwords" });
+      }
+    }
     let salt = crypto.randomBytes(16).toString("base64");
     let password = crypto.pbkdf2Sync(req.body.password, salt, 10000, 256 / 8, "sha512").toString("base64");
     user.password = password;
     user.lock_up_count = 0;
     user.Salt = salt;
     user.password_last_changed = new Date();
+    // add password to passwordsHashs
+    passwordsHashs.create({
+      user_id: user.id,
+      password: bcrypt.hashSync(req.body.password, 8),
+    });
     try {
       await user.save();
     } catch (error) {
