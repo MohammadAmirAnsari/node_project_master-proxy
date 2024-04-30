@@ -568,3 +568,60 @@ exports.createMasterUsersMw = (payload) => {
             console.log(error)
         });
  }
+
+
+ exports.InsertFlightArrivalDetail = (req, res) => {
+    let url = process.env.MW_URL + "/api/Custom/InsertFlightArrivalDetail"
+    console.log("url : ", req.body)
+    axios
+        .post(url, req.body)
+        .then(mwRes => {
+            res.status(mwRes.status).json(mwRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response.status).json(error.response.data)
+        });
+};
+
+exports.UpdateFlightArrivalDetail = (req, res) => {
+    let url = process.env.MW_URL + "/api/Custom/UpdateFlightArrivalDetail"
+    console.log("url : ", req.body)
+    axios
+        .post(url, req.body)
+        .then(mwRes => {
+            res.status(mwRes.status).json(mwRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response.status).json(error.response.data)
+        });
+};
+
+exports.GetFlightArrivalDetails = (req, res) => {
+    let url = process.env.MW_URL + "/api/Custom/GetFlightArrivalDetails"
+    console.log("url : ", req.body)
+    axios
+        .post(url, req.body)
+        .then(mwRes => {
+            res.status(mwRes.status).json(mwRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response.status).json(error.response.data)
+        });
+};
+
+exports.GetFlightArrivalReport = (req, res) => {
+    let url = process.env.MW_URL + "/api/Custom/GetFlightArrivalReport"
+    console.log("url : ", req.body)
+    axios
+        .post(url, req.body)
+        .then(mwRes => {
+            res.status(mwRes.status).json(mwRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response.status).json(error.response.data)
+        });
+};

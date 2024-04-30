@@ -171,4 +171,24 @@ module.exports = function (app) {
         [authJwt.verifyToken],
         controller.ImportIntlCustomDuty
     );
+    app.post(
+        "/api/Custom/InsertFlightArrivalDetail",
+        [authJwt.verifyToken],
+        controller.InsertFlightArrivalDetail
+    );
+    app.post(
+        "/api/Custom/UpdateFlightArrivalDetail",
+        [authJwt.verifyToken],
+        controller.UpdateFlightArrivalDetail
+    );
+    app.post(
+        "/api/Custom/GetFlightArrivalDetails",
+        [authJwt.verifyToken],
+        controller.GetFlightArrivalDetails
+    );
+    app.post(
+        "/api/Custom/GetFlightArrivalReport",
+        [authJwt.verifyToken],
+        controller.GetFlightArrivalReport
+    );
 }
