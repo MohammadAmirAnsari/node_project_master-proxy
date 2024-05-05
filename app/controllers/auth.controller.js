@@ -431,3 +431,27 @@ exports.applyResetPassword = async (req, res) => {
     }
   }
 };
+exports.verifyPasswordPolicy = async (req, res) => {
+  try {
+    const schema = Joi.object({
+      password: Joi.string().min(3).max(32).required().pattern(pattern),
+    });
+    const value = await schema.validateAsync(req.body, { abortEarly: false });
+    // check if the password in forbidden words
+    const forbiddenWords = await ForbiddenWords.findAll();
+    for (let i = 0; i < forbiddenWords.length; i++) {
+      if (req.body.password.includes(forbiddenWords[i].word)) {
+        return res.status(400).send({ message: "Password contains forbidden word" });
+      }
+    }
+    
+
+    return res.status(200).send({ message: "Password is applied to the policy" });
+  } catch (error) {
+    if (error.details) {
+      if (error.details[0].message.includes("pattern")) {
+        return res.status(400).send({ message: "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character" });
+      }
+    }
+  }
+}
