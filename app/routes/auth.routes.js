@@ -20,4 +20,6 @@ module.exports = function (app) {
   app.post("/api/auth/reset-password", controller.resetPassword);
 
   app.post("/api/auth/apply-reset-password", controller.applyResetPassword);
+
+  app.post("/api/auth/verify-password-policy", controller.verifyPasswordPolicy);
 };
