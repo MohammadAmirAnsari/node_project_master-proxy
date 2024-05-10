@@ -89,8 +89,9 @@ exports.deleteAirManifest = (req, res) => {
     });
 };
 exports.getDeclaration = (req, res) => {
+  page = req.query.page;
   axios
-    .get(process.env.MW_URL + "/v2/customs/declaration")
+    .get(process.env.MW_URL + "/v2/customs/declaration?page=" + page)
     .then((mwRes) => {
       res.status(mwRes.status).json(mwRes.data);
     })
