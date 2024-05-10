@@ -3,7 +3,7 @@ const axios = require('axios');
 const FormData = require('form-data');
 const fs = require("fs");
 axios.defaults.headers.common['Authorization'] = process.env.MW_AUTH
-console.log("process.env.MW_AUTH : ",process.env.MW_AUTH)
+console.log("process.env.MW_AUTH : ", process.env.MW_AUTH)
 exports.getMasterServices = (req, res) => {
   let page = req.query.page || 1;
   let status = req.query.status || null;
@@ -278,7 +278,7 @@ exports.createClientMaster = (req, res) => {
 };
 exports.createUser = (req, res) => {
   axios
-    .post(process.env.MW_URL + "/internal/user-clients/create-user",  req.body)
+    .post(process.env.MW_URL + "/internal/user-clients/create-user", req.body)
     .then(mwRes => {
 
       res.status(mwRes.status).json(mwRes.data)
@@ -348,7 +348,7 @@ exports.getClient = (req, res) => {
     });
 };
 exports.editClientMaster = (req, res) => {
-  
+
   let id = req.query.id || 0;
   const form = new FormData();
   for (let i in req.files) {
@@ -357,7 +357,7 @@ exports.editClientMaster = (req, res) => {
   for (const [key, value] of Object.entries(req.body)) {
     form.append(key, value);
   }
- 
+
   axios
     .post(process.env.MW_URL + "/internal/user/edit-client-master?id=" + id, form, {
       headers: {
@@ -450,9 +450,9 @@ exports.getServiceRateByGroup = (req, res) => {
     .catch(error => {
       res.status(error.response.status).json(error.response.data)
     });
-  };
+};
 exports.getFulfillmentClients = (req, res) => {
-  
+
   axios
     .get(process.env.MW_URL + "/v2/fulfillment-clients")
     .then(mwRes => {
@@ -528,20 +528,20 @@ exports.pushAmazonBoeFile = (req, res) => {
 
   const formData = new FormData();
   let files = Object.keys(req.files)
-  files.map(function(filekey, key) {
+  files.map(function (filekey, key) {
     let file = req.files[filekey];
-    formData.append('file['+key+']' , file.data, { filename: file.name });
+    formData.append('file[' + key + ']', file.data, { filename: file.name });
   });
 
 
 
   const headers = {
     'Content-Type': 'multipart/form-data',
-    'Authorization' : 'Bearer 3BDF0A7D-6A16-4817-93D0-3E420EBA27DC'
+    'Authorization': 'Bearer 3BDF0A7D-6A16-4817-93D0-3E420EBA27DC'
   };
 
   axios
-    .post(process.env.MW_URL + "/internal/amazon/boe-upload", formData , {headers})
+    .post(process.env.MW_URL + "/internal/amazon/boe-upload", formData, { headers })
     .then(mwRes => {
       res.status(mwRes.status).json(mwRes.data)
     })
@@ -557,7 +557,7 @@ exports.uploadCBM = (req, res) => {
     console.log("i : ", i);
     form.append(i, req.files[i].data, req.files[i].name)
   }
-  
+
   console.log("req.files ", req.files);
   axios
     .post(process.env.MW_URL + "/v2/upload/cbm", form, {
@@ -614,7 +614,7 @@ exports.manifestChecker = (req, res) => {
     console.log("i : ", i);
     form.append(i, req.files[i].data, req.files[i].name)
   }
-  
+
   for (const [key, value] of Object.entries(req.body)) {
     console.log(key, value)
     form.append(key, value);
@@ -629,6 +629,108 @@ exports.manifestChecker = (req, res) => {
       res.status(mwRes.status).json(mwRes.data)
     })
     .catch(error => {
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getMWusers = (req, res) => {
+  let page = req.body.page || 1;
+  console.log("page : ", req.body)
+  let url = process.env.MW_URL + "/internal/user/listing?page=" + page;
+
+  axios
+    .post(url, req.body)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log("error : ", error);
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+
+exports.createMWusers = (req, res) => {
+  console.log("req.body : ", req.body)
+  let url = process.env.MW_URL + "/internal/user/signup";
+  axios
+    .post(url, req.body)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log("error : ", error);
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.changeClientStatus = (req, res) => {
+  console.log("req.body : ", req.body)
+  let url = process.env.MW_URL + "/internal/user/client-change-status";
+  axios
+    .post(url, req.body)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log("error : ", error);
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getClientDetails = (req, res) => {
+  console.log("req.body : ", req.body)
+  let url = process.env.MW_URL + "/internal/user/client-by-id";
+  axios
+    .post(url, req.body)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log("error : ", error);
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.editClient = (req, res) => {
+  let id = req.params.id;
+  console.log("req.body : ", req.body)
+  let url = process.env.MW_URL + "/internal/user/edit-mw-client/" + id;
+  axios
+    .post(url, req.body)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log("error : ", error);
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getDKey = (req, res) => {
+  let id = req.params.id;
+  let url = process.env.MW_URL + "/internal/user/d-key/" + id;
+  axios
+    .get(url)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log("error : ", error);
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.changeClientPassword = (req, res) => {
+  console.log("req.body : ", req.body)
+  let url = process.env.MW_URL + "/internal/user/client-change-password";
+  axios
+    .post(url, req.body)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log("error : ", error);
       res.status(error.response.status).json(error.response.data)
     });
 };

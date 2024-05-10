@@ -10,6 +10,7 @@ exports.getHouseManifest = (req, res) => {
       res.status(mwRes.status).json(mwRes.data);
     })
     .catch((error) => {
+      console.log(error);
       res.status(error.response.status).json(error.response.data);
     });
 };

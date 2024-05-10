@@ -30,6 +30,8 @@ const verifyToken = (req, res, next) => {
     req.userId = decoded.id;
     axios.defaults.headers.common['x-user-name'] = decoded.full_name || "NA";
     axios.defaults.headers.common['x-user-id'] = decoded.id || "NA";
+    axios.defaults.headers.common['x-hub-id'] = decoded.destinationDepot || "NA";
+    axios.defaults.headers.common['x-merchant-id'] = decoded.merchantCode || "NA";
     if (req.originalUrl.includes("/api/permissions") || req.originalUrl.includes("/api/rate-service")) {
       User.findOne({
         where: {

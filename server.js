@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 const db = require("./app/models");
 const Role = db.role;
 
-db.sequelize.sync();
+db.sequelize.sync({ alter: false });
 // force: true will drop the table if it already exists
 // db.sequelize.sync({force: true}).then(() => {
 //   console.log('Drop and Resync Database with { force: true }');
@@ -40,12 +40,16 @@ app.get("/", (req, res) => {
 // routes
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
+require('./app/routes/master-city.routes')(app);
 require('./app/routes/master-service.routes')(app);
+require("./app/routes/master-oman.routes")(app);
 require('./app/routes/permissions.routes')(app);
 require('./app/routes/inventory.routes')(app);
 require('./app/routes/printing.routes')(app);
 require('./app/routes/customs.routes')(app);
 require('./app/routes/scale.routes')(app);
+require('./app/routes/helper.routes')(app);
+
 const server = http.createServer(app);
 
 const io = require("socket.io")(server, {
