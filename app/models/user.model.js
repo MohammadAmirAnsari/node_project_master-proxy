@@ -32,6 +32,14 @@ module.exports = (sequelize, Sequelize) => {
     last_lock_up_date: {
       type: Sequelize.DATE,
     },
+    last_login_date: {
+      type: Sequelize.DATE,
+      defaultValue:null
+    },
+    last_used_refresh_token: {
+      type: Sequelize.DATE,
+      defaultValue: null
+    },
   });
 
   return User;
