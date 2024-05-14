@@ -197,7 +197,8 @@ exports.signin = (req, res) => {
          }, config.secret, {
          expiresIn: config.jwtExpiration
        });
-
+        user.last_login_date = new Date();
+        await user.save();
         res.status(200).send({
           id: user.id,
           username: user.username,
@@ -246,6 +247,8 @@ exports.refreshToken = async (req, res) => {
     }
 
     const user = await refreshToken.getUser();
+    user.last_used_refresh_token = new Date();
+    await user.save();
     let newAccessToken = jwt.sign(
       {
         id: user.id,
