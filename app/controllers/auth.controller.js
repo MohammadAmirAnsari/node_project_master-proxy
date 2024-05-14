@@ -249,6 +249,7 @@ exports.refreshToken = async (req, res) => {
     const user = await refreshToken.getUser();
     user.last_used_refresh_token = new Date();
     await user.save();
+    let authorities = [];
     user.getRoles().then(async (roles) => {
       var all_roles = [];
       for (let i = 0; i < roles.length; i++) {
