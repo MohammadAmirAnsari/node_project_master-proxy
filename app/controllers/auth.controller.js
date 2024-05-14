@@ -249,23 +249,34 @@ exports.refreshToken = async (req, res) => {
     const user = await refreshToken.getUser();
     user.last_used_refresh_token = new Date();
     await user.save();
-    let newAccessToken = jwt.sign(
-      {
-        id: user.id,
-        email: user.email,
-        status: user.status,
-        full_name: user.full_name,
-      },
-      config.secret,
-      {
-        expiresIn: config.jwtExpiration,
+    user.getRoles().then(async (roles) => {
+      var all_roles = [];
+      for (let i = 0; i < roles.length; i++) {
+        authorities.push("ROLE_" + roles[i].name.toUpperCase());
+        all_roles.push(roles[i].name.toUpperCase());
       }
-    );
+      let newAccessToken = jwt.sign(
+        {
+          id: user.id,
+          email: user.email,
+          status: user.status,
+          full_name: user.full_name,
+          roles: all_roles,
+          destinationDepot: user.DestinationDepot,
+          merchantCode: user.MerchantCode,
+        },
+        config.secret,
+        {
+          expiresIn: config.jwtExpiration,
+        }
+      );
 
-    return res.status(200).json({
-      accessToken: newAccessToken,
-      refreshToken: refreshToken.token,
-    });
+      return res.status(200).json({
+        accessToken: newAccessToken,
+        refreshToken: refreshToken.token,
+      });
+     });
+    
   } catch (err) {
     return res.status(500).send({ message: err });
   }
