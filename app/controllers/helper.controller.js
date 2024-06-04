@@ -314,7 +314,7 @@ exports.GetClientAllPagination = (req, res) => {
 }
 exports.CustomerActionById = (req, res) => {
     let id = req.params.id || 1
-    let url = process.env.MW_URL + "/api/View_CustomersActions/GetById/" + id
+    let url = process.env.MW_URL + "/api/View_CustomersActions/GetByIdM/" + id
     console.log("url : ", url)
     axios
         .get(url)
