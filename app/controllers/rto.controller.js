@@ -60,3 +60,19 @@ exports.createOrders = async (req, res) => {
     res.status(500).json(error);
   }
 };
+exports.listOrders = async (req, res) => {
+  console.log("*".repeat(100));
+  console.log("listOrders", req.body);
+  try {
+    axios
+      .get(process.env.MW_URL + "/v2/irto/list")
+      .then((response) => {
+        res.status(200).json(response.data);
+      })
+      .catch((error) => {
+        res.status(500).json(error);
+      });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
