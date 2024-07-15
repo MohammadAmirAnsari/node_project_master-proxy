@@ -62,7 +62,7 @@ exports.createOrders = async (req, res) => {
 };
 exports.listOrders = async (req, res) => {
    const type = req.query.type;
-   const url = type === "completed" ? "/completed" : "";
+   const url = type === "completed" || type === "manual" ? "/" + type : "";
    const page = req.query.page;
   try {
     axios
