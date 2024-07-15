@@ -61,12 +61,14 @@ exports.createOrders = async (req, res) => {
   }
 };
 exports.listOrders = async (req, res) => {
-  console.log("*".repeat(100));
-  console.log("listOrders", req.body);
+   const type = req.query.type;
+   const url = type === "completed" ? "/completed" : "";
+   const page = req.query.page;
   try {
     axios
-      .get(process.env.MW_URL + "/v2/irto/list")
+      .get(process.env.MW_URL + "/v2/irto/list" + url + "?page=" + page)
       .then((response) => {
+        // console the request url
         res.status(200).json(response.data);
       })
       .catch((error) => {
