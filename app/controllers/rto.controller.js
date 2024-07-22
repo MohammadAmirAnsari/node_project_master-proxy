@@ -60,6 +60,21 @@ exports.createOrders = async (req, res) => {
     res.status(500).json(error);
   }
 };
+exports.updateOrders = async (req, res) => {
+  const irto_id = req.url.split("/")[3];
+  try {
+    axios
+      .put(process.env.MW_URL + "/v2/irto/"+irto_id, req.body)
+      .then((response) => {
+        res.status(200).json(response.data);
+      })
+      .catch((error) => {
+        res.status(500).json(error);
+      });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
 exports.listOrders = async (req, res) => {
    const type = req.query.type;
    const url = type === "completed" || type === "manual" ? "/" + type : "";
