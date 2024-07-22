@@ -61,7 +61,7 @@ exports.createOrders = async (req, res) => {
   }
 };
 exports.updateOrders = async (req, res) => {
-  const irto_id = req.url.split("/")[3];
+  const irto_id = req.params.id;
   try {
     axios
       .put(process.env.MW_URL + "/v2/irto/"+irto_id, req.body)
