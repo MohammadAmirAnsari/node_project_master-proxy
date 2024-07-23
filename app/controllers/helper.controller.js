@@ -625,3 +625,20 @@ exports.GetFlightArrivalReport = (req, res) => {
             res.status(error.response.status).json(error.response.data)
         });
 };
+exports.GetWhatsappLogs = (req, res) => {
+    let id = req.params.id || 1
+    let url = process.env.MW_URL + "/api/Whatsapp_Log/GetById/" + id
+    console.log("url : ", url)
+    axios
+        .get(url)
+        .then(mwRes => {
+
+            res.status(mwRes.status).json(mwRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response.status).json(error.response.data)
+        });
+
+
+}
