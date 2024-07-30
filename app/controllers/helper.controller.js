@@ -6,7 +6,7 @@ axios.defaults.headers.common['Authorization'] = process.env.MW_AUTH
 console.log("process.env.MW_AUTH : ", process.env.MW_AUTH)
 exports.MarkAsRead = (req, res) => {
     let url = process.env.MW_URL + "/api/CustomersAction/MarkAsDone"
-    console.log("url : ", url)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -36,7 +36,7 @@ exports.GetAllHubs = (req, res) => {
 }
 exports.MarkAsreject = (req, res) => {
     let url = process.env.MW_URL + "/api/CustomersAction/MarkAsreject"
-    console.log("url : ", url)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -51,7 +51,7 @@ exports.MarkAsreject = (req, res) => {
 }
 exports.OrderTransactionTypesGetAll = (req, res) => {
     let url = process.env.MW_URL + "/api/OrderTransactionTypes/GetAll"
-    console.log("url : ", url)
+    
     axios
         .get(url)
         .then(mwRes => {
@@ -66,7 +66,7 @@ exports.OrderTransactionTypesGetAll = (req, res) => {
 }
 exports.GetAllOPSPagingFilter = (req, res) => {
     let url = process.env.MW_URL + "/api/View_CustomersActions/GetAllOPSPagingFilter"
-    console.log("url : ", url)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -92,7 +92,7 @@ exports.sendResetPasswordLinkMw = (req, res) => {
 }
 exports.FilterReportStatusUpdated = (req, res) => {
     let url = process.env.MW_URL + "/api/View_COD_Report/FilterReportStatusUpdated"
-    console.log("url : ", url)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -107,7 +107,7 @@ exports.FilterReportStatusUpdated = (req, res) => {
 }
 exports.ShipmentReportFilterReportStatusUpdated = (req, res) => {
     let url = process.env.MW_URL + "/api/ShipmentReport/FilterReportStatusUpdated"
-    console.log("url : ", url)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -122,7 +122,7 @@ exports.ShipmentReportFilterReportStatusUpdated = (req, res) => {
 }
 exports.ImportCustomerRequests = (req, res) => {
     let url = process.env.MW_URL + "/api/CustomersAction/ImportCustomerRequests"
-    console.log("url : ", url)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -137,7 +137,7 @@ exports.ImportCustomerRequests = (req, res) => {
 }
 exports.AddCall = (req, res) => {
     let url = process.env.MW_URL + "/api/CustomersAction/AddCall"
-    console.log("url : ", url)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -152,7 +152,7 @@ exports.AddCall = (req, res) => {
 }
 exports.GetAllOPSDonePagingFilter = (req, res) => {
     let url = process.env.MW_URL + "/api/View_CustomersActions/GetAllOPSDonePagingFilter"
-    console.log("url : ", url)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -167,7 +167,7 @@ exports.GetAllOPSDonePagingFilter = (req, res) => {
 }
 exports.GetAllOnHoldPaginationExternalupdate = (req, res) => {
     let url = process.env.MW_URL + "/api/ShipmentReport/GetAllOnHoldPaginationExternalupdate"
-    console.log("url : ", url)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -182,7 +182,7 @@ exports.GetAllOnHoldPaginationExternalupdate = (req, res) => {
 }
 exports.GetAllPagingFilter = (req, res) => {
     let url = process.env.MW_URL + "/api/View_CustomersActions/GetAllPagingFilter"
-    console.log("url : ", url)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -198,7 +198,7 @@ exports.GetAllPagingFilter = (req, res) => {
 exports.AddAction = (req, res) => {
     let id = req.params.id || 1
     let url = process.env.MW_URL + "/api/CustomersAction/AddAction/"+id
-    console.log("url : ", url)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -213,7 +213,7 @@ exports.AddAction = (req, res) => {
 }
 exports.SelfCollectRequest = (req, res) => {
     let url = process.env.MW_URL + "/api/CustomersAction/SelfCollectRequest"
-    console.log("url : ", url)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -228,7 +228,7 @@ exports.SelfCollectRequest = (req, res) => {
 }
 exports.EditAddress = (req, res) => {
     let url = process.env.MW_URL + "/api/CustomersAction/EditAddress"
-    console.log("url : ", url)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -243,7 +243,7 @@ exports.EditAddress = (req, res) => {
 }
 exports.EditPhone = (req, res) => {
     let url = process.env.MW_URL + "/api/CustomersAction/EditPhone"
-    console.log("url : ", url)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -263,7 +263,7 @@ exports.getDummy = (req, res) => {
 exports.GetAllOnHoldGroupBy = (req, res) => {
     let id = req.params.id || 1
     let url = process.env.MW_URL + "/api/ShipmentReport/GetAllOnHoldGroupBy/" + id
-    console.log("url : ", url)
+    
     axios
         .get(url)
         .then(mwRes => {
@@ -280,7 +280,7 @@ exports.GetAllOnHoldGroupBy = (req, res) => {
 exports.GetSmsLogById = (req, res) => {
     let id = req.params.id || 1
     let url = process.env.MW_URL + "/api/SMS_Log/GetById/" + id
-    console.log("url : ", url)
+    
     axios
         .get(url)
         .then(mwRes => {
@@ -298,7 +298,7 @@ exports.GetClientAllPagination = (req, res) => {
     let PageNumber = req.query.PageNumber || 1
     let PageSize = req.query.PageSize || 5
     let url = process.env.MW_URL + "/api/Client/GetAllPagination?PageNumber=" + PageNumber + "&PageSize=" + PageSize
-    console.log("url : ", url)
+    
     axios
         .get(url)
         .then(mwRes => {
@@ -315,7 +315,7 @@ exports.GetClientAllPagination = (req, res) => {
 exports.CustomerActionById = (req, res) => {
     let id = req.params.id || 1
     let url = process.env.MW_URL + "/api/View_CustomersActions/GetByIdM/" + id
-    console.log("url : ", url)
+    
     axios
         .get(url)
         .then(mwRes => {
@@ -332,7 +332,7 @@ exports.CustomerActionById = (req, res) => {
 exports.GetByTracking = (req, res) => {
     let id = req.params.id || 1
     let url = process.env.MW_URL + "/api/Orders/GetByTracking/" + id
-    console.log("url : ", url)
+    
     axios
         .get(url)
         .then(mwRes => {
@@ -349,7 +349,7 @@ exports.GetByTracking = (req, res) => {
 exports.GetShipmentByTrackingNo = (req, res) => {
     let id = req.params.id || 1
     let url = process.env.MW_URL + "/api/ShipmentReport/GetByTrackingNo/" + id
-    console.log("url : ", url)
+    
     axios
         .get(url)
         .then(mwRes => {
@@ -364,7 +364,7 @@ exports.GetShipmentByTrackingNo = (req, res) => {
 }
 exports.MerchantNames = (req, res) => {
     let url = process.env.MW_URL + "/api/Client/MerchantNames"
-    console.log("url : ", url)
+    
     axios
         .get(url)
         .then(mwRes => {
@@ -379,11 +379,11 @@ exports.MerchantNames = (req, res) => {
 }
 exports.GetAllPaginationExternalupdate = (req, res) => {
     let url = process.env.MW_URL + "/api/ShipmentReport/GetAllPaginationExternalupdate"
-    console.log("url : ", url)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
-            console.log(mwRes)
+            
             res.status(mwRes.status).json(mwRes.data)
         })
         .catch(error => {
@@ -432,7 +432,7 @@ exports.GenerateInvoiceXml = (req, res) => {
 
 exports.GetCustomDutyReport = (req, res) => {
     let url = process.env.MW_URL + "/api/Custom/GetCustomDutyReport"
-    console.log("url : ", url)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -447,7 +447,7 @@ exports.GetCustomDutyReport = (req, res) => {
 
 exports.GetMasterData = (req, res) => {
     let url = process.env.MW_URL + "/api/Custom/GetMasterData"
-    console.log("url : ", url)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -462,7 +462,7 @@ exports.GetMasterData = (req, res) => {
 
 exports.UploadCustomDutyToErp = (req, res) => {
     let url = process.env.MW_URL + "/api/Custom/UploadCustomDutyToErp"
-    console.log("url : ", url)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -477,7 +477,7 @@ exports.UploadCustomDutyToErp = (req, res) => {
 
 exports.UploadInvoiceXmlToAmazon = (req, res) => {
     let url = process.env.MW_URL + "/api/Custom/UploadInvoiceXmlToAmazon"
-    console.log("url : ", url)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -492,7 +492,7 @@ exports.UploadInvoiceXmlToAmazon = (req, res) => {
 
 exports.GetAmazonInvoiceHistory = (req, res) => {
     let url = process.env.MW_URL + "/api/Custom/GetAmazonInvoiceHistory"
-    console.log("url : ", req.body)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -507,7 +507,7 @@ exports.GetAmazonInvoiceHistory = (req, res) => {
 
 exports.GenerateCn35Bill = (req, res) => {
     let url = process.env.MW_URL + "/api/Custom/GenerateCn35Bill"
-    console.log("url : ", req.body)
+ 
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -521,7 +521,7 @@ exports.GenerateCn35Bill = (req, res) => {
 }
 exports.GetEventsStatusCodes = (req, res) => {
     let url = process.env.MW_URL + "/v2/codes"
-    console.log("url : ", req.body)
+
     axios
         .get(url)
         .then(mwRes => {
@@ -556,8 +556,8 @@ exports.ImportIntlCustomDuty = (req, res) => {
 }
 exports.createMasterUsersMw = (payload) => {
     let url = process.env.MW_URL + "/api/user/save"
-    console.log("url : ", url)
-    console.log("payload : ", payload)
+    
+   
     axios
         .post(url, payload)
         .then(mwRes => {
@@ -572,7 +572,7 @@ exports.createMasterUsersMw = (payload) => {
 
  exports.InsertFlightArrivalDetail = (req, res) => {
     let url = process.env.MW_URL + "/api/Custom/InsertFlightArrivalDetail"
-    console.log("url : ", req.body)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -586,7 +586,7 @@ exports.createMasterUsersMw = (payload) => {
 
 exports.UpdateFlightArrivalDetail = (req, res) => {
     let url = process.env.MW_URL + "/api/Custom/UpdateFlightArrivalDetail"
-    console.log("url : ", req.body)
+
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -600,7 +600,7 @@ exports.UpdateFlightArrivalDetail = (req, res) => {
 
 exports.GetFlightArrivalDetails = (req, res) => {
     let url = process.env.MW_URL + "/api/Custom/GetFlightArrivalDetails"
-    console.log("url : ", req.body)
+
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -614,7 +614,7 @@ exports.GetFlightArrivalDetails = (req, res) => {
 
 exports.GetFlightArrivalReport = (req, res) => {
     let url = process.env.MW_URL + "/api/Custom/GetFlightArrivalReport"
-    console.log("url : ", req.body)
+    
     axios
         .post(url, req.body)
         .then(mwRes => {
@@ -628,7 +628,7 @@ exports.GetFlightArrivalReport = (req, res) => {
 exports.GetWhatsappLogs = (req, res) => {
     let id = req.params.id || 1
     let url = process.env.MW_URL + "/api/Whatsapp_Log/GetById/" + id
-    console.log("url : ", url)
+    
     axios
         .get(url)
         .then(mwRes => {
