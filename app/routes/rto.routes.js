@@ -8,4 +8,5 @@ module.exports = function (app) {
   app.post("/api/createOrders", [authJwt.verifyToken], controller.createOrders);
   app.put("/api/updateOrders/:id", [authJwt.verifyToken], controller.updateOrders);
   app.get("/api/listOrders", [authJwt.verifyToken], controller.listOrders);
+  app.get("/api/listAddresses", [authJwt.verifyToken], controller.listAddresses);
 };

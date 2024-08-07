@@ -83,7 +83,23 @@ exports.listOrders = async (req, res) => {
     axios
       .get(process.env.MW_URL + "/v2/irto/list" + url + "?page=" + page)
       .then((response) => {
-        // console the request url
+        res.status(200).json(response.data);
+      })
+      .catch((error) => {
+        res.status(500).json(error);
+      });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+exports.listAddresses = async (req, res) => {
+  // merchant and country is in query params
+  const merchant = req.query.merchant;
+  const country = req.query.country;
+  try {
+    axios
+      .get(process.env.MW_URL + "/v2/irto/addresses" + "?merchant=" + merchant + "&country=" + country)
+      .then((response) => {
         res.status(200).json(response.data);
       })
       .catch((error) => {
