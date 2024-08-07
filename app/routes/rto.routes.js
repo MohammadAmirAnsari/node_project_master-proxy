@@ -7,4 +7,5 @@ module.exports = function (app) {
   app.get("/api/fetchMerchants", [authJwt.verifyToken], controller.fetchMerchants);
   app.post("/api/createOrders", [authJwt.verifyToken], controller.createOrders);
   app.get("/api/listOrders", [authJwt.verifyToken], controller.listOrders);
+  app.get("/api/listAddresses", [authJwt.verifyToken], controller.listAddresses);
 };
