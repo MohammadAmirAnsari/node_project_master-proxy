@@ -94,11 +94,11 @@ exports.listOrders = async (req, res) => {
 };
 exports.listAddresses = async (req, res) => {
   // merchant and country is in query params
-  const merchant = req.query.merchant;
+  const merchant_code = req.query.merchant_code;
   const country = req.query.country;
   try {
     axios
-      .get(process.env.MW_URL + "/v2/irto/addresses" + "?merchant=" + merchant + "&country=" + country)
+      .get(process.env.MW_URL + "/v2/irto/addresses" + "?merchant_code=" + merchant_code + "&country=" + country)
       .then((response) => {
         res.status(200).json(response.data);
       })
