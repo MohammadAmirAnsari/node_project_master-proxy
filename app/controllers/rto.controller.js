@@ -4,7 +4,7 @@ exports.fetchAllRto = async (req, res) => {
   const page = req.query.page;
   try {
     axios
-      .get(process.env.MW_URL + "/v2/irto" + "?page=" + page)
+      .get(process.env.MW_URL + "/v2/irto?page=" + page)
       .then((response) => {
         res.status(200).json(response.data);
       })
