@@ -42,11 +42,14 @@ exports.generateBulkAwb = (req, res) => {
         });
 };
 exports.generateSingleAwb = (req, res) => {
-    console.log("req.body : ", req.body)
+    isIrto = req.body.isIrto;
+    let url = process.env.PRINTING_URL + "/api/v1/printing/generate/";
+    if (isIrto) {
+        url = process.env.PRINTING_URL + "/api/v1/printing/generate-irto/";
+    }
     axios
-        .post(process.env.PRINTING_URL + "/api/v1/printing/generate/", req.body, config)
+        .post(url, req.body, config)
         .then(invRes => {
-            console.log("invRes.data : ", invRes.data)
             res.status(invRes.status).json(invRes.data)
         })
         .catch(error => {
