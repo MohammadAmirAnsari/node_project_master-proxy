@@ -50,6 +50,7 @@ require('./app/routes/customs.routes')(app);
 require('./app/routes/scale.routes')(app);
 require('./app/routes/helper.routes')(app);
 require("./app/routes/rto.routes")(app);
+require("./app/routes/pddp.routes")(app);
 
 const server = http.createServer(app);
 
