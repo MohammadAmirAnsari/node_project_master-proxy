@@ -56,3 +56,14 @@ exports.generateSingleAwb = (req, res) => {
             res.status(error.response.status).json(error.response.data)
         });
 };
+exports.generateManifest = (req, res) => {
+    axios
+        .post(process.env.PRINTING_URL + "/api/v1/printing/generate-irto-manifest/", req.body, config)
+        .then(invRes => {
+            res.status(invRes.status).json(invRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error)
+            res.status(error.response.status).json(error.response.data)
+        });
+}

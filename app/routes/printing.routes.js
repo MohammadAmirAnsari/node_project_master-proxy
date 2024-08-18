@@ -21,4 +21,9 @@ module.exports = function (app) {
         [authJwt.verifyToken],
         controller.generrateCommercialInvoiceExcel
     );
+    app.post(
+        "/api/print/manifest",
+        [authJwt.verifyToken],
+        controller.generateManifest
+    );
 }
