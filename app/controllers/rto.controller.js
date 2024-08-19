@@ -109,3 +109,18 @@ exports.listAddresses = async (req, res) => {
     res.status(500).json(error);
   }
 };
+exports.bulkUpdateOrders = async (req, res) => {
+  try {
+    axios
+      .post(process.env.MW_URL + "/v2/irto/bulk-update", req.body)
+      .then((response) => {
+        console.log(response.data);
+        res.status(200).json(response.data);
+      })
+      .catch((error) => {
+        res.status(500).json(error);
+      });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};

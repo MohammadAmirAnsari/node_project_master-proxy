@@ -9,4 +9,5 @@ module.exports = function (app) {
   app.put("/api/updateOrders/:id", [authJwt.verifyToken], controller.updateOrders);
   app.get("/api/listOrders", [authJwt.verifyToken], controller.listOrders);
   app.get("/api/listAddresses", [authJwt.verifyToken], controller.listAddresses);
+  app.post("/api/bulkUpdateOrders", controller.bulkUpdateOrders);
 };
