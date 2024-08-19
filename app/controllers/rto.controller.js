@@ -54,8 +54,9 @@ exports.createOrders = async (req, res) => {
         res.status(200).json(response.data);
       })
       .catch((error) => {
-        if (error.response.data.data.errors.length > 0) {
-          res.status(500).json(error.response.data.data.errors[0]);
+        if (Object.keys(error.response.data.data.errors).length > 0) {
+          const error_string = JSON.stringify(Object.values(Object.values(error.response.data.data.errors)[0])[0]);
+          res.status(500).json(error_string);
         }
         res.status(500).json(error.response.data.message);
       });
