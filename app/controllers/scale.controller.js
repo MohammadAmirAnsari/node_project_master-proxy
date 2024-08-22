@@ -1,17 +1,16 @@
 require('dotenv').config()
 const axios = require('axios');
-
-exports.pushSaleDataToMw = (req, res) => {
-    console.log(req.query);
-    console.log("req.query.data : ", req.query.data);
+axios.defaults.headers.common['Authorization'] = process.env.MW_AUTH
+exports.scaleDataList = (req, res) => {
+    let url = process.env.MW_URL + "/v2/scale-data-list"
     axios
-        .get("https://apix.asyadexpress.com/v2/scale?data="+req.query.data,)
-        .then(invRes => {
-            console.log("invRes.data : ", invRes.data)
-           
+        .post(url, req.body)
+        .then(mwRes => {
+            res.status(mwRes.status).json(mwRes.data)
+
         })
         .catch(error => {
-            
+            console.log("error : ", error);
+            res.status(error.response.status).json(error.response.data)
         });
-         res.status(200).json({"Message" : "Pushed"})
 };

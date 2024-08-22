@@ -7,9 +7,10 @@ let masterActiveUsers = {};
 const app = express();
 var fileupload = require("express-fileupload");
 const MASTER_URL = process.env.MASTER_URL
+const HELPER_URL = process.env.HELPER_URL
 var connectedClient = {};
 const corsOptions = {
-  origin: MASTER_URL
+  origin: [MASTER_URL, HELPER_URL]
 };
 
 app.use(cors(corsOptions));

@@ -15,7 +15,7 @@ exports.addPermissions = async (req, res) => {
         const value = await schema.validateAsync(req.body, { abortEarly: false });
 
         let title = req.body.title.toLowerCase();
-        console.log("title , ", title);
+        
         Permissions.create({
             title: title,
             createdAt: new Date(),
@@ -48,7 +48,7 @@ exports.addRole = async (req, res) => {
         const value = await schema.validateAsync(req.body, { abortEarly: false });
 
         let role_name = req.body.name.toLowerCase();
-        console.log("role_name , ", role_name);
+        
         Role.create({
             name: role_name,
             createdAt: new Date(),
@@ -70,7 +70,7 @@ exports.addRole = async (req, res) => {
 }
 exports.getInternalPermissions = async (roleId) => {
     return new Promise((resolve ,reject)=>{
-        console.log("SHooo el wadee3");
+       
         PermissionRole.findAll({
             where: {
                 role_id: roleId
@@ -79,7 +79,7 @@ exports.getInternalPermissions = async (roleId) => {
             let permissionsIds = [];
             for (i in per_roles) {
                 permissionsIds.push(per_roles[i].permission_id);
-                console.log(per_roles[i].permission_id)
+              
             }
             Permissions.findAll({
                 where: {
@@ -117,7 +117,7 @@ exports.getPermissions = (req, res) => {
         let permissionsIds = [];
         for (i in per_roles) {
             permissionsIds.push(per_roles[i].permission_id);
-            console.log(per_roles[i].permission_id)
+            
         }
         Permissions.findAll({
             where: {

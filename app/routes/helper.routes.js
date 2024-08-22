@@ -191,4 +191,9 @@ module.exports = function (app) {
         [authJwt.verifyToken],
         controller.GetFlightArrivalReport
     );
+    app.get(
+        "/api/Whatsapp_Log/GetById/:id",
+        [authJwt.verifyToken],
+        controller.GetWhatsappLogs
+    );
 }
