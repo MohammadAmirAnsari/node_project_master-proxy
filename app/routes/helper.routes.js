@@ -190,10 +190,26 @@ module.exports = function (app) {
         "/api/Custom/GetFlightArrivalReport",
         [authJwt.verifyToken],
         controller.GetFlightArrivalReport
-    );
+    );    
     app.get(
         "/api/Whatsapp_Log/GetById/:id",
         [authJwt.verifyToken],
         controller.GetWhatsappLogs
     );
+    app.post(
+        "/api/Custom/GenerateTemuCodReport",
+        [authJwt.verifyToken],
+        controller.GenerateTemuCodReport
+    );
+    app.post(
+        "/api/Custom/GetTemuCodHistory",
+        [authJwt.verifyToken],
+        controller.GetTemuCodHistory
+    ); 
+    app.post(
+        "/api/Custom/UploadTemuCodToSftp",
+        [authJwt.verifyToken],
+        controller.UploadTemuCodToSftp
+    );
+    
 }
