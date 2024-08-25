@@ -42,14 +42,28 @@ exports.generateBulkAwb = (req, res) => {
         });
 };
 exports.generateSingleAwb = (req, res) => {
-    
+    isIrto = req.body.isIrto;
+    let url = process.env.PRINTING_URL + "/api/v1/printing/print-wms-awb/";
+    if (isIrto) {
+        url = process.env.PRINTING_URL + "/api/v1/printing/generate-irto/";
+    }
     axios
-        .post(process.env.PRINTING_URL + "/api/v1/printing/print-wms-awb/", req.body, config)
+        .post(url, req.body, config)
         .then(invRes => {
-            console.log("invRes.data : ", invRes.data)
             res.status(invRes.status).json(invRes.data)
         })
         .catch(error => {
             res.status(error.response.status).json(error.response.data)
         });
 };
+exports.generateManifest = (req, res) => {
+    axios
+        .post(process.env.PRINTING_URL + "/api/v1/printing/generate-irto-manifest/", req.body, config)
+        .then(invRes => {
+            res.status(invRes.status).json(invRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error)
+            res.status(error.response.status).json(error.response.data)
+        });
+}
