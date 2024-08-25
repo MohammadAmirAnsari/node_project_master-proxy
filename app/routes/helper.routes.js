@@ -191,4 +191,19 @@ module.exports = function (app) {
         [authJwt.verifyToken],
         controller.GetFlightArrivalReport
     );
+    app.post(
+        "/api/Custom/GenerateTemuCodReport",
+        [authJwt.verifyToken],
+        controller.GenerateTemuCodReport
+    );
+    app.post(
+        "/api/Custom/GetTemuCodHistory",
+        [authJwt.verifyToken],
+        controller.GetTemuCodHistory
+    ); 
+    app.post(
+        "/api/Custom/UploadTemuCodToSftp",
+        [authJwt.verifyToken],
+        controller.UploadTemuCodToSftp
+    );
 }
