@@ -190,7 +190,7 @@ module.exports = function (app) {
         "/api/Custom/GetFlightArrivalReport",
         [authJwt.verifyToken],
         controller.GetFlightArrivalReport
-    );
+    );    
     app.get(
         "/api/Whatsapp_Log/GetById/:id",
         [authJwt.verifyToken],
