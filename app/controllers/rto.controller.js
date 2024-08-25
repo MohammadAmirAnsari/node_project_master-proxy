@@ -16,9 +16,8 @@ exports.fetchAllRto = async (req, res) => {
   }
 };
 exports.fetchRtoByCountryMerchant = async (req, res) => {
-  // merchant is after irto in the url /v2/irto/{merchant}/{country}
-  const merchant = req.url.split("/")[3];
-  const country = req.url.split("/")[5];
+  const merchant = req.query.merchant;
+  const country = req.query.country;
   try {
     axios
       .get(process.env.MW_URL + "/v2/irto/" + merchant + "/" + country)
