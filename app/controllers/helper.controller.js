@@ -642,3 +642,45 @@ exports.GetWhatsappLogs = (req, res) => {
 
 
 }
+
+exports.GenerateTemuCodReport = (req, res) => {
+    let url = process.env.MW_URL + "/api/Custom/GenerateTemuCodReport"
+    console.log("url : ", req.body)
+    axios
+        .post(url, req.body)
+        .then(mwRes => {
+            res.status(mwRes.status).json(mwRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response.status).json(error.response.data)
+        });
+};
+
+exports.GetTemuCodHistory = (req, res) => {
+    let url = process.env.MW_URL + "/api/Custom/GetTemuCodHistory"
+    console.log("url : ", req.body)
+    axios
+        .post(url, req.body)
+        .then(mwRes => {
+            res.status(mwRes.status).json(mwRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response.status).json(error.response.data)
+        });
+};
+
+exports.UploadTemuCodToSftp = (req, res) => {
+    let url = process.env.MW_URL + "/api/Custom/UploadTemuCodToSftp"
+    console.log("url : ", req.body)
+    axios
+        .post(url, req.body)
+        .then(mwRes => {
+            res.status(mwRes.status).json(mwRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response.status).json(error.response.data)
+        });
+};
