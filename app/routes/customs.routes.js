@@ -12,4 +12,5 @@ module.exports = function (app) {
   app.post("/api/customs/air-manifest", [authJwt.verifyToken], controller.addAirManifest);
   app.post("/api/customs/declaration", [authJwt.verifyToken], controller.addDeclaration);
   app.post("/api/customs/house-manifest/repush", [authJwt.verifyToken], controller.repushHouseManifest);
+  app.post("/api/customs/house-manifest/repush-air", [authJwt.verifyToken], controller.repushAirManifest);
 };

@@ -54,6 +54,20 @@ exports.repushHouseManifest = (req, res) => {
     }
     );
 };
+exports.repushAirManifest = (req, res) => {
+  axios
+      .post(process.env.MW_URL + "/internal/customs/repush-air", req.body, {
+        headers: { "Content-Type": "application/json", Authorization: process.env.MW_AUTH },
+      })
+      .then((mwRes) => {
+            res.status(mwRes.status).json(mwRes.data);
+          }
+      )
+      .catch((error) => {
+            res.status(error.response.status).json(error.response.data);
+          }
+      );
+};
 exports.getClientManifest = (req, res) => {
   let page = req.query.page;
   axios
