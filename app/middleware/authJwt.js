@@ -26,7 +26,7 @@ const verifyToken = (req, res, next) => {
     if (err) {
       return catchError(err, res);
     }
-    console.log("decoded : ", decoded);
+
     req.userId = decoded.id;
     axios.defaults.headers.common['x-user-name'] = decoded.full_name || "NA";
     axios.defaults.headers.common['x-user-id'] = decoded.id || "NA";

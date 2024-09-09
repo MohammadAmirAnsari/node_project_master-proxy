@@ -6,11 +6,11 @@ const config = {
     }
 };
 exports.generrateCommercialInvoice = (req, res) => {
-    console.log("req.body : ", req.body)
+    
     axios
         .post(process.env.PRINTING_URL + "/api/v1/printing/com-invoice/", req.body, config)
         .then(invRes => {
-            console.log("invRes.data : ", invRes.data)
+            
             res.status(invRes.status).json(invRes.data)
         })
         .catch(error => {
@@ -18,11 +18,11 @@ exports.generrateCommercialInvoice = (req, res) => {
         });
 };
 exports.generrateCommercialInvoiceExcel = (req, res) => {
-    console.log("req.body : ", req.body)
+
     axios
         .post(process.env.PRINTING_URL + "/api/v1/printing/com-invoice-excel/", req.body, config)
         .then(invRes => {
-            console.log("invRes.data : ", invRes.data)
+
             res.status(invRes.status).json(invRes.data)
         })
         .catch(error => {
@@ -30,11 +30,11 @@ exports.generrateCommercialInvoiceExcel = (req, res) => {
         });
 };
 exports.generateBulkAwb = (req, res) => {
-    console.log("req.body : ", req.body)
+
     axios
         .post(process.env.PRINTING_URL + "/api/v1/printing/wms-generate-ultimate/", req.body, config)
         .then(invRes => {
-            console.log("invRes.data : ", invRes.data)
+  
             res.status(invRes.status).json(invRes.data)
         })
         .catch(error => {
@@ -42,14 +42,28 @@ exports.generateBulkAwb = (req, res) => {
         });
 };
 exports.generateSingleAwb = (req, res) => {
-    console.log("req.body : ", req.body)
+    isIrto = req.body.isIrto;
+    let url = process.env.PRINTING_URL + "/api/v1/printing/print-wms-awb/";
+    if (isIrto) {
+        url = process.env.PRINTING_URL + "/api/v1/printing/generate-irto/";
+    }
     axios
-        .post(process.env.PRINTING_URL + "/api/v1/printing/generate/", req.body, config)
+        .post(url, req.body, config)
         .then(invRes => {
-            console.log("invRes.data : ", invRes.data)
             res.status(invRes.status).json(invRes.data)
         })
         .catch(error => {
             res.status(error.response.status).json(error.response.data)
         });
 };
+exports.generateManifest = (req, res) => {
+    axios
+        .post(process.env.PRINTING_URL + "/api/v1/printing/generate-irto-manifest/", req.body, config)
+        .then(invRes => {
+            res.status(invRes.status).json(invRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error)
+            res.status(error.response.status).json(error.response.data)
+        });
+}

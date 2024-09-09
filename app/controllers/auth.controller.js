@@ -230,7 +230,7 @@ exports.refreshToken = async (req, res) => {
   try {
     let refreshToken = await RefreshToken.findOne({ where: { token: requestToken } });
 
-    console.log(refreshToken);
+
 
     if (!refreshToken) {
       res.status(403).json({ message: "Refresh token is not in database!" });
@@ -404,11 +404,11 @@ exports.applyResetPassword = async (req, res) => {
       order: [["createdAt", "DESC"]],
       limit: 5,
     });
-    console.log("req.body.password", req.body.password);
+  
     for (let i = 0; i < passwords.length; i++) {
       console.log(passwords[i].password);
       if (bcrypt.compareSync(req.body.password, passwords[i].password)) {
-        console.log("I am here");
+    
         return res.status(400).send({ message: "Password must be different from last 5 passwords" });
       }
     }
