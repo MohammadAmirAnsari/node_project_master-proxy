@@ -7,6 +7,7 @@ exports.fetchAllPickup = async (req, res) => {
       .get(process.env.MW_URL + "/v2/ipickup?page=" + page)
       .then((response) => {
         res.status(200).json(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         res.status(500).json(error);
