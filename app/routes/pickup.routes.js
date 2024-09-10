@@ -2,6 +2,7 @@ const { authJwt } = require("../middleware");
 const controller = require("../controllers/pickup.controller");
 
 module.exports = function (app) {
+
   app.get("/api/pickup/fetchAll", [authJwt.verifyToken], controller.fetchAllPickup);
   app.get("/api/pickup/fetchByCountryMerchant", [authJwt.verifyToken], controller.fetchPickupByCountryMerchant);
   app.get("/api/pickup/fetchMerchants", [authJwt.verifyToken], controller.fetchMerchants);
