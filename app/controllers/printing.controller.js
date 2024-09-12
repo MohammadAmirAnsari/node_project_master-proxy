@@ -77,4 +77,4 @@ exports.generateIpickupManifest = (req, res) => {
             console.log("error : ", error)
             res.status(error.response.status).json(error.response.data)
         });
-};
+}
