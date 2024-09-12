@@ -26,4 +26,9 @@ module.exports = function (app) {
         [authJwt.verifyToken],
         controller.generateManifest
     );
+    app.post(
+        "/api/print/ipickup-manifest",
+        [authJwt.verifyToken],
+        controller.generateIpickupManifest()
+    );
 }

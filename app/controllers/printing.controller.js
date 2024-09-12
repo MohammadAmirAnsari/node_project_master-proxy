@@ -66,4 +66,15 @@ exports.generateManifest = (req, res) => {
             console.log("error : ", error)
             res.status(error.response.status).json(error.response.data)
         });
-}
+};
+exports.generateIpickupManifest = (req, res) => {
+    axios
+        .post(process.env.PRINTING_URL + "/api/v1/printing/generate-ipickup-manifest/", req.body, config)
+        .then(invRes => {
+            res.status(invRes.status).json(invRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error)
+            res.status(error.response.status).json(error.response.data)
+        });
+};
