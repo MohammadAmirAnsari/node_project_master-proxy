@@ -685,4 +685,29 @@ exports.UploadTemuCodToSftp = (req, res) => {
         });
 };
 
+exports.orderSettings = (req, res) => {
+    let url = process.env.MW_URL + "/internal/settings/orders"
+    axios
+        .get(url)
+        .then(mwRes => {
 
+            res.status(mwRes.status).json(mwRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response.status).json(error.response.data)
+        });
+}
+exports.updateSettings = (req, res) => {
+    let url = process.env.MW_URL + "/internal/settings"
+    console.log("url : ", req.body)
+    axios
+        .post(url, req.body)
+        .then(mwRes => {
+            res.status(mwRes.status).json(mwRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response.status).json(error.response.data)
+        });
+};

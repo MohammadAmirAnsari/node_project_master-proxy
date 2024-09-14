@@ -211,5 +211,15 @@ module.exports = function (app) {
         [authJwt.verifyToken],
         controller.UploadTemuCodToSftp
     );
+    app.get(
+        "/api/order-settings",
+        [authJwt.verifyToken],
+        controller.orderSettings
+    );
+    app.post(
+        "/api/settings",
+        [authJwt.verifyToken],
+        controller.updateSettings
+    );
     
 }

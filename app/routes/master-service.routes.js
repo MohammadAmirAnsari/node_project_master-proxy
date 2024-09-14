@@ -266,4 +266,14 @@ app.get(
     [authJwt.verifyToken],
     controller.changeClientPassword
   );
+  app.post(
+    "/api/user-preferences-data",
+    [authJwt.verifyToken],
+    controller.getUserPreferencesDetails
+  );
+  app.post(
+    "/api/user-preferences-update",
+    [authJwt.verifyToken],
+    controller.getUserPreferencesUpdate
+  );
 };

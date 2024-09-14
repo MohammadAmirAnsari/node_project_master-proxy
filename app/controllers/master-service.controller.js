@@ -734,3 +734,31 @@ exports.changeClientPassword = (req, res) => {
       res.status(error.response.status).json(error.response.data)
     });
 };
+exports.getUserPreferencesDetails = (req, res) => {
+  console.log("req.body : ", req.body)
+  let url = process.env.MW_URL + "/internal/user-preferences/data";
+  axios
+    .post(url, req.body)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log("error : ", error);
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+exports.getUserPreferencesUpdate = (req, res) => {
+  console.log("req.body : ", req.body)
+  let url = process.env.MW_URL + "/internal/user-preferences/update";
+  axios
+    .post(url, req.body)
+    .then(mwRes => {
+
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log("error : ", error);
+      res.status(error.response.status).json(error.response.data)
+    });
+};
