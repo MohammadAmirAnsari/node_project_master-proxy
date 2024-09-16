@@ -43,9 +43,13 @@ exports.generateBulkAwb = (req, res) => {
 };
 exports.generateSingleAwb = (req, res) => {
     isIrto = req.body.isIrto;
+    isPickup = req.body.isPickup;
     let url = process.env.PRINTING_URL + "/api/v1/printing/print-wms-awb/";
     if (isIrto) {
         url = process.env.PRINTING_URL + "/api/v1/printing/generate-irto/";
+    }
+    if (isPickup) {
+        url = process.env.PRINTING_URL + "/api/v1/printing/generate-ipickup/";
     }
     axios
         .post(url, req.body, config)
