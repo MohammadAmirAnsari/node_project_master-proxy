@@ -221,5 +221,15 @@ module.exports = function (app) {
         [authJwt.verifyToken],
         controller.updateSettings
     );
+    app.post(
+        "/api/Custom/GenerateTemuAdditionalReport",
+        [authJwt.verifyToken],
+        controller.GenerateTemuAdditionalReport
+    );
+    app.post(
+        "/api/Custom/GetTemuAdditionalReportHistory",
+        [authJwt.verifyToken],
+        controller.GetTemuAdditionalReportHistory
+    );
     
 }

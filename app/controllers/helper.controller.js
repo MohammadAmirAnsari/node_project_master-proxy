@@ -711,3 +711,31 @@ exports.updateSettings = (req, res) => {
             res.status(error.response.status).json(error.response.data)
         });
 };
+
+exports.GenerateTemuAdditionalReport = (req, res) => {
+    let url = process.env.MW_URL + "/api/Custom/GenerateTemuAdditionalReport"
+    console.log("url : ", req.body)
+    axios
+        .post(url, req.body)
+        .then(mwRes => {
+            res.status(mwRes.status).json(mwRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response.status).json(error.response.data)
+        });
+};
+
+exports.GetTemuAdditionalReportHistory = (req, res) => {
+    let url = process.env.MW_URL + "/api/Custom/GetTemuAdditionalReportHistory"
+    console.log("url : ", req.body)
+    axios
+        .post(url, req.body)
+        .then(mwRes => {
+            res.status(mwRes.status).json(mwRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response.status).json(error.response.data)
+        });
+};
