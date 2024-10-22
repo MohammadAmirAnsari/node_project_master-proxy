@@ -231,5 +231,9 @@ module.exports = function (app) {
         [authJwt.verifyToken],
         controller.GetTemuAdditionalReportHistory
     );
-    
+    app.post(
+        "/api/Custom/GetOrderStatusReport",
+        [authJwt.verifyToken],
+        controller.GetOrderStatusReport
+    );    
 }
