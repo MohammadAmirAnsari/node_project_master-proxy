@@ -104,3 +104,53 @@ exports.createCustomsAndDutyInvoice = async (req, res) => {
     res.status(500).json(error);
   }
 };
+exports.listCodManifest = async (req, res) => {
+  const courier_code = req.url.split("/").pop();
+  try {
+    axios
+      .get(process.env.MW_URL + "/v2/list-cod-manifest/" + courier_code, {
+        headers: {
+          Authorization: process.env.MW_AUTH,
+        },
+      })
+      .then((response) => {
+        // success response
+        res.status(200).json(response.data);
+      })
+      .catch((error) => {
+        // error response
+        res.status(500).json(error);
+      });
+  } catch (error) {
+    // error response
+    res.status(500).json(error);
+  }
+};
+exports.createCodManifest = async (req, res) => {
+  let data = new FormData();
+  data.append("data", JSON.stringify(req.body));
+  if (req.files["cod_manifest_excel"]) {
+    data.append("cod_manifest_excel", req.files["cod_manifest_excel"].data, req.files["cod_manifest_excel"].name);
+  }
+  data.append("data", JSON.stringify(req.body));
+  try {
+    axios
+      .post(process.env.MW_URL + "/v2/cod-manifest", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: process.env.MW_AUTH,
+        },
+      })
+      .then((response) => {
+        // success response
+        res.status(200).json(response.data);
+      })
+      .catch((error) => {
+        // error response
+        res.status(500).json(error);
+      });
+  } catch (error) {
+    // error response
+    res.status(500).json(error);
+  }
+};
