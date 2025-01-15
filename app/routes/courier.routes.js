@@ -10,5 +10,11 @@ module.exports = function (app) {
   app.post("/api/courier-invoice", [authJwt.verifyToken], controller.createCourierInvoice);
   app.post("/api/customs-and-duty-invoice", [authJwt.verifyToken], controller.createCustomsAndDutyInvoice);
   app.get("/api/list-courier-invoice/:courier_code", [authJwt.verifyToken], controller.listCourierInvoice);
-  app.get("/api/list-customs-and-duty-invoice/:courier_code", [authJwt.verifyToken], controller.listCustomsAndDutyInvoice);
+  app.get(
+    "/api/list-customs-and-duty-invoice/:courier_code",
+    [authJwt.verifyToken],
+    controller.listCustomsAndDutyInvoice
+  );
+  app.get("/api/list-cod-manifest/:courier_code", [authJwt.verifyToken], controller.listCodManifest);
+  app.post("/api/cod-manifest", [authJwt.verifyToken], controller.createCodManifest);
 };
