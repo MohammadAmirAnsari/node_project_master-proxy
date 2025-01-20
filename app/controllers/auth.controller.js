@@ -326,6 +326,18 @@ exports.resetPassword = async (req, res) => {
         },
       },
     });
+    // user not found
+    User.findOne({
+      where: {
+        email: req.body.email,
+      },
+    }).then((user) => {
+      if (!user) {
+        return res.status(400).send({ message: "User Not Found" });
+      }
+    });
+
+
     console.log("isExist", isExist);
     // not before 24 hours reset password even if it's used
     isNotBefore24Hours = await ResetPassword.findOne({
