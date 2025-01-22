@@ -17,4 +17,11 @@ module.exports = function (app) {
   );
   app.get("/api/list-cod-manifest/:courier_code", [authJwt.verifyToken], controller.listCodManifest);
   app.post("/api/cod-manifest", [authJwt.verifyToken], controller.createCodManifest);
+  app.get(
+    "/api/list-available-adjustments/:manifest_cod_code",
+    [authJwt.verifyToken],
+    controller.listAvailableAdjustments
+  );
+  app.post("/api/adjustment/:courier_code", [authJwt.verifyToken], controller.createAdjustment);
+  app.get("/api/adjustment/:courier_code", [authJwt.verifyToken], controller.listAdjustments);
 };
