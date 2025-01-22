@@ -154,3 +154,72 @@ exports.createCodManifest = async (req, res) => {
     res.status(500).json(error);
   }
 };
+exports.listAvailableAdjustments = async (req, res) => {
+  const courier_code = req.url.split("/").pop();
+  try {
+    axios
+      .get(process.env.MW_URL + "/v2/courier-invoice/list-available-adjustments/" + courier_code, {
+        headers: {
+          Authorization: process.env.MW_AUTH,
+        },
+      })
+      .then((response) => {
+        // success response
+        res.status(200).json(response.data);
+      })
+      .catch((error) => {
+        // error response
+        res.status(500).json(error);
+      });
+  } catch (error) {
+    // error response
+    res.status(500).json(error);
+  }
+};
+exports.createAdjustment = async (req, res) => {
+  // it has payload and courier_code , no file
+  let courier_code = req.url.split("/").pop();
+
+  try {
+    axios
+      .post(process.env.MW_URL + "/v2/courier-invoice/adjustment/" + courier_code, req.body, {
+        headers: {
+          Authorization: process.env.MW_AUTH,
+        },
+      })
+      .then((response) => {
+        // success response
+        res.status(200).json(response.data);
+      })
+      .catch((error) => {
+        // error response
+        res.status(500).json(error);
+      });
+  } catch (error) {
+    // error response
+    res.status(500).json(error);
+  }
+};
+exports.listAdjustments = async (req, res) => {
+  // same as above , only get request
+  const courier_code = req.url.split("/").pop();
+  try {
+    axios
+      .get(process.env.MW_URL + "/v2/courier-invoice/adjustment/" + courier_code, {
+        headers: {
+          Authorization: process.env.MW_AUTH,
+        },
+      })
+      .then((response) => {
+        // success response
+        res.status(200).json(response.data);
+      })
+      .catch((error) => {
+        // error response
+        res.status(500).json(error);
+      });
+  } catch (error) {
+    // error response
+    res.status(500).json(error);
+  }
+};
