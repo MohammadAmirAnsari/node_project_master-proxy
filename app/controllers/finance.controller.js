@@ -108,3 +108,25 @@ exports.markAsPaid = async (req, res) => {
     res.status(500).json(error);
   }
 }
+exports.settleAdjustment = async (req, res) => {
+  const adjustment_id = req.url.split("/").pop();
+  try {
+    axios
+      .post(process.env.MW_URL + "/v2/finance/settle-adjustment/" + adjustment_id, req.body, {
+        headers: {
+          Authorization: process.env.MW_AUTH,
+        },
+      })
+      .then((response) => {
+        // success response
+        res.status(200).json(response.data);
+      })
+      .catch((error) => {
+        // error response
+        res.status(500).json(error);
+      });
+  } catch (error) {
+    // error response
+    res.status(500).json(error);
+  }
+};
