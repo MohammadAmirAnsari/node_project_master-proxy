@@ -762,3 +762,46 @@ exports.getUserPreferencesUpdate = (req, res) => {
       res.status(error.response.status).json(error.response.data)
     });
 };
+
+exports.getAllPudoMasterData = (req, res) => {
+  let _page = req.query.page;
+  let _onlyActive = req.query.onlyActive;
+  let url = process.env.MW_URL + "/api/PudoMaster/GetAll?page=" + _page + "&onlyActive=" + _onlyActive;
+  axios
+    .get(url)
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log("error : ", error);
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+
+exports.createPudoMaster = (req, res) => {
+  console.log("req.body : ", req.body)
+  let url = process.env.MW_URL + "/api/PudoMaster/Create";
+  axios
+    .post(url, req.body)
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log("error : ", error);
+      res.status(error.response.status).json(error.response.data)
+    });
+};
+
+exports.updatePudoMaster = (req, res) => {
+  console.log("req.body : ", req.body)
+  let url = process.env.MW_URL + "/api/PudoMaster/Update";
+  axios
+    .post(url, req.body)
+    .then(mwRes => {
+      res.status(mwRes.status).json(mwRes.data)
+    })
+    .catch(error => {
+      console.log("error : ", error);
+      res.status(error.response.status).json(error.response.data)
+    });
+};

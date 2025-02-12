@@ -276,4 +276,19 @@ app.get(
     [authJwt.verifyToken],
     controller.getUserPreferencesUpdate
   );
+  app.get(
+    "/api/get-pudo-master-data",
+    [authJwt.verifyToken],
+    controller.getAllPudoMasterData
+  );
+  app.post(
+    "/api/create-pudo-master",
+    [authJwt.verifyToken],
+    controller.createPudoMaster
+  );
+  app.post(
+    "/api/update-pudo-master",
+    [authJwt.verifyToken],
+    controller.updatePudoMaster
+  );
 };
