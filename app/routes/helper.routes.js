@@ -210,6 +210,11 @@ module.exports = function (app) {
         "/api/Custom/UploadTemuCodToSftp",
         [authJwt.verifyToken],
         controller.UploadTemuCodToSftp
+    ); 
+    app.post(
+        "/api/Custom/UploadTemuAddOnFileToSftp",
+        [authJwt.verifyToken],
+        controller.UploadTemuAddOnFileToSftp
     );
     app.get(
         "/api/order-settings",

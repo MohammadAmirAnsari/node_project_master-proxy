@@ -685,6 +685,24 @@ exports.UploadTemuCodToSftp = (req, res) => {
         });
 };
 
+exports.UploadTemuAddOnFileToSftp = (req, res) => {
+    const form = new FormData();
+    for (let i in req.files) {
+        form.append(i, req.files[i].data, req.files[i].name)
+    }
+    
+    let url = process.env.MW_URL + "/api/Custom/UploadTemuAddOnFileToSftp"
+    axios
+        .post(url, form)
+        .then(mwRes => {
+            res.status(mwRes.status).json(mwRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response.status).json(error.response.data)
+        });
+};
+
 exports.orderSettings = (req, res) => {
     let url = process.env.MW_URL + "/internal/settings/orders"
     axios
