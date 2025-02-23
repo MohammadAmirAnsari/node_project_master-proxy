@@ -55,6 +55,7 @@ require("./app/routes/pickup.routes")(app);
 require("./app/routes/pddp.routes")(app);
 require("./app/routes/courier.routes")(app);
 require("./app/routes/finance.routes")(app);
+require("./app/routes/cartonization.routes")(app);
 
 const server = http.createServer(app);
 
