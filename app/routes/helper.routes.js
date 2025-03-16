@@ -236,4 +236,9 @@ module.exports = function (app) {
         [authJwt.verifyToken],
         controller.GetOrderStatusReport
     );    
+    app.post(
+        "/api/Custom/GetOrderStatusOverview",
+        [authJwt.verifyToken],
+        controller.GetOrderStatusOverview
+    );    
 }

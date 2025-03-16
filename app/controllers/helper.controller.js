@@ -753,3 +753,17 @@ exports.GetOrderStatusReport = (req, res) => {
             res.status(error.response.status).json(error.response.data)
         });
 };
+
+exports.GetOrderStatusOverview = (req, res) => {
+    let url = process.env.MW_URL + "/api/Custom/GetOrderStatusOverview"
+    console.log("url : ", req.body)
+    axios
+        .post(url, req.body)
+        .then(mwRes => {
+            res.status(mwRes.status).json(mwRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response.status).json(error.response.data)
+        });
+};
