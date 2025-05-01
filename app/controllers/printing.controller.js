@@ -82,3 +82,14 @@ exports.generateIpickupManifest = (req, res) => {
             res.status(error.response.status).json(error.response.data)
         });
 }
+exports.generateFulFillmentInvoice = (req, res) => {
+    axios
+    .post(process.env.PRINTING_URL + "/api/v1/printing/print_fulfillment_excel_invoice/", req.body, config)
+    .then((invRes) => {
+        res.status(invRes.status).json(invRes.data);
+    })
+    .catch((error) => {
+        console.log("error : ", error);
+        res.status(error.response.status).json(error.response.data);
+    });
+};
