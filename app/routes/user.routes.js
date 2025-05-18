@@ -20,7 +20,19 @@ module.exports = function (app) {
     [authJwt.verifyToken],
     controller.getAllRoles
   );
-  app.post("/api/users/active-deactive", [authJwt.verifyToken], controller.userActiveDeactive);
-  app.post("/api/users/change-role", [authJwt.verifyToken], controller.userChangeRole);
+  app.post(
+    "/api/users/active-deactive",
+    [authJwt.verifyToken],
+    controller.userActiveDeactive
+  );
+  app.post(
+    "/api/users/change-role",
+    [authJwt.verifyToken],
+    controller.userChangeRole
+  );
+  app.get(
+    "/api/users/:vendorCode",
+    [authJwt.verifyToken],
+    controller.getUsersByVendorCode
+  )
 };
-
