@@ -349,7 +349,7 @@ exports.CreateVendor = (req, res) => {
         const user = {
           username: mwRes.data.data.contact_name,
           email: mwRes.data.data.contact_email,
-          password: Math.random().toString(36).slice(-8),
+          password: req.body.contact_password,  //Math.random().toString(36).slice(-8),
           full_name: mwRes.data.data.contact_name,
           VendorCode: mwRes.data.data.code,
           roles: ["vp_vendor"],
