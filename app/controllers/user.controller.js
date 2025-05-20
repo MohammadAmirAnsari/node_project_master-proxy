@@ -48,7 +48,7 @@ exports.getAllRoles = (req, res) => {
   })
 };
 exports.userActiveDeactive = (req, res) => {
-    User.update(
+  User.update(
     { status: req.body.active },
     {
       where: {
@@ -59,6 +59,18 @@ exports.userActiveDeactive = (req, res) => {
     res.status(200).json({ message: "User updated successfully" });
   });
 };
+exports.getUsersByVendorCode = (req, res) => {
+  User.findAll({
+    where: {
+      VendorCode: req.params.vendorCode,
+    },
+    include: [{ model: Role }],
+    attributes: ["id", "email", "full_name", "status", "createdAt", "VendorCode"],
+  }).then((user) => {
+    res.status(200).json({ data: user });
+  });
+};
+
 exports.userChangeRole = (req, res) => {
   // get the user first the set using setRoles method
   User.findByPk(req.body.user_id).then((user) => {
@@ -66,4 +78,4 @@ exports.userChangeRole = (req, res) => {
       res.status(200).json({ message: "User role updated successfully" });
     });
   });
-}
+};

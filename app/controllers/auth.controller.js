@@ -210,7 +210,8 @@ exports.signin = (req, res) => {
           destinationDepot: user.DestinationDepot,
           merchantCode: user.MerchantCode,
           permissions: permm,
-          expiresIn: config.jwtExpiration
+          expiresIn: config.jwtExpiration,
+          vendorCode: user.VendorCode,
 
         });
       });
