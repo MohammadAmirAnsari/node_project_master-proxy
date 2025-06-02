@@ -543,3 +543,16 @@ exports.UpdateVendorExecutives = (req, res) => {
       res.status(error.response.status).json(error.response.data);
     });
 }
+exports.NotifyInvoiceRemark = (req, res) => {
+  let url = process.env.MW_URL + "/api/Vendor/NotifyInvoiceRemark";
+  console.log("url : ", url);
+  axios
+    .post(url, req.body)
+    .then((mwRes) => {
+      res.status(mwRes.status).json(mwRes.data);
+    })
+    .catch((error) => {
+      console.log("error : ", error);
+      res.status(error.response.status).json(error.response.data);
+    });
+}
