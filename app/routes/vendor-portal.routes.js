@@ -180,5 +180,10 @@ module.exports = function (app) {
     [authJwt.verifyToken],
     controller.UpdateVendorExecutives
   );
+  app.post(
+    "/api/vendor/notify-invoice-remark",
+    [authJwt.verifyToken],
+    controller.NotifyInvoiceRemark
+  );
   app.post("/api/vendor/add-vendor-user",[authJwt.verifyToken], controller.AddVendorUser);
 };
