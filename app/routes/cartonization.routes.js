@@ -1,0 +1,39 @@
+const { authJwt } = require("../middleware");
+const controller = require("../controllers/cartonization.controller");
+module.exports = function (app) {
+    app.post(
+        "/api/cartonization",
+        [authJwt.verifyToken],
+        controller.CartonizationList
+    );
+    app.get(
+        "/api/cartonization/statuses-list",
+        [authJwt.verifyToken],
+        controller.CartonizationStatusList
+    );
+    app.get(
+        "/api/cartonization/items/:id",
+        [authJwt.verifyToken],
+        controller.CartonizationItems
+    );
+    app.get(
+        "/api/cartonization/available-cartons",
+        [authJwt.verifyToken],
+        controller.AvailableCartons
+    );
+    app.put(
+        "/api/cartonization/:id",
+        [authJwt.verifyToken],
+        controller.UpdateCartonItems
+    );
+    app.post(
+        "/api/cartonization/change-status/:id",
+        [authJwt.verifyToken],
+        controller.ChangeStatus
+    );
+    app.get(
+        "/api/cartonization/logs/:id",
+        [authJwt.verifyToken],
+        controller.CartonizationRequestLogs
+    );
+}

@@ -210,6 +210,11 @@ module.exports = function (app) {
         "/api/Custom/UploadTemuCodToSftp",
         [authJwt.verifyToken],
         controller.UploadTemuCodToSftp
+    ); 
+    app.post(
+        "/api/Custom/UploadTemuAddOnFileToSftp",
+        [authJwt.verifyToken],
+        controller.UploadTemuAddOnFileToSftp
     );
     app.get(
         "/api/order-settings",
@@ -231,5 +236,14 @@ module.exports = function (app) {
         [authJwt.verifyToken],
         controller.GetTemuAdditionalReportHistory
     );
-    
+    app.post(
+        "/api/Custom/GetOrderStatusReport",
+        [authJwt.verifyToken],
+        controller.GetOrderStatusReport
+    );    
+    app.post(
+        "/api/Custom/GetOrderStatusOverview",
+        [authJwt.verifyToken],
+        controller.GetOrderStatusOverview
+    );    
 }
