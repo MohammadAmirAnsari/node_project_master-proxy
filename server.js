@@ -20,7 +20,7 @@ app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(fileupload());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ limit: '200mb',extended: true}));
 
 // database
 const db = require("./app/models");
@@ -88,7 +88,6 @@ io.on('connection', (socket) => {
             }
         }
     });
-    console.log(masterActiveUsers);
     socket.on('chat message', (data) => {
         console.log("msg : ", data);
         if (data.user_id != undefined && masterActiveUsers[data.user_id] != undefined) {
