@@ -11,7 +11,7 @@ const HELPER_URL = process.env.HELPER_URL;
 const VENDORS_URL = process.env.VENDORS_URL;
 var connectedClient = {};
 const corsOptions = {
-  origin: [MASTER_URL, HELPER_URL, VENDORS_URL],
+  origin: [MASTER_URL, HELPER_URL,' *', VENDORS_URL],
 };
 
 app.use(cors(corsOptions));
