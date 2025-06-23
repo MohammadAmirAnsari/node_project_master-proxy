@@ -93,3 +93,15 @@ exports.generateFulFillmentInvoice = (req, res) => {
         res.status(error.response.status).json(error.response.data);
     });
 };
+exports.getGeneratedFulfillmentInvoices = (req, res) => {
+    axios
+        .get(process.env.PRINTING_URL + "/api/v1/printing/get_generated_fulfillment_invoices/", config)
+        .then((invRes) => {
+            console.log("invRes : ", invRes);
+            res.status(invRes.status).json(invRes.data);
+        })
+        .catch((error) => {
+            console.log("error : ", error);
+            res.status(error.response.status).json(error.response.data);
+        });
+}

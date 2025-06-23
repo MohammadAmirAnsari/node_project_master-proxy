@@ -11,7 +11,7 @@ const HELPER_URL = process.env.HELPER_URL;
 const VENDORS_URL = process.env.VENDORS_URL;
 var connectedClient = {};
 const corsOptions = {
-   origin: [MASTER_URL, HELPER_URL, '*', VENDORS_URL],
+    origin: [MASTER_URL, HELPER_URL, VENDORS_URL,'*']
 };
 
 app.use(cors(corsOptions));
@@ -21,13 +21,13 @@ app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(fileupload());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ limit: '200mb',extended: true}));
 
 // database
 const db = require("./app/models");
 const Role = db.role;
 
-db.sequelize.sync({ alter: false });
+db.sequelize.sync({alter: false});
 // force: true will drop the table if it already exists
 // db.sequelize.sync({force: true}).then(() => {
 //   console.log('Drop and Resync Database with { force: true }');
@@ -36,7 +36,7 @@ db.sequelize.sync({ alter: false });
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Master Proxy." });
+    res.json({message: "Master Proxy."});
 });
 
 // routes
@@ -54,6 +54,7 @@ require('./app/routes/helper.routes')(app);
 require("./app/routes/rto.routes")(app);
 require("./app/routes/pickup.routes")(app);
 require("./app/routes/pddp.routes")(app);
+require("./app/routes/driver.routes")(app);
 require("./app/routes/courier.routes")(app);
 require("./app/routes/finance.routes")(app);
 require("./app/routes/cartonization.routes")(app);
@@ -62,69 +63,68 @@ require("./app/routes/vendor-portal.routes")(app);
 const server = http.createServer(app);
 
 const io = require("socket.io")(server, {
-  cors: {
-    origin: MASTER_URL,
-    methods: ["GET", "POST"]
-  }
+    cors: {
+        origin: MASTER_URL,
+        methods: ["GET", "POST"]
+    }
 });
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
-  let user_id = socket.handshake.query.user_id;
-  if (user_id != undefined && user_id != "") {
-    if (!masterActiveUsers[user_id]) {
-      masterActiveUsers[user_id] = [];
-    }
-    masterActiveUsers[user_id].push(socket);
-  }
-  
-  socket.on('disconnect', () => {
-    var connectedTabs = false;
-    if (typeof masterActiveUsers[user_id] != 'undefined') {
-      for (var x = 0; x < masterActiveUsers[user_id].length; x++) {
-        if (masterActiveUsers[user_id][x].connected) {
-          connectedTabs = true;
+    console.log('a user connected');
+    let user_id = socket.handshake.query.user_id;
+    if (user_id != undefined && user_id != "") {
+        if (!masterActiveUsers[user_id]) {
+            masterActiveUsers[user_id] = [];
         }
-      }
-      if (!connectedTabs) {
-        console.log("DELETED <><><");
-        delete masterActiveUsers[user_id];
-      }
-    }
-  });
-  console.log(masterActiveUsers);
-  socket.on('chat message', (data) => {
-    console.log("msg : ", data);
-    if (data.user_id != undefined && masterActiveUsers[data.user_id] != undefined) {
-      for (var x = 0; x < masterActiveUsers[data.user_id].length; x++) {
-        console.log("Push To : ", data.user_id, masterActiveUsers[data.user_id][x].id);
-        io.to(masterActiveUsers[data.user_id][x].id).emit('chatMessage', data.msg);
-       }
-     
+        masterActiveUsers[user_id].push(socket);
     }
 
-  });
+    socket.on('disconnect', () => {
+        var connectedTabs = false;
+        if (typeof masterActiveUsers[user_id] != 'undefined') {
+            for (var x = 0; x < masterActiveUsers[user_id].length; x++) {
+                if (masterActiveUsers[user_id][x].connected) {
+                    connectedTabs = true;
+                }
+            }
+            if (!connectedTabs) {
+                console.log("DELETED <><><");
+                delete masterActiveUsers[user_id];
+            }
+        }
+    });
+    socket.on('chat message', (data) => {
+        console.log("msg : ", data);
+        if (data.user_id != undefined && masterActiveUsers[data.user_id] != undefined) {
+            for (var x = 0; x < masterActiveUsers[data.user_id].length; x++) {
+                console.log("Push To : ", data.user_id, masterActiveUsers[data.user_id][x].id);
+                io.to(masterActiveUsers[data.user_id][x].id).emit('chatMessage', data.msg);
+            }
+
+        }
+
+    });
 });
 
 // set port, listen for requests
 const PORT = process.env.PORT || 9090;
 server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+    console.log(`Server is running on port ${PORT}.`);
 });
 
 function initial() {
-  Role.create({
-    id: 1,
-    name: "user"
-  });
+    Role.create({
+        id: 1,
+        name: "user"
+    });
 
-  Role.create({
-    id: 2,
-    name: "moderator"
-  });
+    Role.create({
+        id: 2,
+        name: "moderator"
+    });
 
-  Role.create({
-    id: 3,
-    name: "admin"
-  });
+    Role.create({
+        id: 3,
+        name: "admin"
+    });
 }
