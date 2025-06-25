@@ -3,9 +3,10 @@ const axios = require("axios");
 
 exports.fetchAllDrivers = async (req, res) => {
   const page = req.query.page;
+  const search = req.query.search;
   try {
     axios
-        .get(process.env.DRIVER_URL + "/api/drivers?page=" + page)
+        .get(process.env.DRIVER_URL + "/api/drivers?page=" + page+"&search=" + search)
         .then((response) => {
           res.status(200).json(response.data);
         })
