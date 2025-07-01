@@ -33,10 +33,9 @@ exports.fetchAllBanks = async (req, res) => {
   }
 };
 exports.createDriver = async (req, res) => {
-    console.log(req.body);
   try {
     axios
-        .post(process.env.DRIVER_URL + "/api/drivers" ,req.body,{headers: {"Content-Type": "multipart/form-data"}})
+        .post(process.env.DRIVER_URL + "/api/drivers" ,req.body)
         .then((response) => {
           res.status(200).json(response.data);
         })
