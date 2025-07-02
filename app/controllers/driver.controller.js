@@ -64,9 +64,10 @@ exports.fetchDriver = async (req, res) => {
 };
 exports.fetchAllReports = async (req, res) => {
   const page = req.query.page;
+  const status = req.query.status;
   try {
     axios
-        .get(process.env.DRIVER_URL + "/api/reports?page=" + page)
+        .get(process.env.DRIVER_URL + "/api/reports?page=" + page+'&status='+status)
         .then((response) => {
           res.status(200).json(response.data);
         })
@@ -108,6 +109,45 @@ exports.createPayment = async (req, res) => {
         }else{
           res.status(error.response.status).json(error.response.data.message);
         }
+
+      });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+exports.sendFinance = async (req, res) => {
+  try {
+    const id = req.params.id;
+    axios
+      .get(process.env.DRIVER_URL + "/api/reports/sendfinance/"+id)
+      .then((response) => {
+        res.status(200).json(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+
+          res.status(error.response.status).json(error.response.data.message);
+
+
+      });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+exports.sendFinish = async (req, res) => {
+  try {
+    const id = req.params.id;
+    axios
+      .get(process.env.DRIVER_URL + "/api/reports/sendfinish/"+id)
+      .then((response) => {
+        res.status(200).json(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+
+          res.status(error.response.status).json(error.response.data.message);
+
 
       });
   } catch (error) {
