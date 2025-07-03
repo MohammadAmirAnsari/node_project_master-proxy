@@ -8,6 +8,10 @@ module.exports = function (app) {
   app.get("/api/fetchdriver/:id", [authJwt.verifyToken], controller.fetchDriver);
   app.get("/api/reports/sendfinance/:id", [authJwt.verifyToken], controller.sendFinance);
   app.get("/api/reports/sendfinish/:id", [authJwt.verifyToken], controller.sendFinish);
+
+  app.get("/api/reports/muscatbank/:id", [authJwt.verifyToken], controller.muscatBank);
+  app.get("/api/reports/otherbanks/:id", [authJwt.verifyToken], controller.otherBanks);
+
   app.get("/api/reports", [authJwt.verifyToken], controller.fetchAllReports);
   app.post("/api/reports", [authJwt.verifyToken], controller.createPayment);
 
