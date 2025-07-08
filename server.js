@@ -17,11 +17,11 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
-app.use(express.json());
+app.use(express.json({ limit: '200MB'}));
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(fileupload());
-app.use(express.urlencoded({ limit: '200mb',extended: true}));
+app.use(express.urlencoded({ limit: '200MB',extended: true}));
 
 // database
 const db = require("./app/models");
