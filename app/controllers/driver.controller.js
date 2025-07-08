@@ -125,7 +125,7 @@ exports.sendFinance = async (req, res) => {
         res.status(200).json(response.data);
       })
       .catch((error) => {
-          res.status(error.response.status).json(error.response.data.message);
+          res.status(error.response.status).json(error.response.data);
       });
   } catch (error) {
     res.status(500).json(error);
@@ -140,7 +140,7 @@ exports.muscatBank = async (req, res) => {
         res.status(200).json(response.data);
       })
       .catch((error) => {
-          res.status(error.response.status).json(error.response.data.message);
+          res.status(error.response.status).json(error.response.data);
       });
   } catch (error) {
     res.status(500).json(error);
@@ -156,7 +156,7 @@ exports.otherBanks = async (req, res) => {
         res.status(200).json(response.data);
       })
       .catch((error) => {
-          res.status(error.response.status).json(error.response.data.message);
+          res.status(error.response.status).json(error.response.data);
       });
   } catch (error) {
     res.status(500).json(error);
@@ -172,7 +172,7 @@ exports.sendFinish = async (req, res) => {
         res.status(200).json(response.data);
       })
       .catch((error) => {
-          res.status(error.response.status).json(error.response.data.message);
+          res.status(error.response.status).json(error.response.data);
       });
   } catch (error) {
     res.status(500).json(error);
