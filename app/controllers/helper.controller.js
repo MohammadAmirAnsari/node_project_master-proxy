@@ -785,3 +785,65 @@ exports.GetOrderStatusOverview = (req, res) => {
             res.status(error.response.status).json(error.response.data)
         });
 };
+
+exports.uploadTemuManifest = (req, res) => {
+    let url = process.env.MW_URL + "/v2/temu-manifest/upload-manifest";
+    let form = new FormData();
+    for (let i in req.files) {
+        form.append(i, req.files[i].data, req.files[i].name)
+    }
+    for (const [key, value] of Object.entries(req.body)) {
+        form.append(key, value);
+    }
+
+    axios
+        .post(url, form)
+        .then(mwRes => {
+            res.status(mwRes.status).json(mwRes.data);
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response?.status || 500).json(error.response?.data || { error: 'MW API error' });
+        });
+};
+
+exports.listTemuManifestByStatus = (req, res) => {
+    let url = process.env.MW_URL + "/v2/temu-manifest/list-by-status";
+    console.log("url : ", req.query)
+    axios
+        .get(url, { params: req.query })
+        .then(mwRes => {
+            res.status(mwRes.status).json(mwRes.data);
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response?.status || 500).json(error.response?.data || { error: 'MW API error' });
+        });
+};
+
+exports.downloadTemuManifest = (req, res) => {
+    let url = process.env.MW_URL + "/v2/temu-manifest/download";
+    axios
+        .get(url, { params: req.query, responseType: 'arraybuffer' })
+        .then(mwRes => {
+            res.set(mwRes.headers);
+            res.status(mwRes.status).send(mwRes.data);
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response?.status || 500).json(error.response?.data || { error: 'MW API error' });
+        });
+};
+
+exports.updateTemuManifestEvents = (req, res) => {
+    let url = process.env.MW_URL + "/v2/temu-manifest/update-temu-manifest-events";
+    axios
+        .post(url, req.body)
+        .then(mwRes => {
+            res.status(mwRes.status).json(mwRes.data);
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response?.status || 500).json(error.response?.data || { error: 'MW API error' });
+        });
+};

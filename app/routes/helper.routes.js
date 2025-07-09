@@ -246,4 +246,24 @@ module.exports = function (app) {
         [authJwt.verifyToken],
         controller.GetOrderStatusOverview
     );    
+    app.post(
+        "/api/temu-manifest/upload-manifest",
+        [authJwt.verifyToken],
+        controller.uploadTemuManifest
+    );
+    app.get(
+        "/api/temu-manifest/list-by-status",
+        [authJwt.verifyToken],
+        controller.listTemuManifestByStatus
+    );
+    app.get(
+        "/api/temu-manifest/download",
+        [authJwt.verifyToken],
+        controller.downloadTemuManifest
+    );
+    app.post(
+        "/api/temu-manifest/update-events",
+        [authJwt.verifyToken],
+        controller.updateTemuManifestEvents
+    );
 }
