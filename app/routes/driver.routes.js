@@ -11,11 +11,11 @@ module.exports = function (app) {
 
   app.get("/api/reports/muscatbank/:id", [authJwt.verifyToken], controller.muscatBank);
   app.get("/api/reports/otherbanks/:id", [authJwt.verifyToken], controller.otherBanks);
-
+  app.post("/api/reports/:id", [authJwt.verifyToken], controller.updatePayment);
   app.get("/api/reports", [authJwt.verifyToken], controller.fetchAllReports);
   app.post("/api/reports", [authJwt.verifyToken], controller.createPayment);
 
-  app.post("/api/reports/:id", [authJwt.verifyToken], controller.updatePayment);
+
   app.get("/api/fetchreport/:id", [authJwt.verifyToken], controller.fetchReport);
 
 };

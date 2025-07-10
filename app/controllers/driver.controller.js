@@ -1,5 +1,6 @@
 require("dotenv").config();
 const axios = require("axios");
+const FormData = require("form-data");
 
 exports.fetchAllDrivers = async (req, res) => {
   const page = req.query.page;
@@ -180,17 +181,21 @@ exports.sendFinish = async (req, res) => {
 };
 
 exports.updatePayment = async (req, res) => {
-  try {
+try {
     const id = req.params.id;
+    const jsonobject = JSON.stringify(req.body.reportJson);
+
     axios
-      .put(process.env.DRIVER_URL + "/api/reports/"+id, req.body)
+      .put(process.env.DRIVER_URL + "/api/reports/"+id, jsonobject,{headers:{'content-type':'application/json'}})
       .then((response) => {
         res.status(200).json(response.data);
       })
       .catch((error) => {
+          console.log(error);
           res.status(error.response.status).json(error.response.data.message);
       });
   } catch (error) {
+    console.log(error);
     res.status(500).json(error);
   }
 };
