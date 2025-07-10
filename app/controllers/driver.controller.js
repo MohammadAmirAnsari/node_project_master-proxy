@@ -42,6 +42,7 @@ exports.createDriver = async (req, res) => {
           res.status(200).json(response.data);
         })
         .catch((error) => {
+            console.log(response);
           res.status(500).json(error);
         });
   } catch (error) {
