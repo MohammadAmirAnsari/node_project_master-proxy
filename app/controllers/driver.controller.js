@@ -192,11 +192,9 @@ try {
         res.status(200).json(response.data);
       })
       .catch((error) => {
-          console.log(error);
           res.status(error.response.status).json(error.response.data.message);
       });
   } catch (error) {
-    console.log(error);
     res.status(500).json(error);
   }
 };
