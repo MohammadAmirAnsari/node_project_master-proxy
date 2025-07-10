@@ -35,8 +35,9 @@ exports.fetchAllBanks = async (req, res) => {
 };
 exports.createDriver = async (req, res) => {
   try {
+    const jsonobject = JSON.stringify(req.body.driverData);
     axios
-        .post(process.env.DRIVER_URL + "/api/drivers" ,req.body)
+        .post(process.env.DRIVER_URL + "/api/drivers" ,jsonobject,{headers:{'content-type':'application/json'}})
         .then((response) => {
           res.status(200).json(response.data);
         })
