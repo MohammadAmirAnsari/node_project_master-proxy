@@ -83,9 +83,10 @@ exports.fetchAllReports = async (req, res) => {
 exports.fetchReport = async (req, res) => {
   const id = req.params.id;
   const hub = req.query.hub??'';
+  const hold = req.query.hold??'';
   try {
     axios
-        .get(process.env.DRIVER_URL + "/api/reports/"+id+"?hub=" + hub)
+        .get(process.env.DRIVER_URL + "/api/reports/"+id+"?hub=" + hub+"&hold=" + hold)
         .then((response) => {
           // console.log(response);
           res.status(200).json(response.data);
@@ -192,11 +193,9 @@ try {
         res.status(200).json(response.data);
       })
       .catch((error) => {
-          console.log(error);
           res.status(error.response.status).json(error.response.data.message);
       });
   } catch (error) {
-    console.log(error);
     res.status(500).json(error);
   }
 };
