@@ -182,6 +182,22 @@ exports.sendFinish = async (req, res) => {
   }
 };
 
+exports.deletePayment = async (req, res) => {
+  try {
+    const id = req.params.id;
+    axios
+      .delete(process.env.DRIVER_URL + "/api/reports/"+id)
+      .then((response) => {
+        res.status(200).json(response.data);
+      })
+      .catch((error) => {
+          res.status(error.response.status).json(error.response.data);
+      });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 exports.updatePayment = async (req, res) => {
 try {
     const id = req.params.id;
