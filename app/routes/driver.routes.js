@@ -11,6 +11,7 @@ module.exports = function (app) {
 
   app.get("/api/reports/muscatbank/:id", [authJwt.verifyToken], controller.muscatBank);
   app.get("/api/reports/otherbanks/:id", [authJwt.verifyToken], controller.otherBanks);
+  app.get("/api/reports/finishreportedit/:id", [authJwt.verifyToken], controller.finishreportedit);
   app.post("/api/reports/:id", [authJwt.verifyToken], controller.updatePayment);
   app.delete("/api/reports/:id", [authJwt.verifyToken], controller.deletePayment);
   app.get("/api/reports", [authJwt.verifyToken], controller.fetchAllReports);
