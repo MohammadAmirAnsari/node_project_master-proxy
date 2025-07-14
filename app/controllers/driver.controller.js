@@ -215,3 +215,21 @@ try {
     res.status(500).json(error);
   }
 };
+
+exports.finishreportedit = async (req, res) => {
+    const id = req.params.id;
+    const hub = req.query.hub??'';
+    try {
+        axios
+            .get(process.env.DRIVER_URL + "/api/reports/finishreportedit/"+id+"?hub=" + hub)
+            .then((response) => {
+                // console.log(response);
+                res.status(200).json(response.data);
+            })
+            .catch((error) => {
+                res.status(500).json(error);
+            });
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};
