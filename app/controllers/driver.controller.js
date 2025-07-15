@@ -35,10 +35,56 @@ exports.fetchAllBanks = async (req, res) => {
 };
 exports.createDriver = async (req, res) => {
   try {
-    const jsonobject = JSON.stringify(req.body.driverData);
+      let data = new FormData();
+      data.append("driverData", req.body.driverData);
+      if(req.files){
+          if(req.files["profile"]) {
+              data.append("profile", req.files["profile"].data, req.files["profile"].name);
+          }
+          if(req.files["contract"]) {
+              data.append("contract", req.files["contract"].data, req.files["contract"].name);
+          }
+          if(req.files["police_certificate"]) {
+              data.append("police_certificate", req.files["police_certificate"].data, req.files["police_certificate"].name);
+          }
+          if(req.files["applications_form"]) {
+              data.append("applications_form", req.files["applications_form"].data, req.files["applications_form"].name);
+          }
+          if(req.files["driver_standards"]) {
+              data.append("driver_standards", req.files["driver_standards"].data, req.files["driver_standards"].name);
+          }
+          if(req.files["license_card1_front"]) {
+              data.append("license_card1_front", req.files["license_card1_front"].data, req.files["license_card1_front"].name);
+          }
+          if(req.files["license_card1_back"]) {
+              data.append("license_card1_back", req.files["license_card1_back"].data, req.files["license_card1_back"].name);
+          }
+          if(req.files["license_card2_front"]) {
+              data.append("license_card2_front", req.files["license_card2_front"].data, req.files["license_card2_front"].name);
+          }
+          if(req.files["license_card2_back"]) {
+              data.append("license_card2_back", req.files["license_card2_back"].data, req.files["license_card2_back"].name);
+          }
+          if(req.files["civil_card_front"]) {
+              data.append("civil_card_front", req.files["civil_card_front"].data, req.files["civil_card_front"].name);
+          }
+          if(req.files["civil_card_back"]) {
+              data.append("civil_card_back", req.files["civil_card_back"].data, req.files["civil_card_back"].name);
+          }
+          if(req.files["driver_license_card_front"]) {
+              data.append("driver_license_card_front", req.files["driver_license_card_front"].data, req.files["driver_license_card_front"].name);
+          }
+          if(req.files["driver_license_card_back"]) {
+              data.append("driver_license_card_back", req.files["driver_license_card_back"].data, req.files["driver_license_card_back"].name);
+          }
+      }
+
     axios
-        .post(process.env.DRIVER_URL + "/api/drivers" ,jsonobject,{headers:{'content-type':'application/json'}})
+        .post(process.env.DRIVER_URL + "/api/drivers" ,data,{
+            headers: { "Content-Type": "multipart/form-data", Authorization: process.env.DRIVER_AUTH },
+        })
         .then((response) => {
+            console.log(response);
           res.status(200).json(response.data);
         })
         .catch((error) => {
