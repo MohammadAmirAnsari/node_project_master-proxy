@@ -1,13 +1,19 @@
 require("dotenv").config();
 const axios = require("axios");
 const FormData = require("form-data");
+const config = {
+    headers: {
+        "Content-Type": "application/json",
+        Authorization: process.env.DRIVER_AUTH,
+    }
+};
 
 exports.fetchAllDrivers = async (req, res) => {
   const page = req.query.page;
   const search = req.query.search;
   try {
     axios
-        .get(process.env.DRIVER_URL + "/api/drivers?page=" + page+"&search=" + search)
+        .get(process.env.DRIVER_URL + "/api/drivers?page=" + page+"&search=" + search,config)
         .then((response) => {
           res.status(200).json(response.data);
         })
@@ -22,7 +28,7 @@ exports.fetchAllBanks = async (req, res) => {
   const page = req.query.page;
   try {
     axios
-        .get(process.env.DRIVER_URL + "/api/banks")
+        .get(process.env.DRIVER_URL + "/api/banks",config)
         .then((response) => {
           res.status(200).json(response.data);
         })
@@ -99,7 +105,7 @@ exports.fetchDriver = async (req, res) => {
   const id = req.params.id;
   try {
     axios
-      .get(process.env.DRIVER_URL + "/api/drivers/"+id)
+      .get(process.env.DRIVER_URL + "/api/drivers/"+id,config)
       .then((response) => {
         res.status(200).json(response.data);
       })
@@ -115,7 +121,7 @@ exports.fetchAllReports = async (req, res) => {
   const status = req.query.status;
   try {
     axios
-        .get(process.env.DRIVER_URL + "/api/reports?page=" + page+'&status='+status)
+        .get(process.env.DRIVER_URL + "/api/reports?page=" + page+'&status='+status,config)
         .then((response) => {
           res.status(200).json(response.data);
         })
@@ -132,7 +138,7 @@ exports.fetchReport = async (req, res) => {
   const hold = req.query.hold??'';
   try {
     axios
-        .get(process.env.DRIVER_URL + "/api/reports/"+id+"?hub=" + hub+"&hold=" + hold)
+        .get(process.env.DRIVER_URL + "/api/reports/"+id+"?hub=" + hub+"&hold=" + hold,config)
         .then((response) => {
           // console.log(response);
           res.status(200).json(response.data);
@@ -147,7 +153,7 @@ exports.fetchReport = async (req, res) => {
 exports.createPayment = async (req, res) => {
   try {
     axios
-      .post(process.env.DRIVER_URL + "/api/reports", req.body)
+      .post(process.env.DRIVER_URL + "/api/reports", req.body,config)
       .then((response) => {
         res.status(200).json(response.data);
       })
@@ -169,7 +175,7 @@ exports.sendFinance = async (req, res) => {
   try {
     const id = req.params.id;
     axios
-      .get(process.env.DRIVER_URL + "/api/reports/sendfinance/"+id)
+      .get(process.env.DRIVER_URL + "/api/reports/sendfinance/"+id,config)
       .then((response) => {
         res.status(200).json(response.data);
       })
@@ -184,7 +190,7 @@ exports.muscatBank = async (req, res) => {
   try {
     const id = req.params.id;
     axios
-      .get(process.env.DRIVER_URL + "/api/reports/muscatbank/"+id)
+      .get(process.env.DRIVER_URL + "/api/reports/muscatbank/"+id,config)
       .then((response) => {
         res.status(200).json(response.data);
       })
@@ -200,7 +206,7 @@ exports.otherBanks = async (req, res) => {
   try {
     const id = req.params.id;
     axios
-      .get(process.env.DRIVER_URL + "/api/reports/otherbanks/"+id)
+      .get(process.env.DRIVER_URL + "/api/reports/otherbanks/"+id,config)
       .then((response) => {
         res.status(200).json(response.data);
       })
@@ -216,7 +222,7 @@ exports.sendFinish = async (req, res) => {
   try {
     const id = req.params.id;
     axios
-      .get(process.env.DRIVER_URL + "/api/reports/sendfinish/"+id)
+      .get(process.env.DRIVER_URL + "/api/reports/sendfinish/"+id,config)
       .then((response) => {
         res.status(200).json(response.data);
       })
@@ -232,7 +238,7 @@ exports.deletePayment = async (req, res) => {
   try {
     const id = req.params.id;
     axios
-      .delete(process.env.DRIVER_URL + "/api/reports/"+id)
+      .delete(process.env.DRIVER_URL + "/api/reports/"+id,config)
       .then((response) => {
         res.status(200).json(response.data);
       })
@@ -247,10 +253,14 @@ exports.deletePayment = async (req, res) => {
 exports.updatePayment = async (req, res) => {
 try {
     const id = req.params.id;
-    const jsonobject = JSON.stringify(req.body.reportJson);
+    let data = new FormData();
+    data.append("reportJson", req.body.reportJson);
+    data.append("_method", 'PUT');
 
     axios
-      .put(process.env.DRIVER_URL + "/api/reports/"+id, jsonobject,{headers:{'content-type':'application/json'}})
+      .post(process.env.DRIVER_URL + "/api/reports/"+id, data,{
+          headers: { "Content-Type": "multipart/form-data", Authorization: process.env.DRIVER_AUTH },
+      })
       .then((response) => {
         res.status(200).json(response.data);
       })
@@ -267,7 +277,7 @@ exports.finishreportedit = async (req, res) => {
     const hub = req.query.hub??'';
     try {
         axios
-            .get(process.env.DRIVER_URL + "/api/reports/finishreportedit/"+id+"?hub=" + hub)
+            .get(process.env.DRIVER_URL + "/api/reports/finishreportedit/"+id+"?hub=" + hub,config)
             .then((response) => {
                 // console.log(response);
                 res.status(200).json(response.data);
