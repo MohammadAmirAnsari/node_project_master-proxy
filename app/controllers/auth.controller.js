@@ -194,6 +194,7 @@ exports.signin = (req, res) => {
           roles: all_roles,
           destinationDepot: user.DestinationDepot,
           merchantCode: user.MerchantCode,
+          erpCode: user.ErpCode
          }, config.secret, {
          expiresIn: config.jwtExpiration
        });
@@ -212,7 +213,7 @@ exports.signin = (req, res) => {
           permissions: permm,
           expiresIn: config.jwtExpiration,
           vendorCode: user.VendorCode,
-
+          erpCode: user.ErpCode,
         });
       });
     })

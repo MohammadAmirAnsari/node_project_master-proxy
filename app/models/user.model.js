@@ -21,6 +21,9 @@ module.exports = (sequelize, Sequelize) => {
     VendorCode: {
       type: Sequelize.STRING
     },
+    ErpCode: {
+      type: Sequelize.STRING
+    },
     status: {
       type: Sequelize.BOOLEAN,
       defaultValue: false,
