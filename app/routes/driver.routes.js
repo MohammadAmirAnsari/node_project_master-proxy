@@ -10,6 +10,7 @@ module.exports = function (app) {
   app.get("/api/reports/sendfinish/:id", [authJwt.verifyToken], controller.sendFinish);
 
   app.get("/api/reports/muscatbank/:id", [authJwt.verifyToken], controller.muscatBank);
+  app.get("/api/reports/paymentadvice/:id", [authJwt.verifyToken], controller.paymentAdvice);
   app.get("/api/reports/otherbanks/:id", [authJwt.verifyToken], controller.otherBanks);
   app.get("/api/reports/finishreportedit/:id", [authJwt.verifyToken], controller.finishreportedit);
   app.post("/api/reports/:id", [authJwt.verifyToken], controller.updatePayment);
