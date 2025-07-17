@@ -201,6 +201,21 @@ exports.muscatBank = async (req, res) => {
     res.status(500).json(error);
   }
 };
+exports.paymentAdvice = async (req, res) => {
+  try {
+    const id = req.params.id;
+    axios
+      .get(process.env.DRIVER_URL + "/api/reports/paymentadvice/"+id,config)
+      .then((response) => {
+        res.status(200).json(response.data);
+      })
+      .catch((error) => {
+          res.status(error.response.status).json(error.response.data);
+      });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
 
 exports.otherBanks = async (req, res) => {
   try {
