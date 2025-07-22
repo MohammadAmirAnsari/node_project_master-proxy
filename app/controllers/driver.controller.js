@@ -269,8 +269,7 @@ exports.updatePayment = async (req, res) => {
 try {
     const id = req.params.id;
     let data = new FormData();
-    console.log(req.body.reportJson);
-    data.append("reportJson", req.body.reportJson);
+    data.append("file", req.files["file"].data, req.files["file"].name);
     data.append("_method", 'PUT');
 
     axios
