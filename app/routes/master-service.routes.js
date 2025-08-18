@@ -291,4 +291,19 @@ app.get(
     [authJwt.verifyToken],
     controller.updatePudoMaster
   );
+  app.get(
+    "/api/get-courier-route-config-master-data",
+    [authJwt.verifyToken],
+    controller.getAllCourierRouteConfigMasterData
+  );
+  app.post(
+    "/api/create-courier-route-config-master",
+    [authJwt.verifyToken],
+    controller.createCourierRouteConfigMaster
+  );
+  app.post(
+    "/api/update-courier-route-config-master",
+    [authJwt.verifyToken],
+    controller.updateCourierRouteConfigMaster
+  );
 };
