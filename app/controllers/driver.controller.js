@@ -88,6 +88,7 @@ exports.createDriver = async (req, res) => {
     axios
         .post(process.env.DRIVER_URL + "/api/drivers" ,data,{
             headers: { "Content-Type": "multipart/form-data", Authorization: process.env.DRIVER_AUTH },
+            maxBodyLength:Infinity
         })
         .then((response) => {
             console.log(response);
@@ -275,6 +276,7 @@ try {
     axios
       .post(process.env.DRIVER_URL + "/api/reports/"+id, data,{
           headers: { "Content-Type": "multipart/form-data", Authorization: process.env.DRIVER_AUTH },
+          maxBodyLength:Infinity
       })
       .then((response) => {
         res.status(200).json(response.data);
