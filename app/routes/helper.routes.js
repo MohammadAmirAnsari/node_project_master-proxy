@@ -266,4 +266,19 @@ module.exports = function (app) {
         [authJwt.verifyToken],
         controller.updateTemuManifestEvents
     );
+    app.get(
+        "/api/integrations-invoice/list",
+        [authJwt.verifyToken],
+        controller.listCommercialInvoices
+    );
+    app.get(
+        "/api/integrations-invoice/download",
+        [authJwt.verifyToken],
+        controller.downloadCommercialInvoice
+    );
+    app.get(
+        "/api/integrations-invoice/view",
+        [authJwt.verifyToken],
+        controller.viewCommercialInvoice
+    );
 }
