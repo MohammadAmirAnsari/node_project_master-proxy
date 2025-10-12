@@ -847,3 +847,53 @@ exports.updateTemuManifestEvents = (req, res) => {
             res.status(error.response?.status || 500).json(error.response?.data || { error: 'MW API error' });
         });
 };
+
+exports.listCommercialInvoices = (req, res) => {
+    let merchant_code = req.query.merchant_code;
+    let url = process.env.MW_URL + "/v3/integrations-invoice/list";
+    
+    if (merchant_code && merchant_code !== 'undefined') {
+        url += "?merchant_code=" + merchant_code;
+    }
+    
+    axios
+        .get(url)
+        .then(mwRes => {
+            res.status(mwRes.status).json(mwRes.data);
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response?.status || 500).json(error.response?.data || { error: 'MW API error' });
+        });
+};
+
+exports.downloadCommercialInvoice = (req, res) => {
+    let id = req.query.id;
+    let url = process.env.MW_URL + "/v3/integrations-invoice/download?id=" + id;
+    
+    axios
+        .get(url, { responseType: 'arraybuffer' })
+        .then(mwRes => {
+            res.set(mwRes.headers);
+            res.status(mwRes.status).send(mwRes.data);
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response?.status || 500).json(error.response?.data || { error: 'MW API error' });
+        });
+};
+
+exports.viewCommercialInvoice = (req, res) => {
+    let id = req.query.id;
+    let url = process.env.MW_URL + "/v3/integrations-invoice/view?id=" + id;
+    
+    axios
+        .get(url)
+        .then(mwRes => {
+            res.status(mwRes.status).json(mwRes.data);
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response?.status || 500).json(error.response?.data || { error: 'MW API error' });
+        });
+};
