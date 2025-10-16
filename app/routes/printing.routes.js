@@ -41,4 +41,9 @@ module.exports = function (app) {
         [authJwt.verifyToken],
         controller.getGeneratedFulfillmentInvoices
     );
+    app.post(
+        "/api/print/sales-invoice",
+        [authJwt.verifyToken],
+        controller.generateSalesInvoice
+    );
 }

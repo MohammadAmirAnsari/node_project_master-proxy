@@ -105,3 +105,15 @@ exports.getGeneratedFulfillmentInvoices = (req, res) => {
             res.status(error.response.status).json(error.response.data);
         });
 }
+exports.generateSalesInvoice = (req, res) => {
+
+    axios
+        .post(process.env.PRINTING_URL + "/api/v1/printing/print-sales-invoice/", req.body, config)
+        .then(invRes => {
+
+            res.status(invRes.status).json(invRes.data)
+        })
+        .catch(error => {
+            res.status(error.response.status).json(error.response.data)
+        });
+};
