@@ -108,23 +108,23 @@ exports.signin = (req, res) => {
   })
     .then(async (user) => {
       if (!user) {
-        return res.status(404).send({ message: "User Not found." });
+        return res.status(404).send({ message: "Invalid username or password." });
       }
 
-      if (user.status == 0) {
-        return res.status(400).send({ message: "User Is Not Active , Please Contact Adminstration." });
-      }
       var derivedKey = pbkdf2.pbkdf2Sync(req.body.password, user.Salt, 10000, (256 / 8), 'sha512')
       var base64Password = Buffer.from(derivedKey).toString('base64');
-
 
       if (base64Password != user.password) {
         user.lock_up_count = user.lock_up_count + 1;
         await user.save();
         return res.status(401).send({
           accessToken: null,
-          message: "Invalid Password!",
+          message: "Invalid username or password.",
         });
+      }
+
+      if (user.status == 0) {
+        return res.status(400).send({ message: "User Is Not Active , Please Contact Adminstration." });
       }
 
       // check password last changed
