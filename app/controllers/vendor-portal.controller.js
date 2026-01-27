@@ -3,9 +3,18 @@ const axios = require("axios");
 const FormData = require("form-data");
 axios.defaults.headers.common["Authorization"] = process.env.MW_AUTH;
 const { createVendorUser } = require("../util/user");
+const CryptoJS = require("crypto-js");
+
+function getDecryptedReqData(decodeUri_t) {  
+  const bytes = CryptoJS.AES.decrypt(decodeUri_t, process.env.URL_ENCRYPTION_KEY);
+  return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+}
 
 exports.GetAllVendorServiceCodes = (req, res) => {
-  const queryString = new URLSearchParams(req.query).toString();
+  const { t } = req.query;
+  if (!t) return res.status(400).json({ message: "Token missing" });
+  const query_data = getDecryptedReqData(decodeURIComponent(t));
+  const queryString = new URLSearchParams(query_data).toString();
   let url = process.env.MW_URL + "/api/VendorDeliveryInvoice/GetAllServiceCodes?" + queryString;
 
   axios
@@ -40,6 +49,7 @@ exports.UploadDeliveryInvoice = (req, res) => {
       res.status(error.response.status).json(error.response.data);
     });
 };
+
 exports.UploadCustomAndDeliveryInvoice = (req, res) => {
   const formData = new FormData();
   for (let i in req.files) {
@@ -61,8 +71,12 @@ exports.UploadCustomAndDeliveryInvoice = (req, res) => {
       res.status(error.response.status).json(error.response.data);
     });
 };
+
 exports.GetAllDeliveryInvoice = (req, res) => {
-  const queryString = new URLSearchParams(req.query).toString();
+  const { t } = req.query;
+  if (!t) return res.status(400).json({ message: "Token missing" });
+  const query_data = getDecryptedReqData(decodeURIComponent(t));
+  const queryString = new URLSearchParams(query_data).toString();
   let url = process.env.MW_URL + "/api/VendorDeliveryInvoice/GetAll?" + queryString;
 
   axios
@@ -77,7 +91,10 @@ exports.GetAllDeliveryInvoice = (req, res) => {
 };
 
 exports.GetAllDeliveryInvoiceForCreditNote = (req, res) => {
-  const queryString = new URLSearchParams(req.query).toString();
+  const { t } = req.query;
+  if (!t) return res.status(400).json({ message: "Token missing" });
+  const query_data = getDecryptedReqData(decodeURIComponent(t));
+  const queryString = new URLSearchParams(query_data).toString();
   let url = process.env.MW_URL + "/api/VendorDeliveryInvoice/GetAllForCreditNote?" + queryString;
 
   axios
@@ -92,7 +109,10 @@ exports.GetAllDeliveryInvoiceForCreditNote = (req, res) => {
 };
 
 exports.GetAllCustomInvoiceForCreditNote = (req, res) => {
-  const queryString = new URLSearchParams(req.query).toString();
+  const { t } = req.query;
+  if (!t) return res.status(400).json({ message: "Token missing" });
+  const query_data = getDecryptedReqData(decodeURIComponent(t));
+  const queryString = new URLSearchParams(query_data).toString();
   let url = process.env.MW_URL + "/api/VendorCustomInvoice/GetAllForCreditNote?" + queryString;
 
   axios
@@ -107,7 +127,10 @@ exports.GetAllCustomInvoiceForCreditNote = (req, res) => {
 };
 
 exports.GetAllCustomAndDeliveryInvoice = (req, res) => {
-  const queryString = new URLSearchParams(req.query).toString();
+  const { t } = req.query;
+  if (!t) return res.status(400).json({ message: "Token missing" });
+  const query_data = getDecryptedReqData(decodeURIComponent(t));
+  const queryString = new URLSearchParams(query_data).toString();
   let url = process.env.MW_URL + "/api/VendorCustomInvoice/GetAll?" + queryString;
 
   axios
@@ -122,7 +145,10 @@ exports.GetAllCustomAndDeliveryInvoice = (req, res) => {
 };
 
 exports.GetDeliveryInvoiceHistory = (req, res) => {
-  const queryString = new URLSearchParams(req.query).toString();
+  const { t } = req.query;
+  if (!t) return res.status(400).json({ message: "Token missing" });
+  const query_data = getDecryptedReqData(decodeURIComponent(t));
+  const queryString = new URLSearchParams(query_data).toString();
   let url = process.env.MW_URL + "/api/VendorDeliveryInvoice/GetHistory?" + queryString;
 
   axios
@@ -137,7 +163,10 @@ exports.GetDeliveryInvoiceHistory = (req, res) => {
 };
 
 exports.GetCustomInvoiceHistory = (req, res) => {
-  const queryString = new URLSearchParams(req.query).toString();
+  const { t } = req.query;
+  if (!t) return res.status(400).json({ message: "Token missing" });
+  const query_data = getDecryptedReqData(decodeURIComponent(t));
+  const queryString = new URLSearchParams(query_data).toString();
   let url = process.env.MW_URL + "/api/VendorCustomInvoice/GetHistory?" + queryString;
 
   axios
@@ -163,6 +192,7 @@ exports.UpdateDeliveryInvoiceStatus = (req, res) => {
       res.status(error.response.status).json(error.response.data);
     });
 };
+
 exports.UpdateCustomInvoiceStatus = (req, res) => {
   let url = process.env.MW_URL + "/api/VendorCustomInvoice/UpdateStatus";
   axios
@@ -198,8 +228,11 @@ exports.UploadCreditNote = (req, res) => {
     });
 };
 
-exports.GetAllCreditNotes = (req, res) => {
-  const queryString = new URLSearchParams(req.query).toString();
+exports.GetAllCreditNotes = (req, res) => {  
+  const { t } = req.query;
+  if (!t) return res.status(400).json({ message: "Token missing" });
+  const query_data = getDecryptedReqData(decodeURIComponent(t));
+  const queryString = new URLSearchParams(query_data).toString();
   let url = process.env.MW_URL + "/api/VendorCreditNote/GetAll?" + queryString;
 
   axios
@@ -213,8 +246,11 @@ exports.GetAllCreditNotes = (req, res) => {
     });
 };
 
-exports.GetCreditNoteHistory = (req, res) => {
-  const queryString = new URLSearchParams(req.query).toString();
+exports.GetCreditNoteHistory = (req, res) => {  
+  const { t } = req.query;
+  if (!t) return res.status(400).json({ message: "Token missing" });
+  const query_data = getDecryptedReqData(decodeURIComponent(t));
+  const queryString = new URLSearchParams(query_data).toString();
   let url = process.env.MW_URL + "/api/VendorCreditNote/GetHistory?" + queryString;
 
   axios
@@ -263,8 +299,11 @@ exports.UploadCodStatement = (req, res) => {
     });
 };
 
-exports.GetAllCodStatements = (req, res) => {
-  const queryString = new URLSearchParams(req.query).toString();
+exports.GetAllCodStatements = (req, res) => {  
+  const { t } = req.query;
+  if (!t) return res.status(400).json({ message: "Token missing" });
+  const query_data = getDecryptedReqData(decodeURIComponent(t));
+  const queryString = new URLSearchParams(query_data).toString();
   let url = process.env.MW_URL + "/api/VendorCodStatement/GetAll?" + queryString;
 
   axios
@@ -278,8 +317,11 @@ exports.GetAllCodStatements = (req, res) => {
     });
 };
 
-exports.GetCodStatementHistory = (req, res) => {
-  const queryString = new URLSearchParams(req.query).toString();
+exports.GetCodStatementHistory = (req, res) => {  
+  const { t } = req.query;
+  if (!t) return res.status(400).json({ message: "Token missing" });
+  const query_data = getDecryptedReqData(decodeURIComponent(t));
+  const queryString = new URLSearchParams(query_data).toString();
   let url = process.env.MW_URL + "/api/VendorCodStatement/GetHistory?" + queryString;
 
   axios
@@ -307,7 +349,11 @@ exports.UpdateCodStatementStatus = (req, res) => {
 };
 
 exports.GetApprovedCustomInvoiceForCod = (req, res) => {
-  const queryString = new URLSearchParams(req.query).toString();
+  const { t } = req.query;
+  if (!t) return res.status(400).json({ message: "Token missing" });
+  const query_data = getDecryptedReqData(decodeURIComponent(t));
+  const queryString = new URLSearchParams(query_data).toString();
+
   let url = process.env.MW_URL + "/api/VendorCustomInvoice/GetApprovedForCod?" + queryString;
 
   axios
@@ -322,9 +368,11 @@ exports.GetApprovedCustomInvoiceForCod = (req, res) => {
 };
 
 exports.ListVendors = (req, res) => {
-  const queryString = new URLSearchParams(req.query).toString();
+  const { t } = req.query;
+  if (!t) return res.status(400).json({ message: "Token missing" });
+  const query_data = getDecryptedReqData(decodeURIComponent(t));
+  const queryString = new URLSearchParams(query_data).toString();
   let url = process.env.MW_URL + "/api/Vendor/GetAll?" + queryString;
-  console.log(url);
 
   axios
     .get(url)
@@ -390,6 +438,7 @@ exports.CreateVendor = (req, res) => {
       res.status(error.response.status).json(error.response.data);
     });
 };
+
 exports.CreateVendorContract = (req, res) => {
   let url = process.env.MW_URL + "/api/VendorContract/Create";
   axios
@@ -402,6 +451,7 @@ exports.CreateVendorContract = (req, res) => {
       res.status(error.response.status).json(error.response.data);
     });
 };
+
 exports.CreateVendorContractLine = (req, res) => {
   let url = process.env.MW_URL + "/api/VendorContractLine/Create";
   axios
@@ -414,8 +464,13 @@ exports.CreateVendorContractLine = (req, res) => {
       res.status(error.response.status).json(error.response.data);
     });
 };
+
 exports.GetVendorContracts = (req, res) => {
-  let id = req.params.id;
+  let id = getDecryptedReqData(decodeURIComponent(req.params.id));
+  if (!id) {
+    return res.status(400).json({ message: "Invalid ID" });
+  }
+
   let url = process.env.MW_URL + "/api/VendorContract/GetById/" + id;
   axios
     .get(url)
@@ -427,8 +482,13 @@ exports.GetVendorContracts = (req, res) => {
       res.status(error.response.status).json(error.response.data);
     });
 };
+
 exports.UpdateVendorContract = (req, res) => {
-  let id = req.params.id;
+  let id = getDecryptedReqData(decodeURIComponent(req.params.id));
+  if (!id) {
+    return res.status(400).json({ message: "Invalid ID" });
+  }
+
   let url = process.env.MW_URL + "/api/VendorContract/UpdateContract/" + id;
   console.log("url : ", url);
   axios
@@ -441,8 +501,13 @@ exports.UpdateVendorContract = (req, res) => {
       res.status(error.response.status).json(error.response.data);
     });
 };
+
 exports.UpdateVendorContractLine = (req, res) => {
-  let id = req.params.id;
+  let id = getDecryptedReqData(decodeURIComponent(req.params.id));
+  if (!id) {
+    return res.status(400).json({ message: "Invalid ID" });
+  }
+
   let url = process.env.MW_URL + "/api/VendorContractLine/UpdateContractLine/" + id;
   console.log("url : ", url);
   axios
@@ -455,8 +520,13 @@ exports.UpdateVendorContractLine = (req, res) => {
       res.status(error.response.status).json(error.response.data);
     });
 };
+
 exports.GetVendorContractLines = (req, res) => {
-  let id = req.params.id;
+  let id = getDecryptedReqData(decodeURIComponent(req.params.id));
+  if (!id) {
+    return res.status(400).json({ message: "Invalid ID" });
+  }
+  
   let url = process.env.MW_URL + "/api/VendorContractLine/GetById/" + id;
   axios
     .get(url)
@@ -470,7 +540,11 @@ exports.GetVendorContractLines = (req, res) => {
 };
 
 exports.GetVendorById = (req, res) => {
-  let id = req.params.id;
+  let id = getDecryptedReqData(decodeURIComponent(req.params.id));
+  if (!id) {
+    return res.status(400).json({ message: "Invalid ID" });
+  }
+  
   let url = process.env.MW_URL + "/api/Vendor/GetById/" + id;
   axios
     .get(url)
@@ -482,6 +556,7 @@ exports.GetVendorById = (req, res) => {
       res.status(error.response.status).json(error.response.data);
     });
 };
+
 exports.GetVendorByCode = (req, res) => {
   let code = req.params.code;
   let url = process.env.MW_URL + "/api/Vendor/GetByCode/" + code;
@@ -495,6 +570,7 @@ exports.GetVendorByCode = (req, res) => {
       res.status(error.response.status).json(error.response.data);
     });
 };
+
 exports.AddVendorUser = (req, res) => {
   const user = {
     username: req.body.username,
@@ -529,8 +605,13 @@ exports.AddVendorUser = (req, res) => {
       res.status(400).json(response);
     });
 };
+
 exports.UpdateVendorExecutives = (req, res) => {
-  let id = req.params.id;
+  let id = getDecryptedReqData(decodeURIComponent(req.params.id));
+  if (!id) {
+    return res.status(400).json({ message: "Invalid ID" });
+  }
+
   let url = process.env.MW_URL + "/api/Vendor/UpdateVendorExecutives/" + id;
   console.log("url : ", url);
   axios
@@ -543,6 +624,7 @@ exports.UpdateVendorExecutives = (req, res) => {
       res.status(error.response.status).json(error.response.data);
     });
 }
+
 exports.NotifyInvoiceRemark = (req, res) => {
   let url = process.env.MW_URL + "/api/Vendor/NotifyInvoiceRemark";
   console.log("url : ", url);
