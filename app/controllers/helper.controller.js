@@ -150,6 +150,21 @@ exports.AddCall = (req, res) => {
         });
 
 }
+exports.UpdateNationalId = (req, res) => {
+    let url = process.env.MW_URL + "/api/CustomersAction/UpdateNationalId"
+    
+    axios
+        .post(url, req.body)
+        .then(mwRes => {
+
+            res.status(mwRes.status).json(mwRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response.status).json(error.response.data)
+        });
+
+}
 exports.GetAllOPSDonePagingFilter = (req, res) => {
     let url = process.env.MW_URL + "/api/View_CustomersActions/GetAllOPSDonePagingFilter"
     
