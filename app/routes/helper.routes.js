@@ -112,6 +112,11 @@ module.exports = function (app) {
         controller.AddCall
     );
     app.post(
+        "/api/CustomersAction/UpdateNationalId",
+        [authJwt.verifyToken],
+        controller.UpdateNationalId
+    );
+    app.post(
         "/api/ShipmentReport/FilterReportStatusUpdated",
         [authJwt.verifyToken],
         controller.ShipmentReportFilterReportStatusUpdated
