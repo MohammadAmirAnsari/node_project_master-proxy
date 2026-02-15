@@ -118,7 +118,6 @@ exports.signin = (req, res) => {
         user.lock_up_count = user.lock_up_count + 1;
         await user.save();
         return res.status(401).send({
-          accessToken: null,
           message: "Invalid username or password.",
         });
       }
@@ -135,7 +134,6 @@ exports.signin = (req, res) => {
         let diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
         if (diffDays > 45) {
           return res.status(401).send({
-            accessToken: null,
             message: "Your Password Is Expired , You will be redirected to reset it.",
           });
         }
@@ -146,7 +144,6 @@ exports.signin = (req, res) => {
           user.last_lock_up_date = new Date();
           await user.save();
           return res.status(401).send({
-            accessToken: null,
             message: "Your Account Is Locked , You will be redirected to reset it.",
           });
         } else {
@@ -163,7 +160,6 @@ exports.signin = (req, res) => {
             await user.save();
           } else {
             return res.status(401).send({
-              accessToken: null,
               message: "Your Account Is Locked , You will be redirected to reset it.",
             });
           }
