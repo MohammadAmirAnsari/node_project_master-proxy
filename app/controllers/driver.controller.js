@@ -43,6 +43,7 @@ exports.createDriver = async (req, res) => {
   try {
       let data = new FormData();
       data.append("driverData", req.body.driverData);
+      console.log(req.body.driverData);
       if(req.files){
           if(req.files["profile"]) {
               data.append("profile", req.files["profile"].data, req.files["profile"].name);
