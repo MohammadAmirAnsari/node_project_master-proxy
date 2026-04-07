@@ -21,6 +21,11 @@ module.exports = function (app) {
         [authJwt.verifyToken],
         controller.GetByTracking
     );
+    app.get(
+        "/api/Orders/GetLastMileAwb/:id",
+        [authJwt.verifyToken],
+        controller.LastMileAwb
+    );
     app.post(
         "/api/CustomersAction/EditPhone",
         [authJwt.verifyToken],
