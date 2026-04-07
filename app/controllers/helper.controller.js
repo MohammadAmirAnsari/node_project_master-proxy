@@ -211,6 +211,22 @@ exports.AddAction = (req, res) => {
         });
 
 }
+exports.LastMileAwb = (req, res) => {
+    let id = req.params.id || 1
+    let url = process.env.MW_URL + "/internal/orders/"+id+"/lastmileawb"
+
+    axios
+        .get(url)
+        .then(mwRes => {
+
+            res.status(mwRes.status).json(mwRes.data)
+        })
+        .catch(error => {
+            console.log("error : ", error);
+            res.status(error.response.status).json(error.response.data)
+        });
+
+}
 exports.SelfCollectRequest = (req, res) => {
     let url = process.env.MW_URL + "/api/CustomersAction/SelfCollectRequest"
     
