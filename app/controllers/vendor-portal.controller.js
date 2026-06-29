@@ -205,6 +205,56 @@ exports.UpdateCustomInvoiceStatus = (req, res) => {
       res.status(error.response.status).json(error.response.data);
     });
 };
+exports.AddReconciliationComment = (req, res) => {
+  let url = process.env.MW_URL + "/api/VendorReconcileHandler/AddComment";
+  axios
+    .post(url, req.body)
+    .then((mwRes) => {
+      res.status(mwRes.status).json(mwRes.data);
+    })
+    .catch((error) => {
+      console.log("error : ", error);
+      res.status(error.response.status).json(error.response.data);
+    });
+};
+
+exports.GetExceptionHistory = (req, res) => {
+  const { t } = req.query;
+  if (!t) return res.status(400).json({ message: "Token missing" });
+  const query_data = getDecryptedReqData(decodeURIComponent(t));
+  const queryString = new URLSearchParams(query_data).toString();
+  console.log(req.body)
+  console.log(queryString)
+  let url = process.env.MW_URL + "/api/VendorReconcileHandler/GetExceptionHistory?" + queryString;
+
+  axios
+    .get(url)
+    .then((mwRes) => {
+      res.status(mwRes.status).json(mwRes.data);
+    })
+    .catch((error) => {
+      console.log("error : ", error);
+      res.status(error.response.status).json(error.response.data);
+    });
+};
+
+exports.GetMismatchComments = (req, res) => {
+  const { t } = req.query;
+  if (!t) return res.status(400).json({ message: "Token missing" });
+  const query_data = getDecryptedReqData(decodeURIComponent(t));
+  const queryString = new URLSearchParams(query_data).toString();
+  let url = process.env.MW_URL + "/api/VendorReconcileHandler/GetMismatchComments?" + queryString;
+
+  axios
+    .get(url)
+    .then((mwRes) => {
+      res.status(mwRes.status).json(mwRes.data);
+    })
+    .catch((error) => {
+      console.log("error : ", error);
+      res.status(error.response.status).json(error.response.data);
+    });
+};
 
 exports.UploadCreditNote = (req, res) => {
   const formData = new FormData();

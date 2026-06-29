@@ -81,6 +81,24 @@ module.exports = function (app) {
     controller.UploadCreditNote
   );
 
+  app.post(
+    "/api/vendor-reconcile-handler/add-comment",
+    [authJwt.verifyToken],
+    controller.AddReconciliationComment
+  );
+
+  app.get(
+    "/api/vendor-reconcile-handler/get-exception-history",
+    [authJwt.verifyToken],
+    controller.GetExceptionHistory
+  );
+
+  app.get(
+    "/api/vendor-reconcile-handler/get-mismatch-comments",
+    [authJwt.verifyToken],
+    controller.GetMismatchComments
+  )
+
   app.get(
     "/api/vendor-credit-note/all",
     [authJwt.verifyToken],
